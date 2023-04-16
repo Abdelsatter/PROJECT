@@ -50,7 +50,8 @@ int main()
 
     bool co = true, co2 = true, groundedF = false, groundedW = false;
 
-
+//Moataz
+    
     Clock clock;
 
     while (window.isOpen())
