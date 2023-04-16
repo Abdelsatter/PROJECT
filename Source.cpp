@@ -7,7 +7,7 @@ using namespace std;
 using namespace sf;
 int main()
 {
-    //sss
+    //s
     //ehab
     //mostafa
     RenderWindow window(VideoMode(1280, 720), "Fireboy & Watergirl");
