@@ -8,7 +8,6 @@ using namespace sf;
 int main()
 {
     
-    //mo
     //ehab
     //mostafa
     RenderWindow window(VideoMode(1280, 720), "Fireboy & Watergirl");
