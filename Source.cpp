@@ -177,7 +177,7 @@ int main()
                 co = false;
                 WaterGirl.setTextureRect(IntRect(118 * cw2, 0, 118, 130));
                 cw2++;
-                if (cw2 > 15)cw2 -= 11;
+                if (cw2 > 15)cw2 -= 10;
                 WaterGirl.setScale(1, 1);
                 WaterGirl.move(5.f, 0.f);
 
