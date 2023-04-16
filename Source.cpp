@@ -7,7 +7,7 @@ using namespace std;
 using namespace sf;
 int main()
 {
-    //ehab
+    
     RenderWindow window(VideoMode(1280, 720), "Fireboy & Watergirl");
     window.setFramerateLimit(60);
     Texture F, W;
