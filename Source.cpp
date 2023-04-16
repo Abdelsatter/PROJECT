@@ -8,6 +8,7 @@ using namespace sf;
 int main()
 {
     //ehab
+    //mostafa
     RenderWindow window(VideoMode(1280, 720), "Fireboy & Watergirl");
     window.setFramerateLimit(60);
     Texture F, W;
