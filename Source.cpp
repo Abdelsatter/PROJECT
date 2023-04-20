@@ -166,11 +166,19 @@ void Main_Menu(RenderWindow& window)
 }
 void Game_Play(RenderWindow& window)
 {
-	Texture F, W;
-	Sprite FireBoy, WaterGirl;
+	Texture F, W,gr,bgr;
+	Sprite FireBoy, WaterGirl,background,ground;
 
 
+	//background
+	bgr.loadFromFile("gamplay_background.jpg");
+	background.setTexture(bgr);
+	background.setScale(1.6, 1.2);
 
+	//level 1 ground
+	gr.loadFromFile("Level_1_ground.png");
+	ground.setTexture(gr);
+	ground.setScale(1.6, 1.2);
 
 
 	//set fireboy
@@ -372,10 +380,20 @@ void Game_Play(RenderWindow& window)
 			else { isAnimationStandingWaterGirl = true; }
 		}
 
+		///test
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+			sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
+			std::cout << mouse_position.x << "  " << mouse_position.y << "\n";
+		}
+		////////////////////////
+
 		window.clear();
 
+		window.draw(background);
+		window.draw(ground);
 		window.draw(FireBoy);
 		window.draw(WaterGirl);
+		
 		//window.draw(hitpoxf);
 	//	window.draw(hitpoxw);
 
