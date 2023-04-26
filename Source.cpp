@@ -13,7 +13,6 @@ struct grounds {
 	RectangleShape ground[30];
 	Texture gr_levels[10], bgr_background[10];
 	Sprite ground_levels[10], background_levels[10];
-	
 
 }level[10];
 
@@ -191,110 +190,108 @@ void Levels(RenderWindow& window) {
 	//level[1].background_levels[1].setScale(1.6, 1.2);
 
 	//game levels
-	{
-		level[1].ground[0].setSize(Vector2f(593, 10));
-		level[1].ground[0].setPosition(Vector2f(0, 710));
+	level[1].ground[0].setSize(Vector2f(593, 10));
+	level[1].ground[0].setPosition(Vector2f(0, 710));
 
-		level[1].ground[1].setSize(Vector2f(107, 10));
-		level[1].ground[1].setPosition(Vector2f(752, 710));
+	level[1].ground[1].setSize(Vector2f(107, 10));
+	level[1].ground[1].setPosition(Vector2f(752, 710));
 
-		level[1].ground[2].setSize(Vector2f(260, 10));
-		level[1].ground[2].setPosition(Vector2f(1016, 710));
+	level[1].ground[2].setSize(Vector2f(260, 10));
+	level[1].ground[2].setPosition(Vector2f(1016, 710));
 
-		level[1].ground[3].setSize(Vector2f(20, 100));
-		level[1].ground[3].setPosition(Vector2f(1157, 660));
+	level[1].ground[3].setSize(Vector2f(20, 100));
+	level[1].ground[3].setPosition(Vector2f(1157, 660));
 
-		level[1].ground[4].setSize(Vector2f(240, 125));
-		level[1].ground[4].setPosition(Vector2f(1177, 635));
+	level[1].ground[4].setSize(Vector2f(240, 125));
+	level[1].ground[4].setPosition(Vector2f(1177, 635));
 
-		level[1].ground[5].setSize(Vector2f(137, 10));
-		level[1].ground[5].setPosition(Vector2f(950, 565));
+	level[1].ground[5].setSize(Vector2f(137, 10));
+	level[1].ground[5].setPosition(Vector2f(950, 565));
 
-		level[1].ground[6].setSize(Vector2f(180, 15));
-		level[1].ground[6].setPosition(Vector2f(600, 560));
+	level[1].ground[6].setSize(Vector2f(180, 15));
+	level[1].ground[6].setPosition(Vector2f(600, 560));
 
-		level[1].ground[7].setSize(Vector2f(30, 70));
-		level[1].ground[7].setRotation(131.f);
-		level[1].ground[7].setPosition(Vector2f(620, 560));
+	level[1].ground[7].setSize(Vector2f(30, 70));
+	level[1].ground[7].setRotation(131.f);
+	level[1].ground[7].setPosition(Vector2f(620, 560));
 
-		level[1].ground[8].setSize(Vector2f(570, 20));
-		level[1].ground[8].setPosition(Vector2f(0, 515));
+	level[1].ground[8].setSize(Vector2f(570, 20));
+	level[1].ground[8].setPosition(Vector2f(0, 515));
 
-		level[1].ground[9].setSize(Vector2f(415, 20));
-		level[1].ground[9].setPosition(Vector2f(0, 610));
+	level[1].ground[9].setSize(Vector2f(415, 20));
+	level[1].ground[9].setPosition(Vector2f(0, 610));
 
-		level[1].ground[10].setSize(Vector2f(470, 20));
-		level[1].ground[10].setPosition(Vector2f(170, 390));
+	level[1].ground[10].setSize(Vector2f(470, 20));
+	level[1].ground[10].setPosition(Vector2f(170, 390));
 
-		level[1].ground[11].setSize(Vector2f(25, 45));
-		level[1].ground[11].setRotation(127.f);
-		level[1].ground[11].setPosition(Vector2f(685, 415));
+	level[1].ground[11].setSize(Vector2f(25, 45));
+	level[1].ground[11].setRotation(127.f);
+	level[1].ground[11].setPosition(Vector2f(685, 415));
 
-		level[1].ground[12].setSize(Vector2f(650, 15));
-		level[1].ground[12].setPosition(Vector2f(675, 415));
+	level[1].ground[12].setSize(Vector2f(650, 15));
+	level[1].ground[12].setPosition(Vector2f(675, 415));
 
-		level[1].ground[13].setSize(Vector2f(20, 45));
-		level[1].ground[13].setRotation(130.f);
-		level[1].ground[13].setPosition(Vector2f(1114, 445));
+	level[1].ground[13].setSize(Vector2f(20, 45));
+	level[1].ground[13].setRotation(130.f);
+	level[1].ground[13].setPosition(Vector2f(1114, 445));
 
-		level[1].ground[14].setSize(Vector2f(20, 120));
-		level[1].ground[14].setRotation(130.f);
-		level[1].ground[14].setPosition(Vector2f(1198, 495));
+	level[1].ground[14].setSize(Vector2f(20, 120));
+	level[1].ground[14].setRotation(130.f);
+	level[1].ground[14].setPosition(Vector2f(1198, 495));
 
-		level[1].ground[15].setSize(Vector2f(90, 20));
-		level[1].ground[15].setPosition(Vector2f(1187, 488));
+	level[1].ground[15].setSize(Vector2f(90, 20));
+	level[1].ground[15].setPosition(Vector2f(1187, 488));
 
-		level[1].ground[16].setSize(Vector2f(185, 120));
-		level[1].ground[16].setPosition(Vector2f(0, 190));
+	level[1].ground[16].setSize(Vector2f(185, 120));
+	level[1].ground[16].setPosition(Vector2f(0, 190));
 
-		level[1].ground[17].setSize(Vector2f(475, 20));
-		level[1].ground[17].setPosition(Vector2f(185, 290));
+	level[1].ground[17].setSize(Vector2f(475, 20));
+	level[1].ground[17].setPosition(Vector2f(185, 290));
 
-		level[1].ground[18].setSize(Vector2f(230, 60));
-		level[1].ground[18].setPosition(Vector2f(660, 245));
+	level[1].ground[18].setSize(Vector2f(230, 60));
+	level[1].ground[18].setPosition(Vector2f(660, 245));
 
-		level[1].ground[19].setSize(Vector2f(220, 40));
-		level[1].ground[19].setPosition(Vector2f(890, 265));
-		/* ========================================*/
-		level[1].ground[20].setSize(Vector2f(760, 20));
-		level[1].ground[20].setPosition(Vector2f(550, 163));
+	level[1].ground[19].setSize(Vector2f(220, 40));
+	level[1].ground[19].setPosition(Vector2f(890, 265));
+	/* ========================================*/
+	level[1].ground[20].setSize(Vector2f(760, 20));
+	level[1].ground[20].setPosition(Vector2f(550, 163));
 
-		level[1].ground[21].setSize(Vector2f(155, 70));
-		level[1].ground[21].setPosition(Vector2f(400, 163));
+	level[1].ground[21].setSize(Vector2f(155, 70));
+	level[1].ground[21].setPosition(Vector2f(400, 163));
 
-		level[1].ground[22].setSize(Vector2f(70, 20));
-		level[1].ground[22].setPosition(Vector2f(360, 115));
+	 level[1].ground[22].setSize(Vector2f(70, 20));
+     level[1].ground[22].setPosition(Vector2f(360, 115));
 
-		level[1].ground[23].setSize(Vector2f(130, 20));
-		level[1].ground[23].setPosition(Vector2f(370, 140));
+	 level[1].ground[23].setSize(Vector2f(130, 20));
+	 level[1].ground[23].setPosition(Vector2f(370, 140));
 
-		level[1].ground[24].setSize(Vector2f(157, 20));
-		level[1].ground[24].setPosition(Vector2f(953, 306));
+	level[1].ground[24].setSize(Vector2f(157, 20));
+	level[1].ground[24].setPosition(Vector2f(953, 306));
+	
+	level[1].ground[25].setSize(Vector2f(50, 50));
+	level[1].ground[25].setRotation(133.f);
+	level[1].ground[25].setPosition(Vector2f(525, 170));
 
-		level[1].ground[25].setSize(Vector2f(50, 50));
-		level[1].ground[25].setRotation(133.f);
-		level[1].ground[25].setPosition(Vector2f(525, 170));
+	level[1].ground[26].setSize(Vector2f(50, 40));
+	level[1].ground[26].setRotation(133.f);
+	level[1].ground[26].setPosition(Vector2f(455, 145));
+	
+	level[1].ground[27].setSize(Vector2f(15, 45));
+	level[1].ground[27].setRotation(133.f);
+	level[1].ground[27].setPosition(Vector2f(390, 150));
 
-		level[1].ground[26].setSize(Vector2f(50, 40));
-		level[1].ground[26].setRotation(133.f);
-		level[1].ground[26].setPosition(Vector2f(455, 145));
+	level[1].ground[28].setSize(Vector2f(15, 110));
+	level[1].ground[28].setRotation(133.f);
+	level[1].ground[28].setPosition(Vector2f(970, 320));
 
-		level[1].ground[27].setSize(Vector2f(15, 45));
-		level[1].ground[27].setRotation(133.f);
-		level[1].ground[27].setPosition(Vector2f(390, 150));
 
-		level[1].ground[28].setSize(Vector2f(15, 110));
-		level[1].ground[28].setRotation(133.f);
-		level[1].ground[28].setPosition(Vector2f(970, 320));
-
-	}
 
 }
 
 void Game_Play(RenderWindow& window)
 {
-
-	Texture F, W;
+	Texture fireBoyImage, waterGirlImage;
 	Sprite FireBoy, WaterGirl;
 
 	//levels
@@ -302,31 +299,31 @@ void Game_Play(RenderWindow& window)
 
 
 	//set fireboy
-	F.loadFromFile("Fireboy.png");
-	FireBoy.setTexture(F);
+	fireBoyImage.loadFromFile("Fireboy.png");
+	FireBoy.setTexture(fireBoyImage);
 	FireBoy.setPosition(450, 650);
-	FireBoy.setOrigin(FireBoy.getLocalBounds().width / 124, FireBoy.getLocalBounds().height / 2);
+	FireBoy.setOrigin(FireBoy.getLocalBounds().width / 38, FireBoy.getLocalBounds().height / 2);
 	FireBoy.setScale(0.9f, 0.9f);
 
 
 	//set watergirl
-	W.loadFromFile("water_girl.png");
+	waterGirlImage.loadFromFile("Watergirl.png");
 	WaterGirl.setPosition(400, 650);
-	WaterGirl.setTexture(W);
-	WaterGirl.setOrigin(WaterGirl.getLocalBounds().width / 106, WaterGirl.getLocalBounds().height / 2);
+	WaterGirl.setTexture(waterGirlImage);
+	WaterGirl.setOrigin(WaterGirl.getLocalBounds().width / 60, WaterGirl.getLocalBounds().height / 2);
 	WaterGirl.setScale(0.9f, 0.9f);
 
 
 	// rectangle the box
 	RectangleShape RectangleDown(Vector2f(1280, 10));
-	RectangleDown.setPosition(0, 710);
+	RectangleDown.setPosition(0, 715);
 	RectangleDown.setFillColor(Color::Red);
 
 
 
 	//sentaces
 	int animationStandingFireBoy = 0, animationStandingWaterGirl = 0;
-	int moveFireBoy = 17, moveWaterGirl = 6;
+	int moveFireBoy = 0, moveWaterGirl = 0;
 	double velocityFireBoy = 0, velocityWaterGirl = 0;
 	bool isAnimationStandingWaterGirl = true, isAnimationStandingFireBoy = true, isMoveFireBoy = true, isMoveWaterGirl = true;
 	Clock clocksf, clocksw, clockf, clockw;
@@ -344,22 +341,22 @@ void Game_Play(RenderWindow& window)
 		}
 
 
-		//hitbox fire boy
-		RectangleShape hitpoxf(Vector2f(60, 100));
-		hitpoxf.setOrigin(30, 35);
-		hitpoxf.setPosition(FireBoy.getPosition().x, FireBoy.getPosition().y);
-		//hitbox water girl
-		RectangleShape hitpoxw(Vector2f(60, 93));
-		hitpoxw.setOrigin(30, 41);
-		hitpoxw.setFillColor(Color::Blue);
-		hitpoxw.setPosition(WaterGirl.getPosition().x, WaterGirl.getPosition().y);
+		////hitbox fire boy
+		//RectangleShape hitpoxf(Vector2f(60, 100));
+		//hitpoxf.setOrigin(30, 35);
+		//hitpoxf.setPosition(FireBoy.getPosition().x, FireBoy.getPosition().y);
+		////hitbox water girl
+		//RectangleShape hitpoxw(Vector2f(60, 93));
+		//hitpoxw.setOrigin(30, 41);
+		//hitpoxw.setFillColor(Color::Blue);
+		//hitpoxw.setPosition(WaterGirl.getPosition().x, WaterGirl.getPosition().y);
 
-		if (RectangleDown.getGlobalBounds().intersects(hitpoxw.getGlobalBounds()))
+		if (RectangleDown.getGlobalBounds().intersects(WaterGirl.getGlobalBounds()))
 		{
-
 			velocityWaterGirl = 0;
 			if (Keyboard::isKeyPressed(Keyboard::Key::Up))
 			{
+			isAnimationStandingWaterGirl = false;
 
 				velocityWaterGirl = 6.5;
 			}
@@ -369,9 +366,8 @@ void Game_Play(RenderWindow& window)
 
 			velocityWaterGirl -= 0.2;
 		}
-		if (RectangleDown.getGlobalBounds().intersects(hitpoxf.getGlobalBounds()))
+		if (RectangleDown.getGlobalBounds().intersects(FireBoy.getGlobalBounds()))
 		{
-
 			velocityFireBoy = 0;
 			if (Keyboard::isKeyPressed(Keyboard::Key::W))
 			{
@@ -380,13 +376,14 @@ void Game_Play(RenderWindow& window)
 		}
 		else
 		{
+			
 
 			velocityFireBoy -= 0.2;
 		}
 		//Animation standing player
 
-		FireBoy.setTextureRect(IntRect(118 * animationStandingFireBoy, 0, 118, 130));
-		WaterGirl.setTextureRect(IntRect(117.8 * animationStandingWaterGirl, 0, 117.8, 130));
+		FireBoy.setTextureRect(IntRect(149 * animationStandingFireBoy, 0, 149, 160));
+		WaterGirl.setTextureRect(IntRect(149 * animationStandingWaterGirl, 0, 149, 160));
 
 
 
@@ -395,7 +392,7 @@ void Game_Play(RenderWindow& window)
 		{
 			if (clocksf.getElapsedTime().asSeconds() >= 0.10)
 			{
-				animationStandingFireBoy++; animationStandingFireBoy %= 17;
+				animationStandingFireBoy++; animationStandingFireBoy %= 19;
 				clocksf.restart();
 			}
 		}
@@ -403,7 +400,7 @@ void Game_Play(RenderWindow& window)
 		{
 			if (clocksw.getElapsedTime().asSeconds() >= 0.10)
 			{
-				animationStandingWaterGirl++; animationStandingWaterGirl %= 6;
+				animationStandingWaterGirl++; animationStandingWaterGirl %= 30;
 				clocksw.restart();
 			}
 		}
@@ -432,14 +429,30 @@ void Game_Play(RenderWindow& window)
 
 		if (isMoveFireBoy)
 		{
-			if (Keyboard::isKeyPressed(Keyboard::Key::A) && FireBoy.getPosition().x > 35)
+			if (Keyboard::isKeyPressed(Keyboard::Key::W))
 			{
 				isAnimationStandingFireBoy = false;
-				FireBoy.setTextureRect(IntRect(118 * moveFireBoy, 0, 118, 130));
+				FireBoy.setTextureRect(IntRect(149 * moveFireBoy, 3 * 160, 149, 160));
 				if (clockf.getElapsedTime().asSeconds() >= 0.05)
 				{
 					moveFireBoy++;
-					if (moveFireBoy > 27)moveFireBoy -= 11;
+					if (moveFireBoy > 4)moveFireBoy = 0;
+					clockf.restart();
+				}
+				if (velocityWaterGirl == 6.5)
+				{
+					FireBoy.setTextureRect(IntRect(149 * moveFireBoy, 2 * 160, 149, 160));
+
+				}
+			}
+			else if (Keyboard::isKeyPressed(Keyboard::Key::A) && FireBoy.getPosition().x > 35)
+			{
+				isAnimationStandingFireBoy = false;
+				FireBoy.setTextureRect(IntRect(149 * moveFireBoy, 1*160, 149, 160));
+				if (clockf.getElapsedTime().asSeconds() >= 0.05)
+				{
+					moveFireBoy++;
+					if (moveFireBoy > 6)moveFireBoy = 0;
 					clockf.restart();
 				}
 				FireBoy.setScale(-0.9f, 0.9f);
@@ -452,11 +465,11 @@ void Game_Play(RenderWindow& window)
 			{
 
 				isAnimationStandingFireBoy = false;
-				FireBoy.setTextureRect(IntRect(118 * moveFireBoy, 0, 118, 130));
+				FireBoy.setTextureRect(IntRect(149* moveFireBoy, 1*160, 149, 160));
 				if (clockf.getElapsedTime().asSeconds() >= 0.05)
 				{
 					moveFireBoy++;
-					if (moveFireBoy > 27)moveFireBoy -= 11;
+					if (moveFireBoy > 6)moveFireBoy = 0;
 					clockf.restart();
 				}
 				FireBoy.setScale(0.9f, 0.9f);
@@ -469,15 +482,30 @@ void Game_Play(RenderWindow& window)
 
 		if (isMoveWaterGirl)
 		{
-
-			if (Keyboard::isKeyPressed(Keyboard::Key::Right) && WaterGirl.getPosition().x < 1245)
+			if (Keyboard::isKeyPressed(Keyboard::Key::Up))
 			{
 				isAnimationStandingWaterGirl = false;
-				WaterGirl.setTextureRect(IntRect(118 * moveWaterGirl, 0, 118, 130));
+				WaterGirl.setTextureRect(IntRect(149 * moveWaterGirl, 3 * 160, 149, 160));
+				if (clockf.getElapsedTime().asSeconds() >= 0.05)
+				{
+					moveWaterGirl++;
+					if (moveWaterGirl > 10)moveWaterGirl = 0;
+					clockf.restart();
+				}
+				if (velocityWaterGirl == 7)
+				{
+					WaterGirl.setTextureRect(IntRect(149 * moveWaterGirl, 2 * 160, 149, 160));
+
+				}
+			}
+			else if (Keyboard::isKeyPressed(Keyboard::Key::Right) && WaterGirl.getPosition().x < 1245)
+			{
+				isAnimationStandingWaterGirl = false;
+				WaterGirl.setTextureRect(IntRect(149 * moveWaterGirl, 1*160, 149, 160));
 				if (clockw.getElapsedTime().asSeconds() >= 0.05)
 				{
 					moveWaterGirl++;
-					if (moveWaterGirl > 15)moveWaterGirl -= 6;
+					if (moveWaterGirl > 10)moveWaterGirl = 0;
 
 					clockw.restart();
 				}
@@ -488,11 +516,11 @@ void Game_Play(RenderWindow& window)
 			else if (Keyboard::isKeyPressed(Keyboard::Key::Left) && WaterGirl.getPosition().x > 35)
 			{
 				isAnimationStandingWaterGirl = false;
-				WaterGirl.setTextureRect(IntRect(118 * moveWaterGirl, 0, 118, 130));
+				WaterGirl.setTextureRect(IntRect(149 * moveWaterGirl, 1*160, 149, 160));
 				if (clockw.getElapsedTime().asSeconds() >= 0.05)
 				{
 					moveWaterGirl++;
-					if (moveWaterGirl > 15)moveWaterGirl -= 6;
+					if (moveWaterGirl > 10)moveWaterGirl = 0;
 
 					clockw.restart();
 				}
@@ -521,9 +549,8 @@ void Game_Play(RenderWindow& window)
 	//	 window.draw(level[1].ground_levels[1]);
 		window.draw(FireBoy);
 		window.draw(WaterGirl);
-
-	//	window.draw(hitpoxf);
-	//	window.draw(hitpoxw);
+		/*window.draw(hitpoxf);
+		window.draw(hitpoxw);*/
 
 	/*	window.draw(RectangleUp);
 		window.draw(RectangleDown);
@@ -535,6 +562,10 @@ void Game_Play(RenderWindow& window)
 
 	}
 }
-//modsa
-//mostafa
-//ehab
+void Map_Level(RenderWindow& window)
+{
+
+
+}
+
+
