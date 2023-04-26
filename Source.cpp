@@ -13,6 +13,7 @@ struct grounds {
 	RectangleShape ground[30];
 	Texture gr_levels[10], bgr_background[10];
 	Sprite ground_levels[10], background_levels[10];
+	
 
 }level[10];
 
@@ -190,102 +191,103 @@ void Levels(RenderWindow& window) {
 	//level[1].background_levels[1].setScale(1.6, 1.2);
 
 	//game levels
-	level[1].ground[0].setSize(Vector2f(593, 10));
-	level[1].ground[0].setPosition(Vector2f(0, 710));
+	{
+		level[1].ground[0].setSize(Vector2f(593, 10));
+		level[1].ground[0].setPosition(Vector2f(0, 710));
 
-	level[1].ground[1].setSize(Vector2f(107, 10));
-	level[1].ground[1].setPosition(Vector2f(752, 710));
+		level[1].ground[1].setSize(Vector2f(107, 10));
+		level[1].ground[1].setPosition(Vector2f(752, 710));
 
-	level[1].ground[2].setSize(Vector2f(260, 10));
-	level[1].ground[2].setPosition(Vector2f(1016, 710));
+		level[1].ground[2].setSize(Vector2f(260, 10));
+		level[1].ground[2].setPosition(Vector2f(1016, 710));
 
-	level[1].ground[3].setSize(Vector2f(20, 100));
-	level[1].ground[3].setPosition(Vector2f(1157, 660));
+		level[1].ground[3].setSize(Vector2f(20, 100));
+		level[1].ground[3].setPosition(Vector2f(1157, 660));
 
-	level[1].ground[4].setSize(Vector2f(240, 125));
-	level[1].ground[4].setPosition(Vector2f(1177, 635));
+		level[1].ground[4].setSize(Vector2f(240, 125));
+		level[1].ground[4].setPosition(Vector2f(1177, 635));
 
-	level[1].ground[5].setSize(Vector2f(137, 10));
-	level[1].ground[5].setPosition(Vector2f(950, 565));
+		level[1].ground[5].setSize(Vector2f(137, 10));
+		level[1].ground[5].setPosition(Vector2f(950, 565));
 
-	level[1].ground[6].setSize(Vector2f(180, 15));
-	level[1].ground[6].setPosition(Vector2f(600, 560));
+		level[1].ground[6].setSize(Vector2f(180, 15));
+		level[1].ground[6].setPosition(Vector2f(600, 560));
 
-	level[1].ground[7].setSize(Vector2f(30, 70));
-	level[1].ground[7].setRotation(131.f);
-	level[1].ground[7].setPosition(Vector2f(620, 560));
+		level[1].ground[7].setSize(Vector2f(30, 70));
+		level[1].ground[7].setRotation(131.f);
+		level[1].ground[7].setPosition(Vector2f(620, 560));
 
-	level[1].ground[8].setSize(Vector2f(570, 20));
-	level[1].ground[8].setPosition(Vector2f(0, 515));
+		level[1].ground[8].setSize(Vector2f(570, 20));
+		level[1].ground[8].setPosition(Vector2f(0, 515));
 
-	level[1].ground[9].setSize(Vector2f(415, 20));
-	level[1].ground[9].setPosition(Vector2f(0, 610));
+		level[1].ground[9].setSize(Vector2f(415, 20));
+		level[1].ground[9].setPosition(Vector2f(0, 610));
 
-	level[1].ground[10].setSize(Vector2f(470, 20));
-	level[1].ground[10].setPosition(Vector2f(170, 390));
+		level[1].ground[10].setSize(Vector2f(470, 20));
+		level[1].ground[10].setPosition(Vector2f(170, 390));
 
-	level[1].ground[11].setSize(Vector2f(25, 45));
-	level[1].ground[11].setRotation(127.f);
-	level[1].ground[11].setPosition(Vector2f(685, 415));
+		level[1].ground[11].setSize(Vector2f(25, 45));
+		level[1].ground[11].setRotation(127.f);
+		level[1].ground[11].setPosition(Vector2f(685, 415));
 
-	level[1].ground[12].setSize(Vector2f(650, 15));
-	level[1].ground[12].setPosition(Vector2f(675, 415));
+		level[1].ground[12].setSize(Vector2f(650, 15));
+		level[1].ground[12].setPosition(Vector2f(675, 415));
 
-	level[1].ground[13].setSize(Vector2f(20, 45));
-	level[1].ground[13].setRotation(130.f);
-	level[1].ground[13].setPosition(Vector2f(1114, 445));
+		level[1].ground[13].setSize(Vector2f(20, 45));
+		level[1].ground[13].setRotation(130.f);
+		level[1].ground[13].setPosition(Vector2f(1114, 445));
 
-	level[1].ground[14].setSize(Vector2f(20, 120));
-	level[1].ground[14].setRotation(130.f);
-	level[1].ground[14].setPosition(Vector2f(1198, 495));
+		level[1].ground[14].setSize(Vector2f(20, 120));
+		level[1].ground[14].setRotation(130.f);
+		level[1].ground[14].setPosition(Vector2f(1198, 495));
 
-	level[1].ground[15].setSize(Vector2f(90, 20));
-	level[1].ground[15].setPosition(Vector2f(1187, 488));
+		level[1].ground[15].setSize(Vector2f(90, 20));
+		level[1].ground[15].setPosition(Vector2f(1187, 488));
 
-	level[1].ground[16].setSize(Vector2f(185, 120));
-	level[1].ground[16].setPosition(Vector2f(0, 190));
+		level[1].ground[16].setSize(Vector2f(185, 120));
+		level[1].ground[16].setPosition(Vector2f(0, 190));
 
-	level[1].ground[17].setSize(Vector2f(475, 20));
-	level[1].ground[17].setPosition(Vector2f(185, 290));
+		level[1].ground[17].setSize(Vector2f(475, 20));
+		level[1].ground[17].setPosition(Vector2f(185, 290));
 
-	level[1].ground[18].setSize(Vector2f(230, 60));
-	level[1].ground[18].setPosition(Vector2f(660, 245));
+		level[1].ground[18].setSize(Vector2f(230, 60));
+		level[1].ground[18].setPosition(Vector2f(660, 245));
 
-	level[1].ground[19].setSize(Vector2f(220, 40));
-	level[1].ground[19].setPosition(Vector2f(890, 265));
-	/* ========================================*/
-	level[1].ground[20].setSize(Vector2f(760, 20));
-	level[1].ground[20].setPosition(Vector2f(550, 163));
+		level[1].ground[19].setSize(Vector2f(220, 40));
+		level[1].ground[19].setPosition(Vector2f(890, 265));
+		/* ========================================*/
+		level[1].ground[20].setSize(Vector2f(760, 20));
+		level[1].ground[20].setPosition(Vector2f(550, 163));
 
-	level[1].ground[21].setSize(Vector2f(155, 70));
-	level[1].ground[21].setPosition(Vector2f(400, 163));
+		level[1].ground[21].setSize(Vector2f(155, 70));
+		level[1].ground[21].setPosition(Vector2f(400, 163));
 
-	 level[1].ground[22].setSize(Vector2f(70, 20));
-     level[1].ground[22].setPosition(Vector2f(360, 115));
+		level[1].ground[22].setSize(Vector2f(70, 20));
+		level[1].ground[22].setPosition(Vector2f(360, 115));
 
-	 level[1].ground[23].setSize(Vector2f(130, 20));
-	 level[1].ground[23].setPosition(Vector2f(370, 140));
+		level[1].ground[23].setSize(Vector2f(130, 20));
+		level[1].ground[23].setPosition(Vector2f(370, 140));
 
-	level[1].ground[24].setSize(Vector2f(157, 20));
-	level[1].ground[24].setPosition(Vector2f(953, 306));
-	
-	level[1].ground[25].setSize(Vector2f(50, 50));
-	level[1].ground[25].setRotation(133.f);
-	level[1].ground[25].setPosition(Vector2f(525, 170));
+		level[1].ground[24].setSize(Vector2f(157, 20));
+		level[1].ground[24].setPosition(Vector2f(953, 306));
 
-	level[1].ground[26].setSize(Vector2f(50, 40));
-	level[1].ground[26].setRotation(133.f);
-	level[1].ground[26].setPosition(Vector2f(455, 145));
-	
-	level[1].ground[27].setSize(Vector2f(15, 45));
-	level[1].ground[27].setRotation(133.f);
-	level[1].ground[27].setPosition(Vector2f(390, 150));
+		level[1].ground[25].setSize(Vector2f(50, 50));
+		level[1].ground[25].setRotation(133.f);
+		level[1].ground[25].setPosition(Vector2f(525, 170));
 
-	level[1].ground[28].setSize(Vector2f(15, 110));
-	level[1].ground[28].setRotation(133.f);
-	level[1].ground[28].setPosition(Vector2f(970, 320));
+		level[1].ground[26].setSize(Vector2f(50, 40));
+		level[1].ground[26].setRotation(133.f);
+		level[1].ground[26].setPosition(Vector2f(455, 145));
 
+		level[1].ground[27].setSize(Vector2f(15, 45));
+		level[1].ground[27].setRotation(133.f);
+		level[1].ground[27].setPosition(Vector2f(390, 150));
 
+		level[1].ground[28].setSize(Vector2f(15, 110));
+		level[1].ground[28].setRotation(133.f);
+		level[1].ground[28].setPosition(Vector2f(970, 320));
+
+	}
 
 }
 
