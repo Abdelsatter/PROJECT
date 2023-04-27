@@ -539,12 +539,12 @@ void Game_Play(RenderWindow& window)
 		////////////////////////
 
 		window.clear();
-		   window.draw(level[1].background_levels[1]);
-		 window.draw(level[1].ground_levels[1]);
-		 for (int i = 0; i < 30; i++) {
-			 window.draw(level[1].ground[i]);
-		 }
-	
+		window.draw(level[1].background_levels[1]);
+		window.draw(level[1].ground_levels[1]);
+		for (int i = 0; i < 30; i++) {
+			window.draw(level[1].ground[i]);
+		}
+
 		// window.draw(level[1].background_levels[1]);
 	//	 window.draw(level[1].ground_levels[1]);
 		window.draw(FireBoy);
@@ -552,20 +552,15 @@ void Game_Play(RenderWindow& window)
 		/*window.draw(hitpoxf);
 		window.draw(hitpoxw);*/
 
-	/*	window.draw(RectangleUp);
-		window.draw(RectangleDown);
-		window.draw(RectangleLeft);
-		window.draw(RectangleRight);*/
+		/*	window.draw(RectangleUp);
+			window.draw(RectangleDown);
+			window.draw(RectangleLeft);
+			window.draw(RectangleRight);*/
 		FireBoy.move(0, -velocityFireBoy);
 		WaterGirl.move(0, -velocityWaterGirl);
 		window.display();
 
 	}
 }
-void Map_Level(RenderWindow& window)
-{
-
-
-}
-
+//modsa
 
