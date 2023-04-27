@@ -356,7 +356,7 @@ void Game_Play(RenderWindow& window)
 			velocityWaterGirl = 0;
 			if (Keyboard::isKeyPressed(Keyboard::Key::Up))
 			{
-			isAnimationStandingWaterGirl = false;
+			
 
 				velocityWaterGirl = 6.5;
 			}
@@ -445,7 +445,7 @@ void Game_Play(RenderWindow& window)
 
 				}
 			}
-			else if (Keyboard::isKeyPressed(Keyboard::Key::A) && FireBoy.getPosition().x > 35)
+			 if (Keyboard::isKeyPressed(Keyboard::Key::A) && FireBoy.getPosition().x > 35)
 			{
 				isAnimationStandingFireBoy = false;
 				FireBoy.setTextureRect(IntRect(149 * moveFireBoy, 1*160, 149, 160));
@@ -498,7 +498,7 @@ void Game_Play(RenderWindow& window)
 
 				}
 			}
-			else if (Keyboard::isKeyPressed(Keyboard::Key::Right) && WaterGirl.getPosition().x < 1245)
+			 if (Keyboard::isKeyPressed(Keyboard::Key::Right) && WaterGirl.getPosition().x < 1245)
 			{
 				isAnimationStandingWaterGirl = false;
 				WaterGirl.setTextureRect(IntRect(149 * moveWaterGirl, 1*160, 149, 160));
