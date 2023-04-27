@@ -303,7 +303,7 @@ void Game_Play(RenderWindow& window)
 	FireBoy.setTexture(fireBoyImage);
 	FireBoy.setPosition(450, 650);
 	FireBoy.setOrigin(FireBoy.getLocalBounds().width / 38, FireBoy.getLocalBounds().height / 2);
-	FireBoy.setScale(0.9f, 0.9f);
+	FireBoy.setScale(0.7f, 0.7f);
 
 
 	//set watergirl
@@ -311,7 +311,7 @@ void Game_Play(RenderWindow& window)
 	WaterGirl.setPosition(400, 650);
 	WaterGirl.setTexture(waterGirlImage);
 	WaterGirl.setOrigin(WaterGirl.getLocalBounds().width / 60, WaterGirl.getLocalBounds().height / 2);
-	WaterGirl.setScale(0.9f, 0.9f);
+	WaterGirl.setScale(0.7f, 0.7f);
 
 
 	// rectangle the box
@@ -358,7 +358,7 @@ void Game_Play(RenderWindow& window)
 			{
 			
 
-				velocityWaterGirl = 6.5;
+				velocityWaterGirl = 5;
 			}
 		}
 		else
@@ -371,7 +371,7 @@ void Game_Play(RenderWindow& window)
 			velocityFireBoy = 0;
 			if (Keyboard::isKeyPressed(Keyboard::Key::W))
 			{
-				velocityFireBoy = 6.5;
+				velocityFireBoy = 5;
 			}
 		}
 		else
@@ -445,7 +445,7 @@ void Game_Play(RenderWindow& window)
 
 				}
 			}
-			 if (Keyboard::isKeyPressed(Keyboard::Key::A) && FireBoy.getPosition().x > 35)
+			 if (Keyboard::isKeyPressed(Keyboard::Key::A) && FireBoy.getPosition().x > 50)
 			{
 				isAnimationStandingFireBoy = false;
 				FireBoy.setTextureRect(IntRect(149 * moveFireBoy, 1*160, 149, 160));
@@ -455,13 +455,13 @@ void Game_Play(RenderWindow& window)
 					if (moveFireBoy > 6)moveFireBoy = 0;
 					clockf.restart();
 				}
-				FireBoy.setScale(-0.9f, 0.9f);
+				FireBoy.setScale(-0.7f, 0.7f);
 				FireBoy.move(-5, 0);
 
 			}
 
 
-			else if (Keyboard::isKeyPressed(Keyboard::Key::D) && FireBoy.getPosition().x < 1245)
+			else if (Keyboard::isKeyPressed(Keyboard::Key::D) && FireBoy.getPosition().x < 1230)
 			{
 
 				isAnimationStandingFireBoy = false;
@@ -472,7 +472,7 @@ void Game_Play(RenderWindow& window)
 					if (moveFireBoy > 6)moveFireBoy = 0;
 					clockf.restart();
 				}
-				FireBoy.setScale(0.9f, 0.9f);
+				FireBoy.setScale(0.7f, 0.7f);
 				FireBoy.move(5, 0);
 
 			}
@@ -498,7 +498,7 @@ void Game_Play(RenderWindow& window)
 
 				}
 			}
-			 if (Keyboard::isKeyPressed(Keyboard::Key::Right) && WaterGirl.getPosition().x < 1245)
+			 if (Keyboard::isKeyPressed(Keyboard::Key::Right) && WaterGirl.getPosition().x < 1230)
 			{
 				isAnimationStandingWaterGirl = false;
 				WaterGirl.setTextureRect(IntRect(149 * moveWaterGirl, 1*160, 149, 160));
@@ -509,11 +509,11 @@ void Game_Play(RenderWindow& window)
 
 					clockw.restart();
 				}
-				WaterGirl.setScale(0.9f, 0.9f);
+				WaterGirl.setScale(0.7f, 0.7f);
 				WaterGirl.move(5, 0);
 
 			}
-			else if (Keyboard::isKeyPressed(Keyboard::Key::Left) && WaterGirl.getPosition().x > 35)
+			else if (Keyboard::isKeyPressed(Keyboard::Key::Left) && WaterGirl.getPosition().x > 50)
 			{
 				isAnimationStandingWaterGirl = false;
 				WaterGirl.setTextureRect(IntRect(149 * moveWaterGirl, 1*160, 149, 160));
@@ -524,7 +524,7 @@ void Game_Play(RenderWindow& window)
 
 					clockw.restart();
 				}
-				WaterGirl.setScale(-0.9f, 0.9f);
+				WaterGirl.setScale(-0.7f, 0.7f);
 				WaterGirl.move(-5, 0);
 
 			}
