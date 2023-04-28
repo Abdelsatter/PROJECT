@@ -9,6 +9,7 @@ using namespace sf;
 void Game_Play(RenderWindow& window);
 void Main_Menu(RenderWindow& window);
 void Levels(RenderWindow& window);
+void collision(RenderWindow& window, RectangleShape& firboy_down, RectangleShape& firboy_top, bool& isAnimationStandingWaterGirl, bool& isAnimationStandingFireBoy, double& velocityFireBoy, double& velocityWaterGirl, RectangleShape& firboy_left, RectangleShape& firboy_right);
 struct grounds {
 	RectangleShape ground[30];
 	Texture gr_levels[10], bgr_background[10];
@@ -202,7 +203,11 @@ void Levels(RenderWindow& window) {
 	level[1].ground[3].setSize(Vector2f(20, 100));
 	level[1].ground[3].setPosition(Vector2f(1157, 660));
 
-	level[1].ground[4].setSize(Vector2f(240, 125));
+	//////
+	level[1].ground[16].setFillColor(Color::Color(100, 200, 100));
+
+
+	level[1].ground[4].setSize(Vector2f(240, 60));
 	level[1].ground[4].setPosition(Vector2f(1177, 635));
 
 	level[1].ground[5].setSize(Vector2f(137, 10));
@@ -245,8 +250,8 @@ void Levels(RenderWindow& window) {
 	level[1].ground[16].setSize(Vector2f(185, 120));
 	level[1].ground[16].setPosition(Vector2f(0, 190));
 
-	level[1].ground[17].setSize(Vector2f(475, 20));
-	level[1].ground[17].setPosition(Vector2f(185, 290));
+	level[1].ground[17].setSize(Vector2f(485, 20));
+	level[1].ground[17].setPosition(Vector2f(145, 290));
 
 	level[1].ground[18].setSize(Vector2f(230, 60));
 	level[1].ground[18].setPosition(Vector2f(660, 245));
@@ -260,15 +265,15 @@ void Levels(RenderWindow& window) {
 	level[1].ground[21].setSize(Vector2f(155, 70));
 	level[1].ground[21].setPosition(Vector2f(400, 163));
 
-	 level[1].ground[22].setSize(Vector2f(70, 20));
-     level[1].ground[22].setPosition(Vector2f(360, 115));
+	level[1].ground[22].setSize(Vector2f(70, 20));
+	level[1].ground[22].setPosition(Vector2f(360, 115));
 
-	 level[1].ground[23].setSize(Vector2f(130, 20));
-	 level[1].ground[23].setPosition(Vector2f(370, 140));
+	level[1].ground[23].setSize(Vector2f(130, 20));
+	level[1].ground[23].setPosition(Vector2f(370, 140));
 
 	level[1].ground[24].setSize(Vector2f(157, 20));
 	level[1].ground[24].setPosition(Vector2f(953, 306));
-	
+
 	level[1].ground[25].setSize(Vector2f(50, 50));
 	level[1].ground[25].setRotation(133.f);
 	level[1].ground[25].setPosition(Vector2f(525, 170));
@@ -276,7 +281,7 @@ void Levels(RenderWindow& window) {
 	level[1].ground[26].setSize(Vector2f(50, 40));
 	level[1].ground[26].setRotation(133.f);
 	level[1].ground[26].setPosition(Vector2f(455, 145));
-	
+
 	level[1].ground[27].setSize(Vector2f(15, 45));
 	level[1].ground[27].setRotation(133.f);
 	level[1].ground[27].setPosition(Vector2f(390, 150));
@@ -287,6 +292,51 @@ void Levels(RenderWindow& window) {
 
 
 
+}
+void collision(RenderWindow& window, RectangleShape& firboy_down, RectangleShape& firboy_top, bool& isAnimationStandingWaterGirl, bool& isAnimationStandingFireBoy, double& velocityFireBoy, double& velocityWaterGirl, RectangleShape& firboy_left, RectangleShape& firboy_right) {
+
+
+	bool top = 0, down = 0, r = 0, l = 0;
+
+	for (int i = 0; i < 30; i++) {
+		if (level[1].ground[i].getGlobalBounds().intersects(firboy_down.getGlobalBounds())&& level[1].ground[i].getPosition().y+5>= firboy_down.getPosition().y) {
+
+			down = 1;
+		}
+	}
+	if (down)
+	{
+		isAnimationStandingFireBoy = 1;
+		velocityFireBoy = 0;
+		if (Keyboard::isKeyPressed(Keyboard::Key::W)) {
+			velocityFireBoy = 7.5;
+			isAnimationStandingFireBoy = 0;
+
+		}
+
+	}
+	else if (!down)
+	{
+		isAnimationStandingFireBoy = 0;
+		velocityFireBoy -= 0.2;
+	}
+	for (int i = 0; i < 30; i++) {
+		if (level[1].ground[i].getGlobalBounds().intersects(firboy_top.getGlobalBounds())) {
+			top = 1;
+		}
+	}
+	if (top && !isAnimationStandingFireBoy) {
+		velocityFireBoy = -1;
+
+	}
+	/*for (int i = 0; i < 30; i++) {
+		if (level[1].ground[i].getGlobalBounds().intersects(firboy_right.getGlobalBounds())) {
+			r = 1;
+		}
+	}
+	if (r) {
+
+	}*/
 }
 
 void Game_Play(RenderWindow& window)
@@ -301,9 +351,9 @@ void Game_Play(RenderWindow& window)
 	//set fireboy
 	fireBoyImage.loadFromFile("Fireboy.png");
 	FireBoy.setTexture(fireBoyImage);
-	FireBoy.setPosition(450, 650);
+	FireBoy.setPosition(100, 100);
 	FireBoy.setOrigin(FireBoy.getLocalBounds().width / 38, FireBoy.getLocalBounds().height / 2);
-	FireBoy.setScale(0.9f, 0.9f);
+	FireBoy.setScale(0.7f, 0.7f);
 
 
 	//set watergirl
@@ -311,13 +361,40 @@ void Game_Play(RenderWindow& window)
 	WaterGirl.setPosition(400, 650);
 	WaterGirl.setTexture(waterGirlImage);
 	WaterGirl.setOrigin(WaterGirl.getLocalBounds().width / 60, WaterGirl.getLocalBounds().height / 2);
-	WaterGirl.setScale(0.9f, 0.9f);
+	WaterGirl.setScale(0.7f, 0.7f);
 
 
 	// rectangle the box
 	RectangleShape RectangleDown(Vector2f(1280, 10));
 	RectangleDown.setPosition(0, 715);
 	RectangleDown.setFillColor(Color::Red);
+
+
+	// hitbox (up_firboy)
+	RectangleShape firboy_top;
+	firboy_top.setSize(Vector2f(5, 5));
+	firboy_top.setFillColor(Color::Blue);
+	firboy_top.setOrigin(2.5, 2.5);
+
+	// hitbox (down_firboy)
+	RectangleShape firboy_down;
+	firboy_down.setSize(Vector2f(5, 5));
+	firboy_down.setFillColor(Color::Blue);
+	firboy_down.setOrigin(2.5, 2.5);
+
+	// hitbox (right_firboy)
+	RectangleShape firboy_right;
+	firboy_right.setSize(Vector2f(6, 30));
+	firboy_right.setFillColor(Color::Blue);
+	firboy_right.setOrigin(3, 15);
+
+	// hitbox (left_firboy)
+	RectangleShape firboy_left;
+	firboy_left.setSize(Vector2f(6, 30));
+	firboy_left.setFillColor(Color::Blue);
+	firboy_left.setOrigin(3, 15);
+
+
 
 
 
@@ -327,6 +404,7 @@ void Game_Play(RenderWindow& window)
 	double velocityFireBoy = 0, velocityWaterGirl = 0;
 	bool isAnimationStandingWaterGirl = true, isAnimationStandingFireBoy = true, isMoveFireBoy = true, isMoveWaterGirl = true;
 	Clock clocksf, clocksw, clockf, clockw;
+
 
 
 	while (window.isOpen())
@@ -340,7 +418,7 @@ void Game_Play(RenderWindow& window)
 			}
 		}
 
-
+		bool ff = 1;
 		////hitbox fire boy
 		//RectangleShape hitpoxf(Vector2f(60, 100));
 		//hitpoxf.setOrigin(30, 35);
@@ -356,9 +434,9 @@ void Game_Play(RenderWindow& window)
 			velocityWaterGirl = 0;
 			if (Keyboard::isKeyPressed(Keyboard::Key::Up))
 			{
-			isAnimationStandingWaterGirl = false;
 
-				velocityWaterGirl = 6.5;
+
+				velocityWaterGirl = 5;
 			}
 		}
 		else
@@ -366,22 +444,10 @@ void Game_Play(RenderWindow& window)
 
 			velocityWaterGirl -= 0.2;
 		}
-		if (RectangleDown.getGlobalBounds().intersects(FireBoy.getGlobalBounds()))
-		{
-			velocityFireBoy = 0;
-			if (Keyboard::isKeyPressed(Keyboard::Key::W))
-			{
-				velocityFireBoy = 6.5;
-			}
-		}
-		else
-		{
-			
 
-			velocityFireBoy -= 0.2;
-		}
+
+
 		//Animation standing player
-
 		FireBoy.setTextureRect(IntRect(149 * animationStandingFireBoy, 0, 149, 160));
 		WaterGirl.setTextureRect(IntRect(149 * animationStandingWaterGirl, 0, 149, 160));
 
@@ -431,7 +497,7 @@ void Game_Play(RenderWindow& window)
 		{
 			if (Keyboard::isKeyPressed(Keyboard::Key::W))
 			{
-				isAnimationStandingFireBoy = false;
+				//	isAnimationStandingFireBoy = false;
 				FireBoy.setTextureRect(IntRect(149 * moveFireBoy, 3 * 160, 149, 160));
 				if (clockf.getElapsedTime().asSeconds() >= 0.05)
 				{
@@ -445,34 +511,34 @@ void Game_Play(RenderWindow& window)
 
 				}
 			}
-			 if (Keyboard::isKeyPressed(Keyboard::Key::A) && FireBoy.getPosition().x > 35)
+			if (Keyboard::isKeyPressed(Keyboard::Key::A) && FireBoy.getPosition().x > 50)
 			{
 				isAnimationStandingFireBoy = false;
-				FireBoy.setTextureRect(IntRect(149 * moveFireBoy, 1*160, 149, 160));
+				FireBoy.setTextureRect(IntRect(149 * moveFireBoy, 1 * 160, 149, 160));
 				if (clockf.getElapsedTime().asSeconds() >= 0.05)
 				{
 					moveFireBoy++;
 					if (moveFireBoy > 6)moveFireBoy = 0;
 					clockf.restart();
 				}
-				FireBoy.setScale(-0.9f, 0.9f);
+				FireBoy.setScale(-0.7f, 0.7f);
 				FireBoy.move(-5, 0);
 
 			}
 
 
-			 if (Keyboard::isKeyPressed(Keyboard::Key::D) && FireBoy.getPosition().x < 1245)
+			else if (Keyboard::isKeyPressed(Keyboard::Key::D) && FireBoy.getPosition().x < 1230)
 			{
 
 				isAnimationStandingFireBoy = false;
-				FireBoy.setTextureRect(IntRect(149* moveFireBoy, 1*160, 149, 160));
+				FireBoy.setTextureRect(IntRect(149 * moveFireBoy, 1 * 160, 149, 160));
 				if (clockf.getElapsedTime().asSeconds() >= 0.05)
 				{
 					moveFireBoy++;
 					if (moveFireBoy > 6)moveFireBoy = 0;
 					clockf.restart();
 				}
-				FireBoy.setScale(0.9f, 0.9f);
+				FireBoy.setScale(0.7f, 0.7f);
 				FireBoy.move(5, 0);
 
 			}
@@ -498,10 +564,10 @@ void Game_Play(RenderWindow& window)
 
 				}
 			}
-			 if (Keyboard::isKeyPressed(Keyboard::Key::Right) && WaterGirl.getPosition().x < 1245)
+			if (Keyboard::isKeyPressed(Keyboard::Key::Right) && WaterGirl.getPosition().x < 1230)
 			{
 				isAnimationStandingWaterGirl = false;
-				WaterGirl.setTextureRect(IntRect(149 * moveWaterGirl, 1*160, 149, 160));
+				WaterGirl.setTextureRect(IntRect(149 * moveWaterGirl, 1 * 160, 149, 160));
 				if (clockw.getElapsedTime().asSeconds() >= 0.05)
 				{
 					moveWaterGirl++;
@@ -509,14 +575,14 @@ void Game_Play(RenderWindow& window)
 
 					clockw.restart();
 				}
-				WaterGirl.setScale(0.9f, 0.9f);
+				WaterGirl.setScale(0.7f, 0.7f);
 				WaterGirl.move(5, 0);
 
 			}
-			 if (Keyboard::isKeyPressed(Keyboard::Key::Left) && WaterGirl.getPosition().x > 35)
+			else if (Keyboard::isKeyPressed(Keyboard::Key::Left) && WaterGirl.getPosition().x > 50)
 			{
 				isAnimationStandingWaterGirl = false;
-				WaterGirl.setTextureRect(IntRect(149 * moveWaterGirl, 1*160, 149, 160));
+				WaterGirl.setTextureRect(IntRect(149 * moveWaterGirl, 1 * 160, 149, 160));
 				if (clockw.getElapsedTime().asSeconds() >= 0.05)
 				{
 					moveWaterGirl++;
@@ -524,13 +590,15 @@ void Game_Play(RenderWindow& window)
 
 					clockw.restart();
 				}
-				WaterGirl.setScale(-0.9f, 0.9f);
+				WaterGirl.setScale(-0.7f, 0.7f);
 				WaterGirl.move(-5, 0);
 
 			}
 			else { isAnimationStandingWaterGirl = true; }
 		}
 
+
+		//////////////////////
 		///test
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
 			sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
@@ -538,17 +606,63 @@ void Game_Play(RenderWindow& window)
 		}
 		////////////////////////
 
+
+
+		// set position hit box fireboy ( up )
+		firboy_top.setPosition(Vector2f(FireBoy.getPosition().x, FireBoy.getPosition().y - 170));
+
+		// set position hit box fireboy ( dowm )
+		firboy_down.setPosition(Vector2f(FireBoy.getPosition().x, FireBoy.getPosition().y - 125));
+
+		// set position hit box fireboy ( right )
+		firboy_right.setPosition(Vector2f(FireBoy.getPosition().x + 20, FireBoy.getPosition().y - 150));
+
+		// set position hit box fireboy ( left )
+		firboy_left.setPosition(Vector2f(FireBoy.getPosition().x - 20, FireBoy.getPosition().y - 150));
+
+		collision(window, firboy_down, firboy_top, isAnimationStandingWaterGirl, isAnimationStandingFireBoy, velocityFireBoy, velocityWaterGirl, firboy_left, firboy_right);
+
+		bool r = 0;
+		for (int i = 0; i < 30; i++) {
+			if (level[1].ground[i].getGlobalBounds().intersects(firboy_right.getGlobalBounds()) && FireBoy.getPosition().x + 75 >= level[1].ground[i].getPosition().x && Keyboard::isKeyPressed(Keyboard::Key::D)) {
+
+				//if (!isAnimationStandingFireBoy )
+				FireBoy.move(-5, 0);
+				firboy_down.setPosition(Vector2f(FireBoy.getPosition().x - 10, FireBoy.getPosition().y - 125));
+			}
+		}
+
+		///
+
+		for (int i = 0; i < 30; i++) {
+
+			if (level[1].ground[i].getGlobalBounds().intersects(firboy_left.getGlobalBounds()) && firboy_left.getPosition().x <= (level[1].ground[i].getPosition().x + level[1].ground[i].getSize().x + 20) && Keyboard::isKeyPressed(Keyboard::Key::A)) {
+
+				//	if (!isAnimationStandingFireBoy )
+				FireBoy.move(5, 0);
+				firboy_down.setPosition(Vector2f(FireBoy.getPosition().x + 10, FireBoy.getPosition().y - 125));
+
+
+			}
+
+		}
+
+
 		window.clear();
 		window.draw(level[1].background_levels[1]);
 		window.draw(level[1].ground_levels[1]);
-		for (int i = 0; i < 30; i++) {
+		/*for (int i = 0; i < 30; i++) {
 			window.draw(level[1].ground[i]);
-		}
+		}*/
 
 		// window.draw(level[1].background_levels[1]);
 	//	 window.draw(level[1].ground_levels[1]);
 		window.draw(FireBoy);
 		window.draw(WaterGirl);
+		window.draw(firboy_top);
+		window.draw(firboy_down);
+		window.draw(firboy_right);
+		window.draw(firboy_left);
 		/*window.draw(hitpoxf);
 		window.draw(hitpoxw);*/
 
@@ -562,5 +676,6 @@ void Game_Play(RenderWindow& window)
 
 	}
 }
-//modsa
+
+//modsas
 
