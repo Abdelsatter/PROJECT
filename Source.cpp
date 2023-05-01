@@ -48,7 +48,6 @@ struct {
 
 	}watergirl_st;
 }f_w;
-
 struct {
 	RectangleShape ground[60];
 	Texture gr_levels[10], bgr_background[10];
