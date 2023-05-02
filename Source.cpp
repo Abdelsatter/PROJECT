@@ -36,7 +36,7 @@ struct {
 		RectangleShape firboy_left;
 		int animationStandingFireBoy = 0, moveFireBoy = 0;
 		double velocityFireBoy = 0;
-		bool isAnimationStandingFireBoy = true, isMoveFireBoy = true;
+		bool isAnimationStandingFireBoy = true, isMoveFireBoy = true, animationUpFireBoy = 1, grounded = 0;
 	}fireboy_st;
 	struct {
 		Texture  waterGirlImage;
@@ -52,7 +52,7 @@ struct {
 		int  animationStandingWaterGirl = 0;
 		int  moveWaterGirl = 0;
 		double  velocityWaterGirl = 0;
-		bool isAnimationStandingWaterGirl = true, isMoveWaterGirl = true;
+		bool isAnimationStandingWaterGirl = true, isMoveWaterGirl = true, grounded = 0;
 
 	}watergirl_st;
 }f_w;
@@ -69,7 +69,7 @@ struct {
 	Texture gr_levels[10], bgr_background[10], pondFireImage, pondWaterImage, coinFireImage, coinWaterImage, fireboyDoorStand, watergirlDoorStand, fireboydoormoving, watergirldoormoving, fireboydooropening, watergirldooropening;
 	Sprite ground_levels[10], background_levels[10], pondFireBoy[10], pondWaterGirl[10], coinFireBoy[10], coinWaterGirl[10], FireBoy_DoorStand, WaterGirl_DoorStand, FireBoy_DoorMoving, WaterGirl_DoorMoving, FireBoy_DoorOpening, WaterGirl_DoorOpening;
 	ConvexShape convexs[30];
-	bool  grounded = 0, fireboy_dooropening = 0, watergirl_dooropening = 0, both_dooropening = 0, isAnimationLava = 0;
+	bool  fireboy_dooropening = 0, watergirl_dooropening = 0, both_dooropening = 0, isAnimationLava = 0;
 	int animationDoorFireBoy = 0, animationDoorWaterGirl = 0, AnimationBothDoor = 0;
 	int animationPond = 0;
 	Clock clockStandingFireBoy, clockStandingWaterGirl, clockMoveFireBoy, clockMoveWaterGirl, clockPondFireBoy;
@@ -118,7 +118,7 @@ void updatef_whitboxes(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 	f_w.watergirl_st.watergirl_top.setPosition(Vector2f(WaterGirl.getPosition().x, WaterGirl.getPosition().y - 170));
 
 	// set position hit box fireboy ( dowm )
-	f_w.watergirl_st.watergirl_down.setPosition(Vector2f(WaterGirl.getPosition().x, WaterGirl.getPosition().y - 133));
+	f_w.watergirl_st.watergirl_down.setPosition(Vector2f(WaterGirl.getPosition().x, WaterGirl.getPosition().y - 130));
 
 	// set position hit box fireboy ( right )
 	f_w.watergirl_st.watergirl_right.setPosition(Vector2f(WaterGirl.getPosition().x + 5, WaterGirl.getPosition().y - 150));
@@ -811,7 +811,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 	for (int i = 0; i < 60; i++) {
 		if (level[1].ground[i].getGlobalBounds().intersects(f_w.fireboy_st.firboy_down.getGlobalBounds()) && (level[1].ground[i].getFillColor() == Color::Cyan)) {
 			down = 1;
-			level[1].grounded = 1;
+			f_w.fireboy_st.grounded = 1;
 		}
 	}
 
@@ -830,7 +830,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 	{
 		isAnimationStandingFireBoy = 0;
 		velocityFireBoy -= 0.2;
-		level[1].grounded = 0;
+		f_w.fireboy_st.grounded = 0;
 	}
 	//collision fireboy_top
 	for (int i = 0; i < 60; i++) {
@@ -873,7 +873,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 				FireBoy.move(5, 0);
 				FireBoy.move(-4, -4);
 			}
-			if (!level[1].grounded || i == 9) {
+			if (!f_w.fireboy_st.grounded || i == 9) {
 				if (Keyboard::isKeyPressed(Keyboard::Key::D))
 				{
 					FireBoy.move(3, 3);
@@ -891,7 +891,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 		else if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].convexs[i].getGlobalBounds()) && level[1].convexs[i].getFillColor() == Color::Red) {
 			isAnimationStandingFireBoy = 1;
 			velocityFireBoy = 0;
-			if (Keyboard::isKeyPressed(Keyboard::Key::A)&&  (!level[1].grounded))
+			if (Keyboard::isKeyPressed(Keyboard::Key::A) && (!f_w.fireboy_st.grounded))
 			{
 				FireBoy.move(5, 0);
 				FireBoy.move(-2, 2);
@@ -901,12 +901,12 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 			{
 				FireBoy.move(4, -4);
 				FireBoy.move(-5, 0);
-				if (level[1].grounded)
+				if (f_w.fireboy_st.grounded)
 					FireBoy.move(-5, 0);
 				cout << "no\n";
 			}
 
-			if (!level[1].grounded)
+			if (!f_w.fireboy_st.grounded)
 			{
 				FireBoy.move(-2.0, 2.0);
 				cout << "YES\n";
@@ -938,7 +938,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 	for (int i = 0; i < 60; i++) {
 		if (level[1].ground[i].getGlobalBounds().intersects(f_w.watergirl_st.watergirl_down.getGlobalBounds()) && (level[1].ground[i].getFillColor() == Color::Cyan)) {
 			down = 1;
-			level[1].grounded = 1;
+			f_w.watergirl_st.grounded = 1;
 		}
 	}
 	if (down)
@@ -956,7 +956,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 	{
 		isAnimationStandingWaterGirl = 0;
 		velocityWaterGirl -= 0.2;
-		level[1].grounded = 0;
+		f_w.watergirl_st.grounded = 0;
 	}
 	//collision watergirl_top
 	for (int i = 0; i < 60; i++) {
@@ -997,7 +997,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 				WaterGirl.move(5, 0);
 				WaterGirl.move(-4, -4);
 			}
-			if (!level[1].grounded || i == 9) {
+			if (!f_w.watergirl_st.grounded || i == 9) {
 				if (Keyboard::isKeyPressed(Keyboard::Key::Right))
 				{
 					WaterGirl.move(3, 3);
@@ -1016,7 +1016,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 		{
 			isAnimationStandingWaterGirl = 1;
 			velocityWaterGirl = 0;
-			if (Keyboard::isKeyPressed(Keyboard::Key::Left) && !level[1].grounded)
+			if (Keyboard::isKeyPressed(Keyboard::Key::Left) && !f_w.watergirl_st.grounded)
 			{
 				WaterGirl.move(5, 0);
 				WaterGirl.move(-2, 2);
@@ -1027,11 +1027,11 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 			{
 				WaterGirl.move(4, -4);
 				WaterGirl.move(-5, 0);
-				if (level[1].grounded)
+				if (f_w.watergirl_st.grounded)
 					WaterGirl.move(-5, 0);
 				cout << "no\n";
 			}
-			if (!level[1].grounded)
+			if (!f_w.watergirl_st.grounded)
 			{
 				WaterGirl.move(-2.0, 2.0);
 				cout << "YES\n";
@@ -1125,22 +1125,32 @@ void Animation(RenderWindow& window) {
 	//move fireboy
 	if (f_w.fireboy_st.isMoveFireBoy)
 	{
-		if (Keyboard::isKeyPressed(Keyboard::Key::W))
-		{
-			//	isAnimationStandingFireBoy = false;
-			f_w.fireboy_st.FireBoy.setTextureRect(IntRect(149 * f_w.fireboy_st.moveFireBoy, 3 * 160, 149, 160));
-			if (level[1].clockMoveFireBoy.getElapsedTime().asSeconds() >= 0.05)
-			{
-				f_w.fireboy_st.moveFireBoy++;
-				if (f_w.fireboy_st.moveFireBoy > 4) f_w.fireboy_st.moveFireBoy = 0;
-				level[1].clockMoveFireBoy.restart();
+		
+
+			if (f_w.fireboy_st.velocityFireBoy > 0) {
+				//	isAnimationStandingFireBoy = false;
+				f_w.fireboy_st.FireBoy.setTextureRect(IntRect(149 * f_w.fireboy_st.moveFireBoy, 3 * 160, 149, 160));
+				if (level[1].clockMoveFireBoy.getElapsedTime().asSeconds() >= 0.05)
+				{
+					f_w.fireboy_st.moveFireBoy++;
+					if (f_w.fireboy_st.moveFireBoy > 4) f_w.fireboy_st.moveFireBoy = 0;
+					level[1].clockMoveFireBoy.restart();
+				}
+				//if (f_w.fireboy_st.velocityFireBoy <0)f_w.fireboy_st.animationUpFireBoy = 0;
 			}
-			if (f_w.watergirl_st.velocityWaterGirl == 6.5)
+			else if(f_w.fireboy_st.velocityFireBoy < 0 )
 			{
 				f_w.fireboy_st.FireBoy.setTextureRect(IntRect(149 * f_w.fireboy_st.moveFireBoy, 2 * 160, 149, 160));
-
+				if (level[1].clockMoveFireBoy.getElapsedTime().asSeconds() >= 0.05)
+				{
+					f_w.fireboy_st.moveFireBoy++;
+					if (f_w.fireboy_st.moveFireBoy > 4) f_w.fireboy_st.moveFireBoy = 0;
+					level[1].clockMoveFireBoy.restart();
+				}
 			}
-		}
+			//	if (f_w.fireboy_st.grounded&&f_w.fireboy_st.velocityFireBoy ==0)f_w.fireboy_st.animationUpFireBoy = 1;
+		
+			cout << f_w.fireboy_st.velocityFireBoy << "\n";
 		if (Keyboard::isKeyPressed(Keyboard::Key::A) && f_w.fireboy_st.FireBoy.getPosition().x > 50)
 		{
 			f_w.fireboy_st.isAnimationStandingFireBoy = false;
@@ -1180,22 +1190,31 @@ void Animation(RenderWindow& window) {
 	//move watergirl
 	if (f_w.watergirl_st.isMoveWaterGirl)
 	{
-		if (Keyboard::isKeyPressed(Keyboard::Key::Up))
-		{
-			//f_w.watergirl_st.isAnimationStandingWaterGirl = false;
+		if (f_w.watergirl_st.velocityWaterGirl > 0) {
+			//	isAnimationStandingFireBoy = false;
 			f_w.watergirl_st.WaterGirl.setTextureRect(IntRect(149 * f_w.watergirl_st.moveWaterGirl, 3 * 160, 149, 160));
-			if (level[1].clockMoveFireBoy.getElapsedTime().asSeconds() >= 0.05)
+			if (level[1].clockMoveWaterGirl.getElapsedTime().asSeconds() >= 0.05)
 			{
 				f_w.watergirl_st.moveWaterGirl++;
-				if (f_w.watergirl_st.moveWaterGirl > 10)f_w.watergirl_st.moveWaterGirl = 0;
-				level[1].clockMoveFireBoy.restart();
+				if (f_w.watergirl_st.moveWaterGirl > 4) f_w.watergirl_st.moveWaterGirl = 0;
+				level[1].clockMoveWaterGirl.restart();
 			}
-			if (f_w.watergirl_st.velocityWaterGirl == 7)
+			//if (f_w.fireboy_st.velocityFireBoy <0)f_w.fireboy_st.animationUpFireBoy = 0;
+		}
+		else if (f_w.watergirl_st.velocityWaterGirl < 0)
+		{
+			f_w.watergirl_st.WaterGirl.setTextureRect(IntRect(149 * f_w.watergirl_st.moveWaterGirl, 2 * 160, 149, 160));
+			if (level[1].clockMoveWaterGirl.getElapsedTime().asSeconds() >= 0.05)
 			{
-				f_w.watergirl_st.WaterGirl.setTextureRect(IntRect(149 * f_w.watergirl_st.moveWaterGirl, 2 * 160, 149, 160));
-
+				f_w.watergirl_st.moveWaterGirl++;
+				if (f_w.watergirl_st.moveWaterGirl > 4) f_w.watergirl_st.moveWaterGirl = 0;
+				level[1].clockMoveWaterGirl.restart();
 			}
 		}
+		
+		
+		
+
 		if (Keyboard::isKeyPressed(Keyboard::Key::Right) && f_w.watergirl_st.WaterGirl.getPosition().x < 1230)
 		{
 			f_w.watergirl_st.isAnimationStandingWaterGirl = false;
@@ -1340,9 +1359,9 @@ void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 
 	window.draw(level[1].background_levels[1]);
 	window.draw(level[1].ground_levels[1]);
-	/*for (int i = 0; i < 60; i++) {
+	for (int i = 0; i < 60; i++) {
 		window.draw(level[1].ground[i]);
-	}*/
+	}
 
 	// window.draw(level[1].background_levels[1]);
 //     window.draw(level[1].ground_levels[1]);
@@ -1373,5 +1392,5 @@ void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 	//    window.draw(firboy_left);
 		//window.draw(test);
 	window.draw(test2);
-	
+
 }
