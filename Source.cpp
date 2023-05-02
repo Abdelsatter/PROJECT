@@ -914,8 +914,12 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 			f_w.fireboy_st.velocityFireBoy = -3.7;
 		}
 	}
-	if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[1].convexs[9].getGlobalBounds()) && !(f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].convexs[9].getGlobalBounds()))) {
+	if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()) && !(f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()))) {
 		FireBoy.move(5.2f, 0);
+	}
+
+	if (f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()) && !(f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()))) {
+		FireBoy.move(-5.2f, 0);
 	}
 
 
@@ -1036,8 +1040,11 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 			velocityWaterGirl = -3.5;
 		}
 	}
-	if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[1].convexs[9].getGlobalBounds()) && !(f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].convexs[9].getGlobalBounds()))) {
+	if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()) && !(f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()))) {
 		WaterGirl.move(5.2f, 0);
+	}
+	if (f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()) && !(f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()))) {
+		WaterGirl.move(-5.2f, 0);
 	}
 }
 void collision(RenderWindow& window, bool& isAnimationStandingFireBoy, double& velocityFireBoy, Sprite& FireBoy, bool& isAnimationStandingWaterGirl, double& velocityWaterGirl, Sprite& WaterGirl) {
