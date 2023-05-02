@@ -1349,8 +1349,10 @@ void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 	}
 	window.draw(FireBoy);
 	window.draw(WaterGirl);
+//	window.draw(level[1].convexs[2]);
 	//window.draw(firboy_top);
 	//window.draw(firboy_down);
+	// 
 	//    window.draw(firboy_right);
 	//    window.draw(firboy_left);
 		//window.draw(test);
