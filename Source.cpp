@@ -19,6 +19,7 @@ void updatef_whitboxes(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 void collision(RenderWindow& window, bool& isAnimationStandingFireBoy, double& velocityFireBoy, Sprite& FireBoy, bool& isAnimationStandingWaterGirl, double& velocityWaterGirl, Sprite& WaterGirl);
 void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl);
 
+
 struct {
 
 	struct {
@@ -72,6 +73,7 @@ struct {
 	int animationDoorFireBoy = 0, animationDoorWaterGirl = 0, AnimationBothDoor = 0;
 	int animationPond = 0;
 	Clock clockStandingFireBoy, clockStandingWaterGirl, clockMoveFireBoy, clockMoveWaterGirl, clockPondFireBoy;
+	Music music;
 
 }level[10];
 int main()
@@ -102,7 +104,7 @@ void updatef_whitboxes(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 	f_w.fireboy_st.firboy_top.setPosition(Vector2f(FireBoy.getPosition().x, FireBoy.getPosition().y - 170));
 
 	// set position hit box fireboy ( dowm )
-	f_w.fireboy_st.firboy_down.setPosition(Vector2f(FireBoy.getPosition().x, FireBoy.getPosition().y - 133));
+	f_w.fireboy_st.firboy_down.setPosition(Vector2f(FireBoy.getPosition().x, FireBoy.getPosition().y - 127));
 
 	// set position hit box fireboy ( right )
 	f_w.fireboy_st.firboy_right.setPosition(Vector2f(FireBoy.getPosition().x + 5, FireBoy.getPosition().y - 150));
@@ -175,7 +177,6 @@ void Main_Menu(RenderWindow& window)
 	bool settingsclicked = 0;
 	Clock clock;
 	int nav = 0;
-
 
 
 	//Main Menu
@@ -303,6 +304,12 @@ void Main_Menu(RenderWindow& window)
 }
 void Levels(RenderWindow& window) {
 
+
+	//MUSIC Game_play
+	level[1].music.openFromFile("background-music.ogg");
+	level[1].music.play();
+	level[1].music.setLoop(1);
+	
 	//pond fireboy
 	level[1].pondFireImage.loadFromFile("Lava.png");
 	level[1].pondFireBoy[1].setTexture(level[1].pondFireImage);
@@ -1263,6 +1270,8 @@ void Game_Play(RenderWindow& window)
 	fire_water_hitboxes(window);
 
 
+
+	
 	///////////////////////////////////////////////////////
 
 
