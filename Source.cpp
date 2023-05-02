@@ -66,14 +66,13 @@ struct {
 //}level[10];
 struct {
 	RectangleShape ground[60];
-	Texture gr_levels[10], bgr_background[10], pondFireImage, pondWaterImage, coinFireImage, coinWaterImage, fireboyDoorStand, watergirlDoorStand, fireboydoormoving, watergirldoormoving, fireboydooropening, watergirldooropening;
-	Sprite ground_levels[10], background_levels[10], pondFireBoy[10], pondWaterGirl[10], coinFireBoy[10], coinWaterGirl[10], FireBoy_DoorStand, WaterGirl_DoorStand, FireBoy_DoorMoving, WaterGirl_DoorMoving, FireBoy_DoorOpening, WaterGirl_DoorOpening;
+	Texture gr_levels[10], bgr_background[10], pondFireImage, pondWaterImage, coinFireImage, coinWaterImage, pondBlackImage, fireboyDoorStand, watergirlDoorStand, fireboydoormoving, watergirldoormoving, fireboydooropening, watergirldooropening, cubeImage;
+	Sprite ground_levels[10], background_levels[10], pondFireBoy[10], pondWaterGirl[10], coinFireBoy[10], coinWaterGirl[10], pondBlack[10], FireBoy_DoorStand, WaterGirl_DoorStand, FireBoy_DoorMoving, WaterGirl_DoorMoving, FireBoy_DoorOpening, WaterGirl_DoorOpening, cube[10];
 	ConvexShape convexs[30];
-	bool  fireboy_dooropening = 0, watergirl_dooropening = 0, both_dooropening = 0, isAnimationLava = 0;
-	int animationDoorFireBoy = 0, animationDoorWaterGirl = 0, AnimationBothDoor = 0;
-	int animationPond = 0;
-	Clock clockStandingFireBoy, clockStandingWaterGirl, clockMoveFireBoy, clockMoveWaterGirl, clockPondFireBoy;
-	Music music;
+	bool  fireboy_dooropening = 0, watergirl_dooropening = 0, both_dooropening = 0;
+	int animationDoorFireBoy = 0, animationDoorWaterGirl = 0, AnimationBothDoor = 0, animationPond[5] = {0,0,0,0};
+	
+	Clock clockStandingFireBoy, clockStandingWaterGirl, clockMoveFireBoy, clockMoveWaterGirl, clockPond[5];
 
 }level[10];
 int main()
@@ -313,57 +312,119 @@ void Levels(RenderWindow& window) {
 	//pond fireboy
 	level[1].pondFireImage.loadFromFile("Lava.png");
 	level[1].pondFireBoy[1].setTexture(level[1].pondFireImage);
-	level[1].pondFireBoy[1].setPosition(594, 708);
+	level[1].pondFireBoy[1].setPosition(594, 707);
+	
 	//pond watergirl
+	level[1].pondWaterImage.loadFromFile("Water.png");
+	level[1].pondWaterGirl[1].setTexture(level[1].pondWaterImage);
+	level[1].pondWaterGirl[1].setPosition(858, 707);
+	
+	//pond black
+	level[1].pondBlackImage.loadFromFile("Acid.png");
+	level[1].pondBlack[1].setTexture(level[1].pondBlackImage);
+	level[1].pondBlack[1].setPosition(790, 558);
+	
 	// coin fireboy
+	level[1].coinFireImage.loadFromFile("fireGem.png");
+	level[1].coinFireBoy[1].setTexture(level[1].coinFireImage);
+	level[1].coinFireBoy[1].setPosition(657.5f, 647.5f);
+	level[1].coinFireBoy[1].setScale(0.5f, 0.5f);
+	level[1].coinFireBoy[1].setOrigin(level[1].coinFireBoy[1].getGlobalBounds().width / 2, level[1].coinFireBoy[1].getGlobalBounds().height / 2);
+	
+	level[1].coinFireBoy[2].setTexture(level[1].coinFireImage);
+	level[1].coinFireBoy[2].setPosition(255.5f, 338.5f);
+	level[1].coinFireBoy[2].setScale(0.5f, 0.5f);
+	level[1].coinFireBoy[2].setOrigin(level[1].coinFireBoy[2].getGlobalBounds().width / 2, level[1].coinFireBoy[2].getGlobalBounds().height / 2);
+
+	level[1].coinFireBoy[3].setTexture(level[1].coinFireImage);
+	level[1].coinFireBoy[3].setPosition(381.5f, 62.f);
+	level[1].coinFireBoy[3].setScale(0.5f, 0.5f);
+	level[1].coinFireBoy[3].setOrigin(level[1].coinFireBoy[3].getGlobalBounds().width / 2, level[1].coinFireBoy[3].getGlobalBounds().height / 2);
+
+	level[1].coinFireBoy[4].setTexture(level[1].coinFireImage);
+	level[1].coinFireBoy[4].setPosition(601.f, 99.5f);
+	level[1].coinFireBoy[4].setScale(0.5f, 0.5f);
+	level[1].coinFireBoy[4].setOrigin(level[1].coinFireBoy[4].getGlobalBounds().width / 2, level[1].coinFireBoy[4].getGlobalBounds().height / 2);
+
+	
 	// coin watergirl
+	level[1].coinWaterImage.loadFromFile("waterGem.png");
+	level[1].coinWaterGirl[1].setTexture(level[1].coinWaterImage);
+	level[1].coinWaterGirl[1].setPosition(920.3f, 647.5f);
+	level[1].coinWaterGirl[1].setScale(0.5f, 0.5f);
+	level[1].coinWaterGirl[1].setOrigin(level[1].coinWaterGirl[1].getGlobalBounds().width / 2, level[1].coinWaterGirl[1].getGlobalBounds().height / 2);
+
+	level[1].coinWaterGirl[2].setTexture(level[1].coinWaterImage);
+	level[1].coinWaterGirl[2].setPosition(755.f, 353.5f);
+	level[1].coinWaterGirl[2].setScale(0.5f, 0.5f);
+	level[1].coinWaterGirl[2].setOrigin(level[1].coinWaterGirl[2].getGlobalBounds().width / 2, level[1].coinWaterGirl[2].getGlobalBounds().height / 2);
+
+	level[1].coinWaterGirl[3].setTexture(level[1].coinWaterImage);
+	level[1].coinWaterGirl[3].setPosition(60.f, 129.5f);
+	level[1].coinWaterGirl[3].setScale(0.5f, 0.5f);
+	level[1].coinWaterGirl[3].setOrigin(level[1].coinWaterGirl[3].getGlobalBounds().width / 2, level[1].coinWaterGirl[3].getGlobalBounds().height / 2);
+
+	level[1].coinWaterGirl[4].setTexture(level[1].coinWaterImage);
+	level[1].coinWaterGirl[4].setPosition(756.5f, 99.5f);
+	level[1].coinWaterGirl[4].setScale(0.5f, 0.5f);
+	level[1].coinWaterGirl[4].setOrigin(level[1].coinWaterGirl[4].getGlobalBounds().width / 2, level[1].coinWaterGirl[4].getGlobalBounds().height / 2);
+
+	
 	//set fireboy
 	f_w.fireboy_st.fireBoyImage.loadFromFile("Fireboy.png");
 	f_w.fireboy_st.FireBoy.setTexture(f_w.fireboy_st.fireBoyImage);
-	f_w.fireboy_st.FireBoy.setPosition(600, 200);
+	f_w.fireboy_st.FireBoy.setPosition(80, 800);
 	f_w.fireboy_st.FireBoy.setOrigin(f_w.fireboy_st.FireBoy.getLocalBounds().width / 38, f_w.fireboy_st.FireBoy.getLocalBounds().height / 2);
 	f_w.fireboy_st.FireBoy.setScale(0.7f, 0.7f);
 	//set watergirl
 	f_w.watergirl_st.waterGirlImage.loadFromFile("Watergirl.png");
-	f_w.watergirl_st.WaterGirl.setPosition(600, 200);
 	f_w.watergirl_st.WaterGirl.setTexture(f_w.watergirl_st.waterGirlImage);
+	f_w.watergirl_st.WaterGirl.setPosition(80, 705);
 	f_w.watergirl_st.WaterGirl.setOrigin(f_w.watergirl_st.WaterGirl.getLocalBounds().width / 60, f_w.watergirl_st.WaterGirl.getLocalBounds().height / 2);
 	f_w.watergirl_st.WaterGirl.setScale(0.7f, 0.7f);
 	//set fireboy's door
 	level[1].fireboyDoorStand.loadFromFile("fbDoor.png");
-	level[1].FireBoy_DoorStand.setPosition(1050, 61);
 	level[1].FireBoy_DoorStand.setTexture(level[1].fireboyDoorStand);
+	level[1].FireBoy_DoorStand.setPosition(1050, 61);
 	level[1].FireBoy_DoorStand.setScale(0.7f, 0.7f);
 	//set watergirl's door
 	level[1].watergirlDoorStand.loadFromFile("wgDoor.png");
-	level[1].WaterGirl_DoorStand.setPosition(1150, 61);
 	level[1].WaterGirl_DoorStand.setTexture(level[1].watergirlDoorStand);
+	level[1].WaterGirl_DoorStand.setPosition(1150, 61);
 	level[1].WaterGirl_DoorStand.setScale(0.7f, 0.7f);
 	//set Fireboy door opening
 	level[1].fireboydooropening.loadFromFile("fb_door.png");
-	level[1].FireBoy_DoorOpening.setPosition(1060, 78);
 	level[1].FireBoy_DoorOpening.setTexture(level[1].fireboydooropening);
+	level[1].FireBoy_DoorOpening.setPosition(1060, 78);
 	level[1].FireBoy_DoorOpening.setScale(0.71f, 0.72f);
 	//set Watergirl door opening
 	level[1].watergirldooropening.loadFromFile("wg_door.png");
-	level[1].WaterGirl_DoorOpening.setPosition(1160, 78);
 	level[1].WaterGirl_DoorOpening.setTexture(level[1].watergirldooropening);
+	level[1].WaterGirl_DoorOpening.setPosition(1160, 78);
 	level[1].WaterGirl_DoorOpening.setScale(0.71f, 0.71f);
 	//set Fireboy moving door
 	level[1].fireboydoormoving.loadFromFile("fbWin.png");
-	level[1].FireBoy_DoorMoving.setPosition(1050, 61);
 	level[1].FireBoy_DoorMoving.setTexture(level[1].fireboydoormoving);
+	level[1].FireBoy_DoorMoving.setPosition(1050, 61);
 	level[1].FireBoy_DoorMoving.setScale(0.7f, 0.7f);
 	//set Watergirl moving door
 	level[1].watergirldoormoving.loadFromFile("wgWin.png");
-	level[1].WaterGirl_DoorMoving.setPosition(1150, 61);
 	level[1].WaterGirl_DoorMoving.setTexture(level[1].watergirldoormoving);
+	level[1].WaterGirl_DoorMoving.setPosition(1150, 61);
 	level[1].WaterGirl_DoorMoving.setScale(0.7f, 0.7f);
+
+	// set cube
+	level[1].cubeImage.loadFromFile("moveCube.png");
+	level[1].cube[1].setTexture(level[1].cubeImage);
+	level[1].cube[1].setPosition(728, 215);
+	level[1].cube[1].setOrigin(level[1].cube[1].getGlobalBounds().width / 2, level[1].cube[1].getGlobalBounds().height / 2);
+	level[1].cube[1].setScale(0.7f, 0.7f);
 
 	//////////////////////////////////////////////////////////////////////////////
 	//ground
 	level[1].gr_levels[1].loadFromFile("Level_1_ground.png");
 	level[1].ground_levels[1].setTexture(level[1].gr_levels[1]);
+
 
 	level[1].ground_levels[1].setScale(1.6, 1.2);
 
@@ -805,7 +866,6 @@ void Levels(RenderWindow& window) {
 }
 void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, double& velocityFireBoy, Sprite& FireBoy)
 {
-
 	bool top = 0, down = 0, r = 0, l = 0;
 	//collision fireboy_down
 	for (int i = 0; i < 60; i++) {
@@ -820,7 +880,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 		isAnimationStandingFireBoy = 1;
 		velocityFireBoy = 0;
 		if (Keyboard::isKeyPressed(Keyboard::Key::W)) {
-			velocityFireBoy = 6.5;
+			velocityFireBoy = 9;
 			isAnimationStandingFireBoy = 0;
 
 		}
@@ -878,11 +938,11 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 				{
 					FireBoy.move(3, 3);
 					FireBoy.move(-5, 0);
-					cout << "no\n";
+					//cout << "no\n";
 				}
 
 				FireBoy.move(2.0, 2.0);
-				cout << "YES\n";
+				//cout << "YES\n";
 			}
 			if (Keyboard::isKeyPressed(Keyboard::Key::W))
 				velocityFireBoy = 5.5;
@@ -903,13 +963,13 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 				FireBoy.move(-5, 0);
 				if (f_w.fireboy_st.grounded)
 					FireBoy.move(-5, 0);
-				cout << "no\n";
+				//cout << "no\n";
 			}
 
 			if (!f_w.fireboy_st.grounded)
 			{
 				FireBoy.move(-2.0, 2.0);
-				cout << "YES\n";
+				//cout << "YES\n";
 			}
 
 			if (Keyboard::isKeyPressed(Keyboard::Key::W))
@@ -921,7 +981,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 			f_w.fireboy_st.velocityFireBoy = -3.7;
 		}
 	}
-	if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()) && !(f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()))) {
+	if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[1].convexs[9].getGlobalBounds()) && !(f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].convexs[9].getGlobalBounds()))) {
 		FireBoy.move(5.2f, 0);
 	}
 
@@ -929,6 +989,20 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 		FireBoy.move(-5.2f, 0);
 	}
 
+	/////////// collision fireboy with water and black pond //////////////////
+	if(f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].pondWaterGirl[1].getGlobalBounds()) || f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].pondBlack[1].getGlobalBounds()))
+	{
+		f_w.fireboy_st.FireBoy.setScale(0, 0);
+	}
+
+	/////////// collision fireboy with coin //////////////////
+	for (int i = 0; i < 5; i++)
+	{
+		if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[1].coinFireBoy[i].getGlobalBounds())|| f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[1].coinFireBoy[i].getGlobalBounds()))
+		{
+			level[1].coinFireBoy[i].setScale(0, 0);
+		}
+	}
 
 }
 void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGirl, double& velocityWaterGirl, Sprite& WaterGirl)
@@ -946,7 +1020,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 		isAnimationStandingWaterGirl = 1;
 		velocityWaterGirl = 0;
 		if (Keyboard::isKeyPressed(Keyboard::Key::Up)) {
-			velocityWaterGirl = 6.5;
+			velocityWaterGirl = 9;
 			isAnimationStandingWaterGirl = 0;
 
 		}
@@ -1002,11 +1076,11 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 				{
 					WaterGirl.move(3, 3);
 					WaterGirl.move(-5, 0);
-					cout << "no\n";
+					//cout << "no\n";
 				}
 
 				WaterGirl.move(2.0, 2.0);
-				cout << "YES\n";
+				//cout << "YES\n";
 			}
 			if (Keyboard::isKeyPressed(Keyboard::Key::Up))
 				velocityWaterGirl = 5.5;
@@ -1029,12 +1103,12 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 				WaterGirl.move(-5, 0);
 				if (f_w.watergirl_st.grounded)
 					WaterGirl.move(-5, 0);
-				cout << "no\n";
+				//cout << "no\n";
 			}
 			if (!f_w.watergirl_st.grounded)
 			{
 				WaterGirl.move(-2.0, 2.0);
-				cout << "YES\n";
+				//cout << "YES\n";
 			}
 
 			if (Keyboard::isKeyPressed(Keyboard::Key::Up))
@@ -1047,11 +1121,23 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 			velocityWaterGirl = -3.5;
 		}
 	}
-	if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()) && !(f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()))) {
+	if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[1].convexs[9].getGlobalBounds()) && !(f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].convexs[9].getGlobalBounds()))) {
 		WaterGirl.move(5.2f, 0);
 	}
 	if (f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()) && !(f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()))) {
 		WaterGirl.move(-5.2f, 0);
+	}
+	if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].pondFireBoy[1].getGlobalBounds()) || f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].pondBlack[1].getGlobalBounds()))
+	{
+		f_w.watergirl_st.WaterGirl.setScale(0, 0);
+	}
+	/////////// collision watergirl with coin //////////////////
+	for (int i = 0; i < 5; i++)
+	{
+		if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[1].coinWaterGirl[i].getGlobalBounds()) || f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[1].coinWaterGirl[i].getGlobalBounds()))
+		{
+			level[1].coinWaterGirl[i].setScale(0, 0);
+		}
 	}
 }
 void collision(RenderWindow& window, bool& isAnimationStandingFireBoy, double& velocityFireBoy, Sprite& FireBoy, bool& isAnimationStandingWaterGirl, double& velocityWaterGirl, Sprite& WaterGirl) {
@@ -1064,21 +1150,29 @@ void Animation(RenderWindow& window) {
 
 
 	//animation pond fireboy
-	level[1].pondFireBoy[1].setTextureRect(IntRect(level[1].animationPond * 160, 0, 160, 21));
-
-	if (level[1].clockPondFireBoy.getElapsedTime().asSeconds() >= 0.15)
+	level[1].pondFireBoy[1].setTextureRect(IntRect(level[1].animationPond[1] * 160, 0, 160, 21));
+	if (level[1].clockPond[1].getElapsedTime().asSeconds() >= 0.15)
 	{
-		if (level[1].isAnimationLava == 0)
-		{
-			level[1].animationPond++;
-			if (level[1].animationPond == 4)level[1].isAnimationLava = 1;
-		}
-		else
-			level[1].animationPond--;
+			level[1].animationPond[1]++; level[1].animationPond[1] %= 4;
+			level[1].clockPond[1].restart();
+	}
 
-		if (level[1].animationPond == 0) level[1].isAnimationLava = 0;
+	//animation pond watergirl
+	level[1].pondWaterGirl[1].setTextureRect(IntRect(level[1].animationPond[2] * 160, 0, 160, 21));
+	if (level[1].clockPond[2].getElapsedTime().asSeconds() >= 0.14)
+	{
+			level[1].animationPond[2]++; level[1].animationPond[2] %= 4;
+			level[1].clockPond[2].restart();
+	}
 
-		level[1].clockPondFireBoy.restart();
+	//animation pond black
+	level[1].pondBlack[1].setTextureRect(IntRect(level[1].animationPond[3] * 160, 0, 160, 21));
+	if (level[1].clockPond[3].getElapsedTime().asSeconds() >= 0.13)
+	{
+			level[1].animationPond[3]++;level[1].animationPond[3] %= 4;
+			level[1].clockPond[3].restart();
+		
+
 	}
 
 	//Animation standing player
@@ -1150,7 +1244,7 @@ void Animation(RenderWindow& window) {
 			}
 			//	if (f_w.fireboy_st.grounded&&f_w.fireboy_st.velocityFireBoy ==0)f_w.fireboy_st.animationUpFireBoy = 1;
 		
-			cout << f_w.fireboy_st.velocityFireBoy << "\n";
+		//	cout << f_w.fireboy_st.velocityFireBoy << "\n";
 		if (Keyboard::isKeyPressed(Keyboard::Key::A) && f_w.fireboy_st.FireBoy.getPosition().x > 50)
 		{
 			f_w.fireboy_st.isAnimationStandingFireBoy = false;
@@ -1359,13 +1453,20 @@ void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 
 	window.draw(level[1].background_levels[1]);
 	window.draw(level[1].ground_levels[1]);
-	for (int i = 0; i < 60; i++) {
-		window.draw(level[1].ground[i]);
-	}
+	for (int i = 0; i < 60; i++) 
+	{
 
+		//window.draw(level[1].ground[i]);
+		if (i < 11) 
+		{
+		window.draw(level[1].coinFireBoy[i]);
+		window.draw(level[1].coinWaterGirl[i]);
+		}
+	}
+	window.draw(level[1].cube[1]);
+	
 	// window.draw(level[1].background_levels[1]);
 //     window.draw(level[1].ground_levels[1]);
-	window.draw(level[1].pondFireBoy[1]);
 	window.draw(level[1].FireBoy_DoorStand);
 	window.draw(level[1].WaterGirl_DoorStand);
 	/*    window.draw(RectangleUp);
@@ -1391,6 +1492,9 @@ void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 	//    window.draw(firboy_right);
 	//    window.draw(firboy_left);
 		//window.draw(test);
+	window.draw(level[1].pondFireBoy[1]);
+	window.draw(level[1].pondWaterGirl[1]);
+	window.draw(level[1].pondBlack[1]);
 	window.draw(test2);
 
 }
