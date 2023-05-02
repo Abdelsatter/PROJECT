@@ -94,7 +94,7 @@ void updatef_whitboxes(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 	f_w.fireboy_st.firboy_top.setPosition(Vector2f(FireBoy.getPosition().x, FireBoy.getPosition().y - 170));
 
 	// set position hit box fireboy ( dowm )
-	f_w.fireboy_st.firboy_down.setPosition(Vector2f(FireBoy.getPosition().x, FireBoy.getPosition().y - 133));
+	f_w.fireboy_st.firboy_down.setPosition(Vector2f(FireBoy.getPosition().x, FireBoy.getPosition().y - 127));
 
 	// set position hit box fireboy ( right )
 	f_w.fireboy_st.firboy_right.setPosition(Vector2f(FireBoy.getPosition().x + 5, FireBoy.getPosition().y - 150));
@@ -108,7 +108,7 @@ void updatef_whitboxes(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 	f_w.watergirl_st.watergirl_top.setPosition(Vector2f(WaterGirl.getPosition().x, WaterGirl.getPosition().y - 170));
 
 	// set position hit box fireboy ( dowm )
-	f_w.watergirl_st.watergirl_down.setPosition(Vector2f(WaterGirl.getPosition().x, WaterGirl.getPosition().y - 133));
+	f_w.watergirl_st.watergirl_down.setPosition(Vector2f(WaterGirl.getPosition().x, WaterGirl.getPosition().y - 130));
 
 	// set position hit box fireboy ( right )
 	f_w.watergirl_st.watergirl_right.setPosition(Vector2f(WaterGirl.getPosition().x + 5, WaterGirl.getPosition().y - 150));
@@ -1175,22 +1175,31 @@ void Animation(RenderWindow& window) {
 	//move watergirl
 	if (f_w.watergirl_st.isMoveWaterGirl)
 	{
-		if (Keyboard::isKeyPressed(Keyboard::Key::Up))
-		{
-			//f_w.watergirl_st.isAnimationStandingWaterGirl = false;
+		if (f_w.watergirl_st.velocityWaterGirl > 0) {
+			//	isAnimationStandingFireBoy = false;
 			f_w.watergirl_st.WaterGirl.setTextureRect(IntRect(149 * f_w.watergirl_st.moveWaterGirl, 3 * 160, 149, 160));
-			if (level[1].clockMoveFireBoy.getElapsedTime().asSeconds() >= 0.05)
+			if (level[1].clockMoveWaterGirl.getElapsedTime().asSeconds() >= 0.05)
 			{
 				f_w.watergirl_st.moveWaterGirl++;
-				if (f_w.watergirl_st.moveWaterGirl > 10)f_w.watergirl_st.moveWaterGirl = 0;
-				level[1].clockMoveFireBoy.restart();
+				if (f_w.watergirl_st.moveWaterGirl > 4) f_w.watergirl_st.moveWaterGirl = 0;
+				level[1].clockMoveWaterGirl.restart();
 			}
-			if (f_w.watergirl_st.velocityWaterGirl == 7)
+			//if (f_w.fireboy_st.velocityFireBoy <0)f_w.fireboy_st.animationUpFireBoy = 0;
+		}
+		else if (f_w.watergirl_st.velocityWaterGirl < 0)
+		{
+			f_w.watergirl_st.WaterGirl.setTextureRect(IntRect(149 * f_w.watergirl_st.moveWaterGirl, 2 * 160, 149, 160));
+			if (level[1].clockMoveWaterGirl.getElapsedTime().asSeconds() >= 0.05)
 			{
-				f_w.watergirl_st.WaterGirl.setTextureRect(IntRect(149 * f_w.watergirl_st.moveWaterGirl, 2 * 160, 149, 160));
-
+				f_w.watergirl_st.moveWaterGirl++;
+				if (f_w.watergirl_st.moveWaterGirl > 4) f_w.watergirl_st.moveWaterGirl = 0;
+				level[1].clockMoveWaterGirl.restart();
 			}
 		}
+		
+		
+		
+
 		if (Keyboard::isKeyPressed(Keyboard::Key::Right) && f_w.watergirl_st.WaterGirl.getPosition().x < 1230)
 		{
 			f_w.watergirl_st.isAnimationStandingWaterGirl = false;
