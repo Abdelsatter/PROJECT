@@ -14,6 +14,7 @@ void Levels(RenderWindow& window);
 void fire_water_hitboxes(RenderWindow& window);
 void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, double& velocityFireBoy, Sprite& FireBoy);
 void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGirl, double& velocityWaterGirl, Sprite& WaterGirl);
+void collision_boxes(RenderWindow& window);
 void Animation(RenderWindow& window);
 void updatef_whitboxes(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl);
 void collision(RenderWindow& window, bool& isAnimationStandingFireBoy, double& velocityFireBoy, Sprite& FireBoy, bool& isAnimationStandingWaterGirl, double& velocityWaterGirl, Sprite& WaterGirl);
@@ -65,7 +66,7 @@ struct {
 //
 //}level[10];
 struct {
-	RectangleShape ground[60];
+	RectangleShape ground[60],boxes_down[10], boxes_right[10], boxes_top[10],  boxes_left[10];
 	Texture gr_levels[10], bgr_background[10], pondFireImage, pondWaterImage, coinFireImage, coinWaterImage, pondBlackImage, fireboyDoorStand, watergirlDoorStand, fireboydoormoving, watergirldoormoving, fireboydooropening, watergirldooropening, cubeImage;
 	Sprite ground_levels[10], background_levels[10], pondFireBoy[10], pondWaterGirl[10], coinFireBoy[10], coinWaterGirl[10], pondBlack[10], FireBoy_DoorStand, WaterGirl_DoorStand, FireBoy_DoorMoving, WaterGirl_DoorMoving, FireBoy_DoorOpening, WaterGirl_DoorOpening, cube[10];
 	ConvexShape convexs[30];
@@ -73,6 +74,8 @@ struct {
 	int animationDoorFireBoy = 0, animationDoorWaterGirl = 0, AnimationBothDoor = 0, animationPond[5] = {0,0,0,0};
 	
 	Clock clockStandingFireBoy, clockStandingWaterGirl, clockMoveFireBoy, clockMoveWaterGirl, clockPond[5];
+	
+	double velocityboxes[10]; bool isStandingboxes[10];
 
 }level[10];
 int main()
@@ -124,6 +127,11 @@ void updatef_whitboxes(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 
 	// set position hit box fireboy ( left )
 	f_w.watergirl_st.watergirl_left.setPosition(Vector2f(WaterGirl.getPosition().x - 5, WaterGirl.getPosition().y - 150));
+
+	level[1].boxes_down[1].setPosition(level[1].cube[1].getPosition().x, level[1].cube[1].getPosition().y + 25);
+	level[1].boxes_top[1].setPosition(level[1].cube[1].getPosition().x, level[1].cube[1].getPosition().y -25);
+	level[1].boxes_left[1].setPosition(level[1].cube[1].getPosition().x-25, level[1].cube[1].getPosition().y );
+	level[1].boxes_right[1].setPosition(level[1].cube[1].getPosition().x+25, level[1].cube[1].getPosition().y );
 
 }
 void fire_water_hitboxes(RenderWindow& window) {
@@ -304,10 +312,8 @@ void Main_Menu(RenderWindow& window)
 void Levels(RenderWindow& window) {
 
 
-	//MUSIC Game_play
-	level[1].music.openFromFile("background-music.ogg");
-	level[1].music.play();
-	level[1].music.setLoop(1);
+	
+	
 	
 	//pond fireboy
 	level[1].pondFireImage.loadFromFile("Lava.png");
@@ -420,6 +426,18 @@ void Levels(RenderWindow& window) {
 	level[1].cube[1].setOrigin(level[1].cube[1].getGlobalBounds().width / 2, level[1].cube[1].getGlobalBounds().height / 2);
 	level[1].cube[1].setScale(0.7f, 0.7f);
 
+	///set the box hit box
+	level[1].boxes_down[1].setSize(Vector2f(50,5));
+	level[1].boxes_down[1].setOrigin(25.f, 2.5f);
+
+	level[1].boxes_top[1].setSize(Vector2f(50.f, 5.f));
+	level[1].boxes_top[1].setOrigin(25.f, 2.5f);
+
+	level[1].boxes_left[1].setSize(Vector2f(5, 50));
+	level[1].boxes_left[1].setOrigin(2.5f, 25.f);
+
+	level[1].boxes_right[1].setSize(Vector2f(5, 50));
+	level[1].boxes_right[1].setOrigin(2.5f, 25.f);
 	//////////////////////////////////////////////////////////////////////////////
 	//ground
 	level[1].gr_levels[1].loadFromFile("Level_1_ground.png");
@@ -869,7 +887,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 	bool top = 0, down = 0, r = 0, l = 0;
 	//collision fireboy_down
 	for (int i = 0; i < 60; i++) {
-		if (level[1].ground[i].getGlobalBounds().intersects(f_w.fireboy_st.firboy_down.getGlobalBounds()) && (level[1].ground[i].getFillColor() == Color::Cyan)) {
+		if (level[1].ground[i].getGlobalBounds().intersects(level[1].boxes_down[1].getGlobalBounds()) && (level[1].ground[i].getFillColor() == Color::Cyan)) {
 			down = 1;
 			f_w.fireboy_st.grounded = 1;
 		}
@@ -1140,9 +1158,11 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 		}
 	}
 }
+
 void collision(RenderWindow& window, bool& isAnimationStandingFireBoy, double& velocityFireBoy, Sprite& FireBoy, bool& isAnimationStandingWaterGirl, double& velocityWaterGirl, Sprite& WaterGirl) {
 	collision_fireboy(window, isAnimationStandingFireBoy, velocityFireBoy, FireBoy);
 	collision_watergirl(window, isAnimationStandingWaterGirl, velocityWaterGirl, WaterGirl);
+
 }
 void Animation(RenderWindow& window) {
 
@@ -1464,7 +1484,10 @@ void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 		}
 	}
 	window.draw(level[1].cube[1]);
-	
+	window.draw(level[1].boxes_down[1]);
+	window.draw(level[1].boxes_top[1]);
+	window.draw(level[1].boxes_left[1]);
+	window.draw(level[1].boxes_right[1]);
 	// window.draw(level[1].background_levels[1]);
 //     window.draw(level[1].ground_levels[1]);
 	window.draw(level[1].FireBoy_DoorStand);
