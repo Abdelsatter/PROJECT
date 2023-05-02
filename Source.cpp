@@ -18,37 +18,7 @@ void Animation(RenderWindow& window);
 void updatef_whitboxes(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl);
 void collision(RenderWindow& window, bool& isAnimationStandingFireBoy, double& velocityFireBoy, Sprite& FireBoy, bool& isAnimationStandingWaterGirl, double& velocityWaterGirl, Sprite& WaterGirl);
 void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl);
-//struct {
-//
-//	struct {
-//		// hitbox (up_firboy)
-//		RectangleShape firboy_top;
-//		// hitbox (down_firboy)
-//		RectangleShape firboy_down;
-//		// hitbox (right_firboy)
-//		RectangleShape firboy_right;
-//		// hitbox (left_firboy)
-//		RectangleShape firboy_left;
-//		int animationStandingFireBoy = 0, moveFireBoy = 0;
-//		double velocityFireBoy = 0;
-//		bool isAnimationStandingFireBoy = true, isMoveFireBoy = true;
-//	}fireboy_st;
-//	struct {
-//		// hitbox (up_watergirl)
-//		RectangleShape watergirl_top;
-//		// hitbox (down_watergirl)
-//		RectangleShape watergirl_down;
-//		// hitbox (right_watergirl)
-//		RectangleShape watergirl_right;
-//		// hitbox (left_watergirl)
-//		RectangleShape watergirl_left;
-//		int  animationStandingWaterGirl = 0;
-//		int  moveWaterGirl = 0;
-//		double  velocityWaterGirl = 0;
-//		bool isAnimationStandingWaterGirl = true, isMoveWaterGirl = true;
-//
-//	}watergirl_st;
-//}f_w;
+
 struct {
 
 	struct {
@@ -766,9 +736,9 @@ void Levels(RenderWindow& window) {
 	level[1].convexs[15].setPoint(2, sf::Vector2f(753.f, 725.f));
 
 	////down----------------------//////////////////////////////////////////////////
-	
-	
-	
+
+
+
 	level[1].convexs[16].setPointCount(3);
 	level[1].convexs[16].setFillColor(Color::Black);
 	level[1].convexs[16].setPoint(0, sf::Vector2f(494.f, 527.f));
@@ -805,7 +775,7 @@ void Levels(RenderWindow& window) {
 	level[1].convexs[18].setPoint(1, sf::Vector2f(1088.f, 455.5f));
 	level[1].convexs[18].setPoint(2, sf::Vector2f(1094.f, 455.5f));
 
-	
+
 
 	level[1].convexs[19].setPointCount(3);
 	level[1].convexs[19].setFillColor(Color::Black);
@@ -896,7 +866,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 				FireBoy.move(5, 0);
 				FireBoy.move(-4, -4);
 			}
-			if (!level[1].grounded  || i == 9) {
+			if (!level[1].grounded || i == 9) {
 				if (Keyboard::isKeyPressed(Keyboard::Key::D))
 				{
 					FireBoy.move(3, 3);
@@ -914,7 +884,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 		else if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].convexs[i].getGlobalBounds()) && level[1].convexs[i].getFillColor() == Color::Red) {
 			isAnimationStandingFireBoy = 1;
 			velocityFireBoy = 0;
-			if (Keyboard::isKeyPressed(Keyboard::Key::A))
+			if (Keyboard::isKeyPressed(Keyboard::Key::A)&&  (!level[1].grounded))
 			{
 				FireBoy.move(5, 0);
 				FireBoy.move(-2, 2);
@@ -929,9 +899,11 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 				cout << "no\n";
 			}
 
-
-			FireBoy.move(-2.0, 2.0);
-			cout << "YES\n";
+			if (!level[1].grounded)
+			{
+				FireBoy.move(-2.0, 2.0);
+				cout << "YES\n";
+			}
 
 			if (Keyboard::isKeyPressed(Keyboard::Key::W))
 				velocityFireBoy = 5.5;
@@ -1014,7 +986,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 				WaterGirl.move(5, 0);
 				WaterGirl.move(-4, -4);
 			}
-			if (!level[1].grounded  || i == 9) {
+			if (!level[1].grounded || i == 9) {
 				if (Keyboard::isKeyPressed(Keyboard::Key::Right))
 				{
 					WaterGirl.move(3, 3);
@@ -1033,13 +1005,13 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 		{
 			isAnimationStandingWaterGirl = 1;
 			velocityWaterGirl = 0;
-			if (Keyboard::isKeyPressed(Keyboard::Key::Left)&& !level[1].grounded)
+			if (Keyboard::isKeyPressed(Keyboard::Key::Left) && !level[1].grounded)
 			{
 				WaterGirl.move(5, 0);
 				WaterGirl.move(-2, 2);
 			}
 
-			
+
 			if (Keyboard::isKeyPressed(Keyboard::Key::Right))
 			{
 				WaterGirl.move(4, -4);
@@ -1383,33 +1355,5 @@ void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 	//    window.draw(firboy_left);
 		//window.draw(test);
 	window.draw(test2);
-//	window.draw(level[1].background_levels[1]);
-//	window.draw(level[1].ground_levels[1]);
-//	for (int i = 0; i < 60; i++) {
-//		window.draw(level[1].ground[i]);
-//	}
-//
-//	// window.draw(level[1].background_levels[1]);
-////	 window.draw(level[1].ground_levels[1]);
-//	window.draw(FireBoy);
-//	window.draw(WaterGirl);
-//	window.draw(f_w.fireboy_st.firboy_down);
-//	window.draw(f_w.watergirl_st.watergirl_left);
-//	window.draw(f_w.watergirl_st.watergirl_right);
-//	window.draw(f_w.fireboy_st.firboy_right);
-//	window.draw(f_w.fireboy_st.firboy_left);
-//	//window.draw(test);
-//	window.draw(test2);
-//	//	window.draw(conv);
-//	for (int i = 0; i < 30; i++) {
-//
-//		window.draw(level[1].convexs[i]);
-//	}
-//	/*window.draw(hitpoxf);
-//	window.draw(hitpoxw);*/
-//
-//	/*	window.draw(RectangleUp);
-//		window.draw(RectangleDown);
-//		window.draw(RectangleLeft);
-//		window.draw(RectangleRight);*/
+	
 }
