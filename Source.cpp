@@ -876,7 +876,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 		else if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].convexs[i].getGlobalBounds()) && level[1].convexs[i].getFillColor() == Color::Red) {
 			isAnimationStandingFireBoy = 1;
 			velocityFireBoy = 0;
-			if (Keyboard::isKeyPressed(Keyboard::Key::A))
+			if (Keyboard::isKeyPressed(Keyboard::Key::A)&&  (!level[1].grounded))
 			{
 				FireBoy.move(5, 0);
 				FireBoy.move(-2, 2);
@@ -891,9 +891,11 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 				cout << "no\n";
 			}
 
-
-			FireBoy.move(-2.0, 2.0);
-			cout << "YES\n";
+			if (!level[1].grounded)
+			{
+				FireBoy.move(-2.0, 2.0);
+				cout << "YES\n";
+			}
 
 			if (Keyboard::isKeyPressed(Keyboard::Key::W))
 				velocityFireBoy = 5.5;
