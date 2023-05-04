@@ -68,10 +68,10 @@ struct {
 //}level[10];
 struct {
 	RectangleShape ground[60], boxes_down[10], boxes_right[10], boxes_top[10], boxes_left[10];
-	Texture gr_levels[10], bgr_background[10], pondFireImage, pondWaterImage, coinFireImage, coinWaterImage, pondBlackImage, fireboyDoorStand, watergirlDoorStand, fireboydoormoving, watergirldoormoving, fireboydooropening, watergirldooropening, cubeImage;
-	Sprite ground_levels[10], background_levels[10], pondFireBoy[10], pondWaterGirl[10], coinFireBoy[10], coinWaterGirl[10], pondBlack[10], FireBoy_DoorStand, WaterGirl_DoorStand, FireBoy_DoorMoving, WaterGirl_DoorMoving, FireBoy_DoorOpening, WaterGirl_DoorOpening, cube[10];
+	Texture gr_levels[10], bgr_background[10], pondFireImage, pondWaterImage, coinFireImage, coinWaterImage, pondBlackImage, fireboyDoorStand, watergirlDoorStand, fireboydoormoving, watergirldoormoving, fireboydooropening, watergirldooropening, cubeImage,pause;
+	Sprite ground_levels[10], background_levels[10], pondFireBoy[10], pondWaterGirl[10], coinFireBoy[10], coinWaterGirl[10], pondBlack[10], FireBoy_DoorStand, WaterGirl_DoorStand, FireBoy_DoorMoving, WaterGirl_DoorMoving, FireBoy_DoorOpening, WaterGirl_DoorOpening, cube[10],Pause;
 	ConvexShape convexs[30];
-	bool  fireboy_dooropening = 0, watergirl_dooropening = 0, both_dooropening = 0;
+	bool  fireboy_dooropening = 0, watergirl_dooropening = 0, both_dooropening = 0,pauseclicked = 0;
 	int animationDoorFireBoy = 0, animationDoorWaterGirl = 0, AnimationBothDoor = 0, animationPond[5] = { 0,0,0,0 };
 
 	Clock clockStandingFireBoy, clockStandingWaterGirl, clockMoveFireBoy, clockMoveWaterGirl, clockPond[5];
@@ -393,7 +393,11 @@ void Levels(RenderWindow& window) {
 
 
 
-
+	//Pause
+	level[1].pause.loadFromFile("Pause.png");
+	level[1].Pause.setTexture(level[1].pause);
+	level[1].Pause.setPosition(1230, 8);
+	level[1].Pause.setScale(0.85, 0.85);
 
 	//pond fireboy
 	level[1].pondFireImage.loadFromFile("Lava.png");
