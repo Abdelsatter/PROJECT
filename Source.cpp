@@ -1132,6 +1132,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 	/////////// collision fireboy with water and black pond //////////////////
 	if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].pondWaterGirl[1].getGlobalBounds()) || f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].pondBlack[1].getGlobalBounds()))
 	{
+		level[1].death[1].play();
 		level[1].isSmoke[1] = 1;
 		level[1].smoke[1].setPosition(f_w.fireboy_st.firboy_top.getPosition().x - 30, f_w.fireboy_st.firboy_top.getPosition().y - 40);
 
@@ -1328,6 +1329,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 	/////////// collision watergirl with fire and black pond //////////////////
 	if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].pondFireBoy[1].getGlobalBounds()) || f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].pondBlack[1].getGlobalBounds()))
 	{
+		level[1].death[2].play();
 		level[1].isSmoke[2] = 1;
 		level[1].smoke[2].setPosition(f_w.watergirl_st.watergirl_top.getPosition().x - 30, f_w.watergirl_st.watergirl_top.getPosition().y - 40);
 
@@ -1661,7 +1663,7 @@ void Animation(RenderWindow& window) {
 	//	cout << f_w.fireboy_st.velocityFireBoy << "\n";
 		if (Keyboard::isKeyPressed(Keyboard::Key::A) && f_w.fireboy_st.FireBoy.getPosition().x > 50)
 		{
-
+			level[1].Walk[1].play(),
 			f_w.fireboy_st.isAnimationStandingFireBoy = false;
 			f_w.fireboy_st.FireBoy.setTextureRect(IntRect(149 * f_w.fireboy_st.moveFireBoy, 1 * 160, 149, 160));
 			if (level[1].clockMoveFireBoy.getElapsedTime().asSeconds() >= 0.05)
@@ -1678,7 +1680,7 @@ void Animation(RenderWindow& window) {
 
 		else if (Keyboard::isKeyPressed(Keyboard::Key::D) && f_w.fireboy_st.FireBoy.getPosition().x < 1230)
 		{
-
+			level[1].Walk[1].play();
 			f_w.fireboy_st.isAnimationStandingFireBoy = false;
 			f_w.fireboy_st.FireBoy.setTextureRect(IntRect(149 * f_w.fireboy_st.moveFireBoy, 1 * 160, 149, 160));
 			if (level[1].clockMoveFireBoy.getElapsedTime().asSeconds() >= 0.05)
@@ -1691,7 +1693,7 @@ void Animation(RenderWindow& window) {
 			f_w.fireboy_st.FireBoy.move(5, 0);
 
 		}
-		else { f_w.fireboy_st.isAnimationStandingFireBoy = true; }
+		else { f_w.fireboy_st.isAnimationStandingFireBoy = true; level[1].Walk[1].stop();}
 
 	}
 
@@ -1726,6 +1728,7 @@ void Animation(RenderWindow& window) {
 
 		if (Keyboard::isKeyPressed(Keyboard::Key::Right) && f_w.watergirl_st.WaterGirl.getPosition().x < 1230)
 		{
+			level[1].Walk[2].play();
 			f_w.watergirl_st.isAnimationStandingWaterGirl = false;
 			f_w.watergirl_st.WaterGirl.setTextureRect(IntRect(149 * f_w.watergirl_st.moveWaterGirl, 1 * 160, 149, 160));
 			if (level[1].clockMoveWaterGirl.getElapsedTime().asSeconds() >= 0.05)
@@ -1741,6 +1744,7 @@ void Animation(RenderWindow& window) {
 		}
 		else if (Keyboard::isKeyPressed(Keyboard::Key::Left) && f_w.watergirl_st.WaterGirl.getPosition().x > 50)
 		{
+			level[1].Walk[2].play();
 			f_w.watergirl_st.isAnimationStandingWaterGirl = false;
 			f_w.watergirl_st.WaterGirl.setTextureRect(IntRect(149 * f_w.watergirl_st.moveWaterGirl, 1 * 160, 149, 160));
 			if (level[1].clockMoveWaterGirl.getElapsedTime().asSeconds() >= 0.05)
@@ -1754,7 +1758,7 @@ void Animation(RenderWindow& window) {
 			f_w.watergirl_st.WaterGirl.move(-5, 0);
 
 		}
-		else { f_w.watergirl_st.isAnimationStandingWaterGirl = true; }
+		else { f_w.watergirl_st.isAnimationStandingWaterGirl = true; level[1].Walk[2].stop();	}
 	}
 
 
