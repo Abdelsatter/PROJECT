@@ -10,6 +10,7 @@ RectangleShape test2;
 ////////////////////////////////////////////////////
 void Game_Play(RenderWindow& window);
 void Main_Menu(RenderWindow& window);
+void MM_settings(RenderWindow& window, Sprite& mainmenu_Background, Sprite beam[], Sprite& mainmenu_title, Sprite& fb_MainMenu, Sprite& wg_MainMenu, Sprite& play_button, Sprite& settings, RectangleShape& settings_backgroundd, Sprite& Settings_background, RectangleShape& Settings_hitbox, Sprite& Music, Sprite& Sound, RectangleShape& Buttons_hitbox,Texture& music , Texture& sound);
 void Levels(RenderWindow& window);
 void fire_water_hitboxes(RenderWindow& window);
 void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, double& velocityFireBoy, Sprite& FireBoy);
@@ -187,6 +188,7 @@ void Main_Menu(RenderWindow& window)
 	int nav = 0;
 
 
+
 	//Main Menu
 
 	Texture MainMenu_title;
@@ -247,6 +249,44 @@ void Main_Menu(RenderWindow& window)
 	wg_MainMenu.setTextureRect(IntRect(0, 0, 70, 130));
 	wg_MainMenu.setPosition(1000, 570);
 
+	//Settings Background
+
+	RectangleShape Settings_hitbox;
+	Settings_hitbox.setSize(Vector2f(1280, 70));
+	Settings_hitbox.setPosition(0, 0);
+	float initial = 720;
+	RectangleShape settings_backgroundd;
+	settings_backgroundd.setFillColor(Color(0,0,0,156));
+	settings_backgroundd.setSize(Vector2f(1280, 720));
+	Sprite Settings_background;
+	Texture settings_background;
+	settings_background.loadFromFile("MM_Settings.png");
+	Settings_background.setTexture(settings_background);
+	//Settings_background.setPosition(130.5, 70);
+	Settings_background.setPosition(130.5, 720);
+	
+	//Music and Sound buttons
+
+	Sprite Music;
+	Texture music;
+	music.loadFromFile("Music_on.png");
+	Music.setTexture(music);
+	//Music.setPosition(408,315);
+	Music.setPosition(408, 965);
+
+	Sprite Sound;
+	Texture sound;
+	sound.loadFromFile("Sound_on.png");
+	Sound.setTexture(sound);
+	//Sound.setPosition(760,315);
+	Sound.setPosition(760, 965);
+
+	//Buttons hitbox
+	RectangleShape Buttons_hitbox;
+	Buttons_hitbox.setSize(Vector2f(1280, 315));
+	Buttons_hitbox.setPosition(0, 0);
+	
+
 
 	while (window.isOpen())
 	{
@@ -279,10 +319,12 @@ void Main_Menu(RenderWindow& window)
 		}
 
 		if (clock.getElapsedTime().asSeconds() > 0.3) {
-			if (playclicked)
+			if (playclicked) 
 				nav = 1;
-			else if (settingsclicked)
+				
+			else if (settingsclicked) {
 				nav = 2;
+			}
 		}
 
 		window.clear();
@@ -296,20 +338,56 @@ void Main_Menu(RenderWindow& window)
 			window.draw(wg_MainMenu);
 			window.draw(play_button);
 			window.draw(settings);
-			//W1.draw(settings_button);
+			
 		}
 		else if (nav == 1) {
-			//W1.draw(level_select);
 			Game_Play(window);
 
 		}
 		else if (nav == 2) {
-
+			MM_settings(window, mainmenu_Background, beam, mainmenu_title, fb_MainMenu, wg_MainMenu, play_button, settings, settings_backgroundd, Settings_background, Settings_hitbox,Music,Sound,Buttons_hitbox,music,sound);
 		}
 		window.display();
 	}
 
 }
+
+void MM_settings(RenderWindow& window, Sprite& mainmenu_Background, Sprite beam[], Sprite& mainmenu_title, Sprite& fb_MainMenu, Sprite& wg_MainMenu, Sprite& play_button, Sprite& settings, RectangleShape& settings_backgroundd, Sprite& Settings_background, RectangleShape& Settings_hitbox, Sprite& Music, Sprite& Sound, RectangleShape& Buttons_hitbox,Texture& music , Texture& sound) {
+    
+    Vector2i mousepos = Mouse::getPosition(window);
+    if (Mouse::isButtonPressed(Mouse::Left)) {
+        if (mousepos.x > 408 && mousepos.x < 453 && mousepos.y > 315 && mousepos.y < 355) {
+            music.loadFromFile("Music_off.png");
+            Music.setTexture(music);
+        }
+        else if (mousepos.x > 760 && mousepos.x < 805 && mousepos.y > 315 && mousepos.y < 355) {
+            sound.loadFromFile("Sound_off.png");
+            Sound.setTexture(sound);
+        }
+    }
+    window.draw(mainmenu_Background);
+    for (int i = 0; i < 3; i++) {
+        window.draw(beam[i]);
+    }
+    window.draw(mainmenu_title);
+    window.draw(fb_MainMenu);
+    window.draw(wg_MainMenu);
+    window.draw(play_button);
+    window.draw(settings);
+    window.draw(settings_backgroundd);
+    window.draw(Settings_background);
+    window.draw(Music);
+    window.draw(Sound);
+    if (!Settings_hitbox.getGlobalBounds().intersects(Settings_background.getGlobalBounds())) 
+        Settings_background.move(0, -30);
+    if (!Buttons_hitbox.getGlobalBounds().intersects(Music.getGlobalBounds())) {
+        Music.move(0, -30);
+    }
+    if(!Buttons_hitbox.getGlobalBounds().intersects(Sound.getGlobalBounds())) {
+        Sound.move(0, -30);
+    }
+}
+
 void Levels(RenderWindow& window) {
 
 
@@ -937,7 +1015,18 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 			FireBoy.move(5, 0);
 		}
 	}
-
+	
+	/////////////////////////---------------Pause Collision------------////////////////////////////////////////////
+    	Vector2i mousepos = Mouse::getPosition(window);
+    	if (Mouse::isButtonPressed(Mouse::Left) && mousepos.x > 1230 && mousepos.x < 1261 && mousepos.y> 8 && mousepos.y < 42) {
+        	level[1].Pause.setScale(0.8f, 0.8f);
+        	level[1].pauseclicked = 1;
+        	level[1].Pause.setPosition(1232, 9);
+    	}
+    	else {
+        	level[1].Pause.setPosition(1230, 8);
+        	level[1].Pause.setScale(1.0f, 1.0f);
+    	}
 
 	///////////////////////////---------------collision convexs---------------------///////////////////////////
 	{
