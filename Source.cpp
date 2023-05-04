@@ -1034,7 +1034,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 		f_w.fireboy_st.FireBoy.move(8.0f, 0.0f);
 		f_w.watergirl_st.WaterGirl.move(3.f, 0);
 	}
-	
+
 	if (f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[1].boxes_left[1].getGlobalBounds()) && !(level[1].f_b_w_g[1])) {
 		level[1].cube[1].move(2.5f, 0.0f);
 		f_w.fireboy_st.FireBoy.move(-3.0f, 0.0f);
@@ -1203,19 +1203,19 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 		//level[1].cube[1].move(-2.5f, 0.0f);
 		f_w.watergirl_st.WaterGirl.move(5.0f, 0.0f);
 		f_w.fireboy_st.FireBoy.move(0.1f, 0.0f);
-	
+
 	}
 	if (f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[1].boxes_left[1].getGlobalBounds()) && !(level[1].w_b_f_g[1])) {
 		level[1].cube[1].move(2.5f, 0.0f);
 		f_w.watergirl_st.WaterGirl.move(-3.0f, 0.0f);
 
-		
+
 	}
 	if (f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[1].boxes_left[1].getGlobalBounds()) && (level[1].w_b_f_g[1])) {
 		// level[1].cube[1].move(2.5f, 0.0f);
 		f_w.watergirl_st.WaterGirl.move(-5.0f, 0.0f);
 		f_w.fireboy_st.FireBoy.move(-0.1f, 0.0f);
-		
+
 	}
 	if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].boxes_top[1].getGlobalBounds())) {
 		f_w.watergirl_st.grounded = 1;
@@ -1359,14 +1359,14 @@ void collision_boxes(RenderWindow& window)
 	if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[1].boxes_right[1].getGlobalBounds()) && f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[1].boxes_left[1].getGlobalBounds())) {
 		f_w.fireboy_st.FireBoy.move(3.0f, 0.0f);
 		if (!(level[1].g_w_b_f[1]))
-		f_w.watergirl_st.WaterGirl.move(-3.0f, 0.0f);
+			f_w.watergirl_st.WaterGirl.move(-3.0f, 0.0f);
 
 	}
 	if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[1].boxes_right[1].getGlobalBounds()) && f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[1].boxes_left[1].getGlobalBounds())) {
-	
+
 		f_w.fireboy_st.FireBoy.move(-3.0f, 0.0f);
-if (!(level[1].f_b_w_g[1]))
-		f_w.watergirl_st.WaterGirl.move(3.0f, 0.0f);
+		if (!(level[1].f_b_w_g[1]))
+			f_w.watergirl_st.WaterGirl.move(3.0f, 0.0f);
 
 	}
 
