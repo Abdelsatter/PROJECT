@@ -180,6 +180,7 @@ void fire_water_hitboxes(RenderWindow& window) {
 	f_w.watergirl_st.watergirl_left.setFillColor(Color::Blue);
 	f_w.watergirl_st.watergirl_left.setOrigin(10, 20);
 }
+
 void Main_Menu(RenderWindow& window)
 {
 	bool playclicked = 0;
