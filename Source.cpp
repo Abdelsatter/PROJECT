@@ -66,12 +66,12 @@ struct {
 	ConvexShape convexs[30];
 	bool  fireboy_dooropening = 0, watergirl_dooropening = 0, both_dooropening = 0, pauseclicked = 0;
 	int animationDoorFireBoy = 0, animationDoorWaterGirl = 0, animationBothDoor = 0, animationSmoke[3] = { 0,0,0 }, animationPond[5] = { 0,0,0,0 }, isSmoke[3] = { 0,0,0 };
-	Clock clockStandingFireBoy, clockStandingWaterGirl, clockMoveFireBoy, clockMoveWaterGirl, clockPond[5], clockSmoke[5];
+	Clock clockStandingFireBoy, clockStandingWaterGirl, clockMoveFireBoy, clockMoveWaterGirl, clockPond[5], clockSmoke[5], clockDoor[10];
 	double velocityboxes[10];
 	bool isStandingboxes[10], g_f_b_w[10] = {}, g_w_b_f[10] = {}, w_b_f_g[10] = {}, f_b_w_g[10] = {};
 	Music mainMenu, soundLevel[10];
-	SoundBuffer soundDeath, soundJumpFire, soundJumpWater, soundMainDeath, soundCoin, soundelevator;
-	Sound death[3], Jump[3], mainDeath, Coin, elevatorSound;
+	SoundBuffer soundDeath, soundJumpFire, soundJumpWater, soundMainDeath, soundCoin, soundelevator, soundDoor;
+	Sound death[3], Jump[3], mainDeath, Coin, elevatorSound, door[3];
 
 }level[10];
 int main()
@@ -435,6 +435,10 @@ void Levels(RenderWindow& window) {
 	level[1].soundelevator.loadFromFile("elevator.wav");
 	level[1].elevatorSound.setBuffer(level[1].soundelevator);
 
+	level[1].soundDoor.loadFromFile("Door.wav");
+	level[1].door[1].setBuffer(level[1].soundDoor);
+	level[1].door[2].setBuffer(level[1].soundDoor);
+
 	// button
 	level[1].button.loadFromFile("CyanButton.png");
 	level[1].Button[1].setTexture(level[1].button);
@@ -539,13 +543,13 @@ void Levels(RenderWindow& window) {
 	//set fireboy
 	f_w.fireboy_st.fireBoyImage.loadFromFile("Fireboy.png");
 	f_w.fireboy_st.FireBoy.setTexture(f_w.fireboy_st.fireBoyImage);
-	f_w.fireboy_st.FireBoy.setPosition(880, 650);
+	f_w.fireboy_st.FireBoy.setPosition(880, 200);
 	f_w.fireboy_st.FireBoy.setOrigin(f_w.fireboy_st.FireBoy.getLocalBounds().width / 38, f_w.fireboy_st.FireBoy.getLocalBounds().height / 2);
 	f_w.fireboy_st.FireBoy.setScale(0.7f, 0.7f);
 	//set watergirl
 	f_w.watergirl_st.waterGirlImage.loadFromFile("Watergirl.png");
 	f_w.watergirl_st.WaterGirl.setTexture(f_w.watergirl_st.waterGirlImage);
-	f_w.watergirl_st.WaterGirl.setPosition(880, 650);
+	f_w.watergirl_st.WaterGirl.setPosition(880, 200);
 	f_w.watergirl_st.WaterGirl.setOrigin(f_w.watergirl_st.WaterGirl.getLocalBounds().width / 60, f_w.watergirl_st.WaterGirl.getLocalBounds().height / 2);
 	f_w.watergirl_st.WaterGirl.setScale(0.7f, 0.7f);
 	//set fireboy's door
@@ -1602,7 +1606,6 @@ void button_collision() {
 
 	}
 }
-
 void collision(RenderWindow& window, bool& isAnimationStandingFireBoy, double& velocityFireBoy, Sprite& FireBoy, bool& isAnimationStandingWaterGirl, double& velocityWaterGirl, Sprite& WaterGirl) {
 	collision_fireboy(window, isAnimationStandingFireBoy, velocityFireBoy, FireBoy);
 	collision_watergirl(window, isAnimationStandingWaterGirl, velocityWaterGirl, WaterGirl);
@@ -1830,29 +1833,75 @@ void Animation(RenderWindow& window) {
 	}
 
 
-
+	//animation door fireboy
 	if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].FireBoy_DoorOpening.getGlobalBounds())) {
-
+		if (!level[1].fireboy_dooropening)
+		{
+			level[1].door[1].setLoop(false);
+			level[1].door[1].play();
+			
+		}
 		level[1].fireboy_dooropening = 1;
-		level[1].FireBoy_DoorOpening.setTextureRect(IntRect(level[1].animationDoorFireBoy * 114, 0, 114, 123));
-		if (level[1].animationDoorFireBoy != 21) { level[1].animationDoorFireBoy++; }
+		if (level[1].clockDoor[1].getElapsedTime().asSeconds() >= 0.036)
+		{
+			level[1].FireBoy_DoorOpening.setTextureRect(IntRect(level[1].animationDoorFireBoy * 114, 0, 114, 123));
+			if (level[1].animationDoorFireBoy != 21) { level[1].animationDoorFireBoy++; }
+			level[1].clockDoor[1].restart();
+		}
+			if (level[1].animationDoorFireBoy == 21)level[1].door[1].stop();
 	}
 	else {
+		if (level[1].fireboy_dooropening)
+		{
+			level[1].door[1].setLoop(false);
+			level[1].door[1].play();
+
+		}
 		level[1].fireboy_dooropening = 0;
-		level[1].FireBoy_DoorOpening.setTextureRect(IntRect(level[1].animationDoorFireBoy * 114, 0, 114, 123));
-		if (level[1].animationDoorFireBoy != 0) { level[1].animationDoorFireBoy--; }
+		if (level[1].clockDoor[1].getElapsedTime().asSeconds() >= 0.036)
+		{
+			level[1].FireBoy_DoorOpening.setTextureRect(IntRect(level[1].animationDoorFireBoy * 114, 0, 114, 123));
+			if (level[1].animationDoorFireBoy != 0) { level[1].animationDoorFireBoy--; }
+			level[1].clockDoor[1].restart();
+		}
+			if (level[1].animationDoorFireBoy == 0)level[1].door[1].stop();
 
 	}
-	if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].WaterGirl_DoorOpening.getGlobalBounds())) {
-		level[1].watergirl_dooropening = 1;
-		level[1].WaterGirl_DoorOpening.setTextureRect(IntRect(level[1].animationDoorWaterGirl * 114, 0, 114, 122));
-		if (level[1].animationDoorWaterGirl != 21) { level[1].animationDoorWaterGirl++; }
+	//animation door watergirl
+	if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].WaterGirl_DoorOpening.getGlobalBounds())) 
+	{
+			if (!level[1].watergirl_dooropening)
+			{
+				level[1].door[2].setLoop(false);
+				level[1].door[2].play();
+			}
+				level[1].watergirl_dooropening = 1;
+			if (level[1].clockDoor[2].getElapsedTime().asSeconds() >= 0.036)
+			{
+			level[1].WaterGirl_DoorOpening.setTextureRect(IntRect(level[1].animationDoorWaterGirl * 114, 0, 114, 122));
+			if (level[1].animationDoorWaterGirl != 21) { level[1].animationDoorWaterGirl++; }
+				level[1].clockDoor[2].restart();
+			}
+			if (level[1].animationDoorWaterGirl == 21)level[1].door[2].stop();
+	
 	}
 	else {
-		level[1].watergirl_dooropening = 1;
+		if (level[1].watergirl_dooropening)
+		{
+			level[1].door[2].setLoop(false);
+			level[1].door[2].play();
+		}
+		level[1].watergirl_dooropening = 0;
+		if (level[1].clockDoor[2].getElapsedTime().asSeconds() >= 0.036)
+		{
 		level[1].WaterGirl_DoorOpening.setTextureRect(IntRect(level[1].animationDoorWaterGirl * 114, 0, 114, 122));
 		if (level[1].animationDoorWaterGirl != 0) { level[1].animationDoorWaterGirl--; }
+			level[1].clockDoor[2].restart();
+		}
+		if (level[1].animationDoorWaterGirl == 0)level[1].door[2].stop();
 	}
+
+
 	if (level[1].animationDoorFireBoy == 21 && level[1].animationDoorWaterGirl == 21) {
 		level[1].both_dooropening = 1;
 		level[1].FireBoy_DoorMoving.setTextureRect(IntRect(level[1].animationBothDoor * 149, 0, 149, 160));
