@@ -69,8 +69,8 @@ struct {
 	double velocityboxes[10];
 	bool isStandingboxes[10], g_f_b_w[10] = {}, g_w_b_f[10] = {}, w_b_f_g[10] = {}, f_b_w_g[10] = {};
 	Music mainMenu, soundLevel[10];
-	SoundBuffer soundDeath, soundJumpFire, soundJumpWater, soundMainDeath, soundCoin;
-	Sound death[3], Jump[3], mainDeath, Coin;
+	SoundBuffer soundDeath, soundJumpFire, soundJumpWater, soundMainDeath, soundCoin, soundelevator;
+	Sound death[3], Jump[3], mainDeath, Coin, elevatorSound;
 
 }level[10];
 int main()
@@ -412,12 +412,22 @@ void Levels(RenderWindow& window) {
 	level[1].soundDeath.loadFromFile("Death.wav");
 	level[1].death[2].setBuffer(level[1].soundDeath);
 
+	level[1].soundelevator.loadFromFile("elevator.wav");
+	level[1].elevatorSound.setBuffer(level[1].soundelevator);
+
 	// button
-	level[1].button.loadFromFile("CyanButton1.png");
+	level[1].button.loadFromFile("CyanButton.png");
 	level[1].Button[1].setTexture(level[1].button);
 	level[1].Button[1].setPosition(Vector2f(986.5f, 286.f));
 	level[1].Button[2].setTexture(level[1].button);
 	level[1].Button[2].setPosition(Vector2f(363.5f, 486.f));
+
+	// elevator
+	level[1].elevator.loadFromFile("Cyanelevator.png");
+	level[1].Elevator[1].setTexture(level[1].elevator);
+	level[1].Elevator[2].setTexture(level[1].elevator);
+	level[1].Elevator[1].setPosition(Vector2f(600.f, 286.f));
+	level[1].Elevator[2].setPosition(Vector2f(300.f, 786.f));
 
 	// elevator
 	level[1].elevator.loadFromFile("fireGem.png");
