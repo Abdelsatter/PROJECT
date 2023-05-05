@@ -17,6 +17,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGirl, double& velocityWaterGirl, Sprite& WaterGirl);
 void collision_boxes(RenderWindow& window);
 void Animation(RenderWindow& window);
+void button_collision();
 void updatef_whitboxes(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl);
 void collision(RenderWindow& window, bool& isAnimationStandingFireBoy, double& velocityFireBoy, Sprite& FireBoy, bool& isAnimationStandingWaterGirl, double& velocityWaterGirl, Sprite& WaterGirl);
 void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl);
@@ -123,10 +124,29 @@ void updatef_whitboxes(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 	// set position hit box fireboy ( left )
 	f_w.watergirl_st.watergirl_left.setPosition(Vector2f(WaterGirl.getPosition().x - 5, WaterGirl.getPosition().y - 150));
 
+	///the box hit_boxes 
 	level[1].boxes_down[1].setPosition(level[1].cube[1].getPosition().x, level[1].cube[1].getPosition().y + 25);
 	level[1].boxes_top[1].setPosition(level[1].cube[1].getPosition().x, level[1].cube[1].getPosition().y - 25);
 	level[1].boxes_left[1].setPosition(level[1].cube[1].getPosition().x - 25, level[1].cube[1].getPosition().y);
 	level[1].boxes_right[1].setPosition(level[1].cube[1].getPosition().x + 25, level[1].cube[1].getPosition().y);
+
+///hit boxes elevator (up)
+	level[1].ground[14].setPosition(Vector2f(level[1].Elevator[1].getPosition().x, level[1].Elevator[1].getPosition().y));
+
+	///hit boxes elevator(down)
+	level[1].ground[25].setPosition(Vector2f(Vector2f(level[1].Elevator[1].getPosition().x, level[1].Elevator[1].getPosition().y+28)));
+
+	///hit boxes elevator(left)
+	level[1].ground[26].setPosition(Vector2f(level[1].Elevator[1].getPosition().x, level[1].Elevator[1].getPosition().y));
+
+	//hit boxes elevator2 (up)
+	level[1].ground[27].setPosition(Vector2f(level[1].Elevator[2].getPosition().x, level[1].Elevator[2].getPosition().y));
+
+	///hit boxes elevator1 (down)
+	level[1].ground[28].setPosition(Vector2f(Vector2f(level[1].Elevator[2].getPosition().x, level[1].Elevator[2].getPosition().y + 28)));
+	
+	///hit boxes elevator2 (right)
+	level[1].ground[46].setPosition(Vector2f(level[1].Elevator[2].getPosition().x+144, level[1].Elevator[2].getPosition().y));
 
 }
 void fire_water_hitboxes(RenderWindow& window) {
@@ -418,16 +438,22 @@ void Levels(RenderWindow& window) {
 	// button
 	level[1].button.loadFromFile("CyanButton.png");
 	level[1].Button[1].setTexture(level[1].button);
-	level[1].Button[1].setPosition(Vector2f(986.5f, 286.f));
+	level[1].Button[1].setPosition(Vector2f(986.5f, 278.f));
+	level[1].Button[1].setScale(0.8f, 0.8f);
+
 	level[1].Button[2].setTexture(level[1].button);
-	level[1].Button[2].setPosition(Vector2f(363.5f, 486.f));
+	level[1].Button[2].setPosition(Vector2f(363.5f, 502.f));
+	level[1].Button[2].setScale(0.8f, 0.8f);
 
 	// elevator
 	level[1].elevator.loadFromFile("Cyanelevator.png");
 	level[1].Elevator[1].setTexture(level[1].elevator);
+	level[1].Elevator[1].setPosition(Vector2f(1107.f, 330.f));
+	level[1].Elevator[1].setScale(0.65f,0.5f);
+
 	level[1].Elevator[2].setTexture(level[1].elevator);
-	level[1].Elevator[1].setPosition(Vector2f(600.f, 286.f));
-	level[1].Elevator[2].setPosition(Vector2f(300.f, 786.f));
+	level[1].Elevator[2].setPosition(Vector2f(23.f, 387.f));
+	level[1].Elevator[2].setScale(0.65f, 0.5f);
 
 
 
@@ -506,13 +532,13 @@ void Levels(RenderWindow& window) {
 	//set fireboy
 	f_w.fireboy_st.fireBoyImage.loadFromFile("Fireboy.png");
 	f_w.fireboy_st.FireBoy.setTexture(f_w.fireboy_st.fireBoyImage);
-	f_w.fireboy_st.FireBoy.setPosition(880, 450);
+	f_w.fireboy_st.FireBoy.setPosition(880, 650);
 	f_w.fireboy_st.FireBoy.setOrigin(f_w.fireboy_st.FireBoy.getLocalBounds().width / 38, f_w.fireboy_st.FireBoy.getLocalBounds().height / 2);
 	f_w.fireboy_st.FireBoy.setScale(0.7f, 0.7f);
 	//set watergirl
 	f_w.watergirl_st.waterGirlImage.loadFromFile("Watergirl.png");
 	f_w.watergirl_st.WaterGirl.setTexture(f_w.watergirl_st.waterGirlImage);
-	f_w.watergirl_st.WaterGirl.setPosition(880, 450);
+	f_w.watergirl_st.WaterGirl.setPosition(880, 650);
 	f_w.watergirl_st.WaterGirl.setOrigin(f_w.watergirl_st.WaterGirl.getLocalBounds().width / 60, f_w.watergirl_st.WaterGirl.getLocalBounds().height / 2);
 	f_w.watergirl_st.WaterGirl.setScale(0.7f, 0.7f);
 	//set fireboy's door
@@ -635,11 +661,10 @@ void Levels(RenderWindow& window) {
 	level[1].ground[12].setPosition(Vector2f(675, 415));
 	level[1].ground[12].setFillColor(Color::Cyan);
 
+	/////////////hit box elevator up////////////
+	level[1].ground[14].setSize(Vector2f(144, 2));
+	level[1].ground[14].setFillColor(Color::Cyan);
 
-	level[1].ground[14].setSize(Vector2f(2, 120));
-	level[1].ground[14].setRotation(130.f);         ///////
-	level[1].ground[14].setPosition(Vector2f(1185, 507));
-	level[1].ground[14].setFillColor(Color::Magenta);
 
 	level[1].ground[15].setSize(Vector2f(90, 2));
 	level[1].ground[15].setPosition(Vector2f(1183, 507));
@@ -666,8 +691,7 @@ void Levels(RenderWindow& window) {
 	level[1].ground[20].setPosition(Vector2f(520, 163));
 	level[1].ground[20].setFillColor(Color::Cyan);
 
-	//  level[1].ground[21].setSize(Vector2f(155, 2));
-	//	level[1].ground[21].setPosition(Vector2f(400, 163));
+	
 
 	level[1].ground[22].setSize(Vector2f(70, 2));
 	level[1].ground[22].setPosition(Vector2f(360, 115));
@@ -681,25 +705,21 @@ void Levels(RenderWindow& window) {
 	level[1].ground[24].setPosition(Vector2f(953, 330));
 	level[1].ground[24].setFillColor(Color::Cyan);
 
-	level[1].ground[25].setSize(Vector2f(2, 43));
-	level[1].ground[25].setRotation(140.f);      //////////
-	level[1].ground[25].setPosition(Vector2f(525, 170));
-	level[1].ground[25].setFillColor(Color::Magenta);
+	////////////////hit box elevator down////////////
+	level[1].ground[25].setSize(Vector2f(144, 2));
+	level[1].ground[25].setFillColor(Color::Cyan);
 
-	level[1].ground[26].setSize(Vector2f(2, 40));
-	level[1].ground[26].setRotation(130.f);    ////////
-	level[1].ground[26].setPosition(Vector2f(459, 140));
-	level[1].ground[26].setFillColor(Color::Magenta);
+	////////////////hit box elevator left////////////
+	level[1].ground[26].setSize(Vector2f(2, 30));
+	level[1].ground[26].setFillColor(Color::Yellow);
 
-	level[1].ground[27].setSize(Vector2f(2, 45));
-	level[1].ground[27].setRotation(130.f);     //////
-	level[1].ground[27].setPosition(Vector2f(397, 157));
-	level[1].ground[27].setFillColor(Color::Magenta);
+	////////////////hit box elevator2 up////////////
+	level[1].ground[27].setSize(Vector2f(144, 2));
+	level[1].ground[27].setFillColor(Color::Cyan);
 
-	level[1].ground[28].setSize(Vector2f(2, 110));
-	level[1].ground[28].setRotation(125.f);    //////
-	level[1].ground[28].setPosition(Vector2f(980, 310));
-	level[1].ground[28].setFillColor(Color::Magenta);
+	////////////////hit box elevator2 down////////////
+	level[1].ground[28].setSize(Vector2f(144, 2));
+	level[1].ground[28].setFillColor(Color::Cyan);
 
 
 	level[1].ground[21].setSize(Vector2f(390, 2));
@@ -790,53 +810,51 @@ void Levels(RenderWindow& window) {
 	level[1].ground[45].setPosition(Vector2f(341, 135));
 	level[1].ground[45].setFillColor(Color::Cyan);
 
-
-	level[1].ground[46].setSize(Vector2f(2, 28));
-	level[1].ground[46].setRotation(40.f);      //////////
-	level[1].ground[46].setPosition(Vector2f(359, 114));
-	level[1].ground[46].setFillColor(Color::Magenta);
+	////////////////hit box elevator2 down////////////
+	level[1].ground[46].setSize(Vector2f(2, 30));
+	level[1].ground[46].setFillColor(Color::Yellow);
 
 
-	level[1].ground[47].setSize(Vector2f(40, 2));
-	level[1].ground[47].setRotation(35.f);      //////////
-	level[1].ground[47].setPosition(Vector2f(592, 407));
-	level[1].ground[47].setFillColor(Color::Magenta);
+	//level[1].ground[47].setSize(Vector2f(40, 2));
+	//level[1].ground[47].setRotation(35.f);      //////////
+	//level[1].ground[47].setPosition(Vector2f(592, 407));
+	//level[1].ground[47].setFillColor(Color::Magenta);
 
 
-	level[1].ground[48].setSize(Vector2f(40, 2));
-	level[1].ground[48].setRotation(37.f);      //////////
-	level[1].ground[48].setPosition(Vector2f(924, 309));
-	level[1].ground[48].setFillColor(Color::Magenta);
+	//level[1].ground[48].setSize(Vector2f(40, 2));
+	//level[1].ground[48].setRotation(37.f);      //////////
+	//level[1].ground[48].setPosition(Vector2f(924, 309));
+	//level[1].ground[48].setFillColor(Color::Magenta);
 
 
-	level[1].ground[49].setSize(Vector2f(80, 2));
-	level[1].ground[49].setRotation(37.f);      //////////
-	level[1].ground[49].setPosition(Vector2f(492, 529));
-	level[1].ground[49].setFillColor(Color::Magenta);
+	//level[1].ground[49].setSize(Vector2f(80, 2));
+	//level[1].ground[49].setRotation(37.f);      //////////
+	//level[1].ground[49].setPosition(Vector2f(492, 529));
+	//level[1].ground[49].setFillColor(Color::Magenta);
 
 
-	level[1].ground[50].setSize(Vector2f(40, 2));
-	level[1].ground[50].setRotation(27.f);      //////////
-	level[1].ground[50].setPosition(Vector2f(779, 559));
-	level[1].ground[50].setFillColor(Color::Magenta);
+	//level[1].ground[50].setSize(Vector2f(40, 2));
+	//level[1].ground[50].setRotation(27.f);      //////////
+	//level[1].ground[50].setPosition(Vector2f(779, 559));
+	//level[1].ground[50].setFillColor(Color::Magenta);
 
 
-	level[1].ground[51].setSize(Vector2f(25, 2));
-	level[1].ground[51].setRotation(147.f);      //////////
-	level[1].ground[51].setPosition(Vector2f(952, 565));
-	level[1].ground[51].setFillColor(Color::Magenta);
+	//level[1].ground[51].setSize(Vector2f(25, 2));
+	//level[1].ground[51].setRotation(147.f);      //////////
+	//level[1].ground[51].setPosition(Vector2f(952, 565));
+	//level[1].ground[51].setFillColor(Color::Magenta);
 
 
-	level[1].ground[52].setSize(Vector2f(25, 2));
-	level[1].ground[52].setRotation(27.f);      //////////
-	level[1].ground[52].setPosition(Vector2f(1084, 565));
-	level[1].ground[52].setFillColor(Color::Magenta);
+	//level[1].ground[52].setSize(Vector2f(25, 2));
+	//level[1].ground[52].setRotation(27.f);      //////////
+	//level[1].ground[52].setPosition(Vector2f(1084, 565));
+	//level[1].ground[52].setFillColor(Color::Magenta);
 
 
-	level[1].ground[53].setSize(Vector2f(2, 40));
-	level[1].ground[53].setRotation(47.f);      //////////
-	level[1].ground[53].setPosition(Vector2f(1186, 639));
-	level[1].ground[53].setFillColor(Color::Magenta);
+	//level[1].ground[53].setSize(Vector2f(2, 40));
+	//level[1].ground[53].setRotation(47.f);      //////////
+	//level[1].ground[53].setPosition(Vector2f(1186, 639));
+	//level[1].ground[53].setFillColor(Color::Magenta);
 
 
 	level[1].ground[54].setSize(Vector2f(34, 2));
@@ -1552,10 +1570,38 @@ void collision_boxes(RenderWindow& window)
 	}
 
 }
+void button_collision() {
+	bool pressed = 0;
+	float distanceup = 0, distancedown=0;
+	for (int i = 0; i < 10; i++) {
+		if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].Button[i].getGlobalBounds()) || f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].Button[i].getGlobalBounds())) {
+			for (distanceup = 0; distanceup < 1; distanceup += 0.4) {
+				level[1].Button[i].setPosition(level[1].Button[i].getPosition().x, level[1].Button[i].getPosition().y + distanceup);
+				cout << "noooooooooooooooooooooo\n";
+				pressed = 1;
+			}
+		}
+		else if (!f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].Button[i].getGlobalBounds()) || !f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].Button[i].getGlobalBounds())){
+			if (pressed) {
+				for (distancedown = 0; distancedown <= 50; distancedown += 0.4) {
+					level[1].Button[i].setPosition(level[1].Button[i].getPosition().x, level[1].Button[i].getPosition().y - distancedown);
+					cout << "yessss\n";
+				}
+			}
+		}
+	
+
+
+
+	}
+}
+
 void collision(RenderWindow& window, bool& isAnimationStandingFireBoy, double& velocityFireBoy, Sprite& FireBoy, bool& isAnimationStandingWaterGirl, double& velocityWaterGirl, Sprite& WaterGirl) {
 	collision_fireboy(window, isAnimationStandingFireBoy, velocityFireBoy, FireBoy);
 	collision_watergirl(window, isAnimationStandingWaterGirl, velocityWaterGirl, WaterGirl);
 	collision_boxes(window);
+ button_collision();
+
 }
 void Animation(RenderWindow& window) {
 
@@ -1887,11 +1933,13 @@ void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 {
 
 	window.draw(level[1].background_levels[1]);
+	window.draw(level[1].Button[2]);
+	window.draw(level[1].Button[1]);
 	window.draw(level[1].ground_levels[1]);
 	for (int i = 0; i < 60; i++)
 	{
 
-		//window.draw(level[1].ground[i]);
+		window.draw(level[1].ground[i]);
 		if (i < 11)
 		{
 			window.draw(level[1].coinFireBoy[i]);
@@ -1904,8 +1952,7 @@ void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 		}
 	}
 	window.draw(level[1].cube[1]);
-	window.draw(level[1].Button[2]);
-	window.draw(level[1].Button[1]);
+	
 	window.draw(level[1].Elevator[2]);
 	window.draw(level[1].Elevator[1]);
 	/*window.draw(level[1].boxes_down[1]);
