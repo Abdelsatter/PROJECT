@@ -58,8 +58,10 @@ struct {
 }f_w;
 struct {
 	RectangleShape ground[60], boxes_down[10], boxes_right[10], boxes_top[10], boxes_left[10];
-	Texture gr_levels[10], bgr_background[10], pondFireImage, pondWaterImage, coinFireImage, coinWaterImage, pondBlackImage, fireboyDoorStand, watergirlDoorStand, fireboydoormoving, watergirldoormoving, fireboydooropening, watergirldooropening, cubeImage, pause, smokeImage;
-	Sprite ground_levels[10], background_levels[10], pondFireBoy[10], pondWaterGirl[10], coinFireBoy[10], coinWaterGirl[10], pondBlack[10], FireBoy_DoorStand, WaterGirl_DoorStand, FireBoy_DoorMoving, WaterGirl_DoorMoving, FireBoy_DoorOpening, WaterGirl_DoorOpening, cube[10], Pause, smoke[3];
+	Texture button, elevator, fireboyDoorStand, watergirlDoorStand, fireboydoormoving, watergirldoormoving, fireboydooropening, watergirldooropening, cubeImage, pause, smokeImage;
+	Texture gr_levels[10], bgr_background[10], pondFireImage, pondWaterImage, coinFireImage, coinWaterImage, pondBlackImage;
+	Sprite Button[10], Elevator[10], FireBoy_DoorStand, WaterGirl_DoorStand, FireBoy_DoorMoving, WaterGirl_DoorMoving, FireBoy_DoorOpening, WaterGirl_DoorOpening, cube[10], Pause, smoke[3];
+	Sprite ground_levels[10], background_levels[10], pondFireBoy[10], pondWaterGirl[10], coinFireBoy[10], coinWaterGirl[10], pondBlack[10];
 	ConvexShape convexs[30];
 	bool  fireboy_dooropening = 0, watergirl_dooropening = 0, both_dooropening = 0, pauseclicked = 0;
 	int animationDoorFireBoy = 0, animationDoorWaterGirl = 0, animationBothDoor = 0, animationSmoke[3] = { 0,0,0 }, animationPond[5] = { 0,0,0,0 }, isSmoke[3] = { 0,0,0 };
@@ -67,8 +69,8 @@ struct {
 	double velocityboxes[10];
 	bool isStandingboxes[10], g_f_b_w[10] = {}, g_w_b_f[10] = {}, w_b_f_g[10] = {}, f_b_w_g[10] = {};
 	Music mainMenu, soundLevel[10];
-	SoundBuffer soundDeath, soundJumpFire, soundJumpWater, soundMainDeath, soundCoin;
-	Sound death[3], Jump[3], mainDeath, Coin;
+	SoundBuffer soundDeath, soundJumpFire, soundJumpWater, soundMainDeath, soundCoin, soundelevator;
+	Sound death[3], Jump[3], mainDeath, Coin, elevatorSound;
 
 }level[10];
 int main()
@@ -409,7 +411,23 @@ void Levels(RenderWindow& window) {
 	level[1].Jump[2].setBuffer(level[1].soundJumpWater);
 	level[1].soundDeath.loadFromFile("Death.wav");
 	level[1].death[2].setBuffer(level[1].soundDeath);
-	
+
+	level[1].soundelevator.loadFromFile("elevator.wav");
+	level[1].elevatorSound.setBuffer(level[1].soundelevator);
+
+	// button
+	level[1].button.loadFromFile("CyanButton.png");
+	level[1].Button[1].setTexture(level[1].button);
+	level[1].Button[1].setPosition(Vector2f(986.5f, 286.f));
+	level[1].Button[2].setTexture(level[1].button);
+	level[1].Button[2].setPosition(Vector2f(363.5f, 486.f));
+
+	// elevator
+	level[1].elevator.loadFromFile("Cyanelevator.png");
+	level[1].Elevator[1].setTexture(level[1].elevator);
+	level[1].Elevator[2].setTexture(level[1].elevator);
+	level[1].Elevator[1].setPosition(Vector2f(600.f, 286.f));
+	level[1].Elevator[2].setPosition(Vector2f(300.f, 786.f));
 
 
 
@@ -1127,8 +1145,8 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 	/////////// collision fireboy with water and black pond //////////////////
 	if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].pondWaterGirl[1].getGlobalBounds()) || f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].pondBlack[1].getGlobalBounds()))
 	{
-		if(!level[1].isSmoke[1])
-		level[1].death[1].play();
+		if (!level[1].isSmoke[1])
+			level[1].death[1].play();
 		level[1].isSmoke[1] = 1;
 		level[1].smoke[1].setPosition(f_w.fireboy_st.firboy_top.getPosition().x - 30, f_w.fireboy_st.firboy_top.getPosition().y - 40);
 
@@ -1325,11 +1343,11 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 	/////////// collision watergirl with fire and black pond //////////////////
 	if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].pondFireBoy[1].getGlobalBounds()) || f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].pondBlack[1].getGlobalBounds()))
 	{
-		if(!level[1].isSmoke[2])
-		level[1].death[2].play();
+		if (!level[1].isSmoke[2])
+			level[1].death[2].play();
 		level[1].isSmoke[2] = 1;
 		level[1].smoke[2].setPosition(f_w.watergirl_st.watergirl_top.getPosition().x - 30, f_w.watergirl_st.watergirl_top.getPosition().y - 40);
-		
+
 		f_w.watergirl_st.WaterGirl.setScale(0, 0);
 	}
 	else level[1].isSmoke[2] = 0;
@@ -1660,7 +1678,7 @@ void Animation(RenderWindow& window) {
 	//	cout << f_w.fireboy_st.velocityFireBoy << "\n";
 		if (Keyboard::isKeyPressed(Keyboard::Key::A) && f_w.fireboy_st.FireBoy.getPosition().x > 50)
 		{
-		
+
 			f_w.fireboy_st.isAnimationStandingFireBoy = false;
 			f_w.fireboy_st.FireBoy.setTextureRect(IntRect(149 * f_w.fireboy_st.moveFireBoy, 1 * 160, 149, 160));
 			if (level[1].clockMoveFireBoy.getElapsedTime().asSeconds() >= 0.05)
@@ -1677,7 +1695,7 @@ void Animation(RenderWindow& window) {
 
 		else if (Keyboard::isKeyPressed(Keyboard::Key::D) && f_w.fireboy_st.FireBoy.getPosition().x < 1230)
 		{
-		
+
 			f_w.fireboy_st.isAnimationStandingFireBoy = false;
 			f_w.fireboy_st.FireBoy.setTextureRect(IntRect(149 * f_w.fireboy_st.moveFireBoy, 1 * 160, 149, 160));
 			if (level[1].clockMoveFireBoy.getElapsedTime().asSeconds() >= 0.05)
@@ -1690,7 +1708,7 @@ void Animation(RenderWindow& window) {
 			f_w.fireboy_st.FireBoy.move(5, 0);
 
 		}
-		else { f_w.fireboy_st.isAnimationStandingFireBoy = true;}
+		else { f_w.fireboy_st.isAnimationStandingFireBoy = true; }
 
 	}
 
@@ -1725,7 +1743,7 @@ void Animation(RenderWindow& window) {
 
 		if (Keyboard::isKeyPressed(Keyboard::Key::Right) && f_w.watergirl_st.WaterGirl.getPosition().x < 1230)
 		{
-		
+
 			f_w.watergirl_st.isAnimationStandingWaterGirl = false;
 			f_w.watergirl_st.WaterGirl.setTextureRect(IntRect(149 * f_w.watergirl_st.moveWaterGirl, 1 * 160, 149, 160));
 			if (level[1].clockMoveWaterGirl.getElapsedTime().asSeconds() >= 0.05)
@@ -1741,7 +1759,7 @@ void Animation(RenderWindow& window) {
 		}
 		else if (Keyboard::isKeyPressed(Keyboard::Key::Left) && f_w.watergirl_st.WaterGirl.getPosition().x > 50)
 		{
-			
+
 			f_w.watergirl_st.isAnimationStandingWaterGirl = false;
 			f_w.watergirl_st.WaterGirl.setTextureRect(IntRect(149 * f_w.watergirl_st.moveWaterGirl, 1 * 160, 149, 160));
 			if (level[1].clockMoveWaterGirl.getElapsedTime().asSeconds() >= 0.05)
@@ -1755,7 +1773,7 @@ void Animation(RenderWindow& window) {
 			f_w.watergirl_st.WaterGirl.move(-5, 0);
 
 		}
-		else { f_w.watergirl_st.isAnimationStandingWaterGirl = true; 	}
+		else { f_w.watergirl_st.isAnimationStandingWaterGirl = true; }
 	}
 
 
@@ -1886,6 +1904,10 @@ void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 		}
 	}
 	window.draw(level[1].cube[1]);
+	window.draw(level[1].Button[2]);
+	window.draw(level[1].Button[1]);
+	window.draw(level[1].Elevator[2]);
+	window.draw(level[1].Elevator[1]);
 	/*window.draw(level[1].boxes_down[1]);
 	window.draw(level[1].boxes_top[1]);
 	window.draw(level[1].boxes_left[1]);
