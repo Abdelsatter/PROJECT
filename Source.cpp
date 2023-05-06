@@ -10,9 +10,11 @@ RectangleShape test2;
 ////////////////////////////////////////////////////
 void Game_Play(RenderWindow& window);
 void Main_Menu(RenderWindow& window);
-void MM_settings(RenderWindow& window, Sprite& mainmenu_Background, Sprite beam[], Sprite& mainmenu_title, Sprite& fb_MainMenu, Sprite& wg_MainMenu, Sprite& play_button, Sprite& settings, RectangleShape& settings_backgroundd, Sprite& Settings_background, RectangleShape& Settings_hitbox, Sprite& Music, Sprite& Sound, RectangleShape& Buttons_hitbox, Texture& music, Texture& sound);
-void Levels(RenderWindow& window);
+
+void Level1(RenderWindow& window);
+void Level2(RenderWindow& window);
 void fire_water_hitboxes(RenderWindow& window);
+void MM_settings(RenderWindow& window, Sprite& mainmenu_Background, Sprite beam[], Sprite& mainmenu_title, Sprite& fb_MainMenu, Sprite& wg_MainMenu, Sprite& play_button, Sprite& settings, RectangleShape& settings_backgroundd, Sprite& Settings_background, RectangleShape& Settings_hitbox, Sprite& Music, Sprite& Sound, RectangleShape& Buttons_hitbox, Texture& music, Texture& sound, Sprite& Music2, Sprite& Sound2);
 void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, double& velocityFireBoy, Sprite& FireBoy);
 void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGirl, double& velocityWaterGirl, Sprite& WaterGirl);
 void collision_boxes(RenderWindow& window);
@@ -58,9 +60,9 @@ struct {
 	}watergirl_st;
 }f_w;
 struct {
-	RectangleShape ground[60], boxes_down[10], boxes_right[10], boxes_top[10], boxes_left[10], button_up[10], button_down[10];
+	RectangleShape ground[60], boxes_down[10], boxes_right[10], boxes_top[10], boxes_left[10], button_up[10], button_down[10], lever_left_hitbox, lever_right_hitbox;
 	Texture button, elevator, fireboyDoorStand, watergirlDoorStand, fireboydoormoving, watergirldoormoving, fireboydooropening, watergirldooropening, cubeImage, pause, smokeImage;
-	Texture gr_levels[10], bgr_background[10], pondFireImage, pondWaterImage, coinFireImage, coinWaterImage, pondBlackImage, lever;
+	Texture gr_levels[10], bgr_background[10], pondFireImage, pondWaterImage, coinFireImage, coinWaterImage, pondBlackImage, lever_off, lever_on, BlueLeverOff1, elevator2, lever_button_on;
 	Sprite Button[10], Elevator[10], FireBoy_DoorStand, WaterGirl_DoorStand, FireBoy_DoorMoving, WaterGirl_DoorMoving, FireBoy_DoorOpening, WaterGirl_DoorOpening, cube[10], Pause, smoke[3];
 	Sprite ground_levels[10], background_levels[10], pondFireBoy[10], pondWaterGirl[10], coinFireBoy[10], coinWaterGirl[10], pondBlack[10];
 	ConvexShape convexs[60];
@@ -69,7 +71,7 @@ struct {
 	Clock clockStandingFireBoy, clockStandingWaterGirl, clockMoveFireBoy, clockMoveWaterGirl, clockPond[5], clockSmoke[5], clockDoor[10], timer, ingame_setings_c;
 	Time sa3a_s, sa3a_m;
 	double velocityboxes[10];
-	bool isStandingboxes[10], g_f_b_w[10] = {}, g_w_b_f[10] = {}, w_b_f_g[10] = {}, f_b_w_g[10] = {};
+	bool isStandingboxes[10], g_f_b_w[10] = {}, g_w_b_f[10] = {}, w_b_f_g[10] = {}, f_b_w_g[10] = {}, lever_open = 0, elevator_open = 0;
 	Music mainMenu, soundLevel[10];
 	SoundBuffer soundDeath, soundJumpFire, soundJumpWater, soundMainDeath, soundCoin, soundelevator, soundDoor;
 	Sound death[3], Jump[3], mainDeath, Coin, elevatorSound, door[3];
@@ -78,10 +80,10 @@ struct {
 	Text fb_count, wg_count, elwaqt_s, elwaqt_m;
 }level[10];
 struct {
-	RectangleShape Background, Settings_hitbox;
-	Sprite settings_menu;
-	Texture settings_Menu;
-
+	RectangleShape Background, Settings_hitbox, Return_MM_hb, back_hb;
+	Sprite settings_menu, Back_button;
+	Texture settings_Menu, back_button;
+	bool return_to_MM = 0;
 }in_game;
 int main()
 {
@@ -140,7 +142,7 @@ void updatef_whitboxes(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 	level[1].boxes_right[1].setPosition(level[1].cube[1].getPosition().x + 25, level[1].cube[1].getPosition().y);
 
 	///hit boxes elevator1 (up)
-	level[1].ground[14].setPosition(Vector2f(level[1].Elevator[1].getPosition().x, level[1].Elevator[1].getPosition().y));
+	level[1].ground[14].setPosition(Vector2f(level[1].Elevator[1].getPosition().x, level[1].Elevator[1].getPosition().y + 2));
 
 	///hit boxes elevator1 (down)
 	level[1].ground[25].setPosition(Vector2f(Vector2f(level[1].Elevator[1].getPosition().x, level[1].Elevator[1].getPosition().y + 28)));
@@ -149,7 +151,7 @@ void updatef_whitboxes(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 	level[1].ground[26].setPosition(Vector2f(level[1].Elevator[1].getPosition().x, level[1].Elevator[1].getPosition().y));
 
 	//hit boxes elevator2 (up)
-	level[1].ground[27].setPosition(Vector2f(level[1].Elevator[2].getPosition().x, level[1].Elevator[2].getPosition().y));
+	level[1].ground[27].setPosition(Vector2f(level[1].Elevator[2].getPosition().x, level[1].Elevator[2].getPosition().y + 2));
 
 	///hit boxes elevator1 (down)
 	level[1].ground[28].setPosition(Vector2f(Vector2f(level[1].Elevator[2].getPosition().x, level[1].Elevator[2].getPosition().y + 28)));
@@ -190,9 +192,9 @@ void fire_water_hitboxes(RenderWindow& window) {
 	f_w.watergirl_st.watergirl_top.setOrigin(2.5, 10);
 
 	// hitbox (down_watergirl)
-	f_w.watergirl_st.watergirl_down.setSize(Vector2f(5, 15));
+	f_w.watergirl_st.watergirl_down.setSize(Vector2f(5, 17.5));
 	f_w.watergirl_st.watergirl_down.setFillColor(Color::Blue);
-	f_w.watergirl_st.watergirl_down.setOrigin(2.5, 7.5);
+	f_w.watergirl_st.watergirl_down.setOrigin(2.5, 8.75);
 
 	// hitbox (right_watergirl)
 	f_w.watergirl_st.watergirl_right.setSize(Vector2f(20, 40));
@@ -204,8 +206,8 @@ void fire_water_hitboxes(RenderWindow& window) {
 	f_w.watergirl_st.watergirl_left.setFillColor(Color::Blue);
 	f_w.watergirl_st.watergirl_left.setOrigin(10, 20);
 }
-void Main_Menu(RenderWindow& window)
-{
+void Main_Menu(RenderWindow& window) {
+
 
 	//sound main menu
 	level[0].mainMenu.openFromFile("Menu_Music.wav");
@@ -280,12 +282,11 @@ void Main_Menu(RenderWindow& window)
 	wg_MainMenu.setTextureRect(IntRect(0, 0, 70, 130));
 	wg_MainMenu.setPosition(1000, 570);
 
-	//Settings Background
+	/////////////---Settings Background---////////////////
 
 	RectangleShape Settings_hitbox;
 	Settings_hitbox.setSize(Vector2f(1280, 70));
 	Settings_hitbox.setPosition(0, 0);
-	float initial = 720;
 	RectangleShape settings_backgroundd;
 	settings_backgroundd.setFillColor(Color(0, 0, 0, 156));
 	settings_backgroundd.setSize(Vector2f(1280, 720));
@@ -296,26 +297,39 @@ void Main_Menu(RenderWindow& window)
 	//Settings_background.setPosition(130.5, 70);
 	Settings_background.setPosition(130.5, 720);
 
-	//Music and Sound buttons
 
-	Sprite Music;
-	Texture music;
+	//Music, Sound and back buttons
+
+	Sprite Music, Music2;
+	Texture music, music2;
 	music.loadFromFile("Music_on.png");
+	music2.loadFromFile("Music_off.png");
 	Music.setTexture(music);
+	Music2.setTexture(music2);
 	//Music.setPosition(408,315);
 	Music.setPosition(408, 965);
+	Music2.setPosition(408, 965);
 
-	Sprite Sound;
-	Texture sound;
+	Sprite Sound, Sound2;
+	Texture sound, sound2;
 	sound.loadFromFile("Sound_on.png");
+	sound2.loadFromFile("Sound_off.png");
 	Sound.setTexture(sound);
-	//Sound.setPosition(760,315);
+	Sound2.setTexture(sound2);
 	Sound.setPosition(760, 965);
+	Sound2.setPosition(760, 965);
+	in_game.back_button.loadFromFile("Back_button.png");
+	in_game.Back_button.setTexture(in_game.back_button);
+	in_game.Back_button.setPosition(452, 965);
 
-	//Buttons hitbox
+	//Buttons and background hitboxes
 	RectangleShape Buttons_hitbox;
 	Buttons_hitbox.setSize(Vector2f(1280, 315));
 	Buttons_hitbox.setPosition(0, 0);
+	in_game.Return_MM_hb.setSize(Vector2f(1280, 5));
+	in_game.Return_MM_hb.setPosition(0, 1338);
+	in_game.back_hb.setSize(Vector2f(1280, 5));
+	in_game.back_hb.setPosition(0, 520);
 
 
 
@@ -377,7 +391,7 @@ void Main_Menu(RenderWindow& window)
 			window.draw(wg_MainMenu);
 			window.draw(play_button);
 			window.draw(settings);
-
+			/*window.draw(in_game.back_hb);*/
 		}
 		else if (nav == 1) {
 			level[0].mainMenu.stop();
@@ -385,28 +399,80 @@ void Main_Menu(RenderWindow& window)
 
 		}
 		else if (nav == 2) {
-			MM_settings(window, mainmenu_Background, beam, mainmenu_title, fb_MainMenu, wg_MainMenu, play_button, settings, settings_backgroundd, Settings_background, Settings_hitbox, Music, Sound, Buttons_hitbox, music, sound);
+			MM_settings(window, mainmenu_Background, beam, mainmenu_title, fb_MainMenu, wg_MainMenu, play_button, settings, settings_backgroundd, Settings_background, Settings_hitbox, Music, Sound, Buttons_hitbox, music, sound, Music2, Sound2);
 		}
 		window.display();
 	}
 
-}void MM_settings(RenderWindow& window, Sprite& mainmenu_Background, Sprite beam[], Sprite& mainmenu_title, Sprite& fb_MainMenu, Sprite& wg_MainMenu, Sprite& play_button, Sprite& settings, RectangleShape& settings_backgroundd, Sprite& Settings_background, RectangleShape& Settings_hitbox, Sprite& Music, Sprite& Sound, RectangleShape& Buttons_hitbox, Texture& music, Texture& sound) {
+}
+bool musicclicked = 0, soundclicked = 0;
+void MM_settings(RenderWindow& window, Sprite& mainmenu_Background, Sprite beam[], Sprite& mainmenu_title, Sprite& fb_MainMenu, Sprite& wg_MainMenu, Sprite& play_button, Sprite& settings, RectangleShape& settings_backgroundd, Sprite& Settings_background, RectangleShape& Settings_hitbox, Sprite& Music, Sprite& Sound, RectangleShape& Buttons_hitbox, Texture& music, Texture& sound, Sprite& Music2, Sprite& Sound2) {
 
+
+
+	//while (window.isOpen())
+	//{
 	Vector2i mousepos = Mouse::getPosition(window);
+
+
 	if (Mouse::isButtonPressed(Mouse::Left)) {
-		if (mousepos.x > 408 && mousepos.x < 453 && mousepos.y > 315 && mousepos.y < 355) {
-			music.loadFromFile("Music_off.png");
-			Music.setTexture(music);
+		if (!(mousepos.x > 130.5 && mousepos.x < 1162.5 && mousepos.y > 115 && mousepos.y < 713)) {
+			in_game.return_to_MM = 1;
 		}
-		else if (mousepos.x > 760 && mousepos.x < 805 && mousepos.y > 315 && mousepos.y < 355) {
-			sound.loadFromFile("Sound_off.png");
-			Sound.setTexture(sound);
+		else if (mousepos.x > 452 && mousepos.x < 716 && mousepos.y > 545 && mousepos.y < 636) {
+			in_game.Back_button.setScale(0.9f, 0.9f);
+			in_game.return_to_MM = 1;
+		}
+		else {
+			in_game.Back_button.setScale(1.0f, 1.0f);
+		}
+		if (mousepos.x > 428 && mousepos.x < 493 && mousepos.y > 305 && mousepos.y < 365) {
+
+			musicclicked = !musicclicked;
+			Music2.setPosition(Music.getPosition().x, Music.getPosition().y);
+
+		}
+		else if (mousepos.x > 760 && mousepos.x < 840 && mousepos.y > 305 && mousepos.y < 365) {
+			soundclicked = !soundclicked;
+			Sound2.setPosition(Sound.getPosition().x, Sound.getPosition().y);
 		}
 	}
+	if (in_game.return_to_MM == 0) {
+		if (!Settings_hitbox.getGlobalBounds().intersects(Settings_background.getGlobalBounds()))
+			Settings_background.move(0, -30);
+
+		if (!Buttons_hitbox.getGlobalBounds().intersects(Music.getGlobalBounds())) {
+			Music.move(0, -30);
+			Music2.move(0, -30);
+		}
+		if (!Buttons_hitbox.getGlobalBounds().intersects(Sound.getGlobalBounds())) {
+			Sound.move(0, -30);
+			Sound2.move(0, -30);
+		}
+		if (!in_game.back_hb.getGlobalBounds().intersects(in_game.Back_button.getGlobalBounds())) {
+			in_game.Back_button.move(0, -30);
+		}
+	}
+	if (in_game.return_to_MM == 1) {
+		if (!in_game.Return_MM_hb.getGlobalBounds().intersects(Settings_background.getGlobalBounds())) {
+			Settings_background.move(0, 30);
+			Music.move(0, 30);
+			Sound.move(0, 30);
+			Music2.move(0, 30);
+			Sound2.move(0, 30);
+			in_game.Back_button.move(0, 30);
+		}
+		else {
+			in_game.return_to_MM = 0;
+			Main_Menu(window);
+		}
+	}
+	//	window.clear();
 	window.draw(mainmenu_Background);
 	for (int i = 0; i < 3; i++) {
 		window.draw(beam[i]);
 	}
+
 	window.draw(mainmenu_title);
 	window.draw(fb_MainMenu);
 	window.draw(wg_MainMenu);
@@ -414,18 +480,19 @@ void Main_Menu(RenderWindow& window)
 	window.draw(settings);
 	window.draw(settings_backgroundd);
 	window.draw(Settings_background);
-	window.draw(Music);
-	window.draw(Sound);
-	if (!Settings_hitbox.getGlobalBounds().intersects(Settings_background.getGlobalBounds()))
-		Settings_background.move(0, -30);
-	if (!Buttons_hitbox.getGlobalBounds().intersects(Music.getGlobalBounds())) {
-		Music.move(0, -30);
-	}
-	if (!Buttons_hitbox.getGlobalBounds().intersects(Sound.getGlobalBounds())) {
-		Sound.move(0, -30);
-	}
+	if (!musicclicked)
+		window.draw(Music);
+	else
+		window.draw(Music2);
+	if (!soundclicked)
+		window.draw(Sound);
+	else
+		window.draw(Sound2);
+	window.draw(in_game.Back_button);
+	//	window.display();
+	//}
 }
-void Levels(RenderWindow& window) {
+void Level1(RenderWindow& window) {
 
 
 	//sound level1
@@ -460,33 +527,69 @@ void Levels(RenderWindow& window) {
 	// button
 	level[1].button.loadFromFile("CyanButton.png");
 	level[1].Button[1].setTexture(level[1].button);
-	level[1].Button[1].setPosition(Vector2f(986.5f, 278.f));
+	level[1].Button[1].setPosition(Vector2f(986.5f, 280.f));
 	level[1].Button[1].setScale(0.8f, 0.8f);
-	
+
 	/// hit_box button1_up
 	level[1].button_up[1].setSize(Vector2f(4, 3));
 	level[1].button_up[1].setPosition(Vector2f(level[1].Button[1].getPosition().x + 20, level[1].Button[1].getPosition().y - 4));
-	
+
 	/// hit_box button1_down
 	level[1].button_down[1].setSize(Vector2f(4, 3));
 	level[1].button_down[1].setPosition(Vector2f(level[1].Button[1].getPosition().x + 20, level[1].Button[1].getPosition().y + 20));
 
 	level[1].Button[2].setTexture(level[1].button);
-	level[1].Button[2].setPosition(Vector2f(363.5f, 379.f));
+	level[1].Button[2].setPosition(Vector2f(363.5f, 381.f));
 	level[1].Button[2].setScale(0.8f, 0.8f);
-	
+
 	/// hit_box button2_up
 	level[1].button_up[2].setSize(Vector2f(4, 3));
 	level[1].button_up[2].setPosition(Vector2f(level[1].Button[2].getPosition().x + 20, level[1].Button[2].getPosition().y - 4));
-	
+
 	/// hit_box button2_down
 	level[1].button_down[2].setSize(Vector2f(4, 3));
 	level[1].button_down[2].setPosition(Vector2f(level[1].Button[2].getPosition().x + 20, level[1].Button[2].getPosition().y + 20));
 
-	///BlueLever
-	level[1].lever.loadFromFile("BlueLeverOff2.png");
-	level[1].Button[3].setTexture(level[1].lever);
-	level[1].Button[3].setPosition(Vector2f(363.5f, 577.f));
+	///BlueLever_off2
+	level[1].lever_off.loadFromFile("BlueLeverOff2.png");
+	level[1].Button[3].setTexture(level[1].lever_off);
+	level[1].Button[3].setScale(0.48f, 0.48f);
+	level[1].Button[3].setPosition(Vector2f(263.5f, 470.f));
+
+	///BlueLever_on2
+	level[1].lever_button_on.loadFromFile("BlueLeverOn2.png");
+	level[1].Button[6].setTexture(level[1].lever_button_on);
+	level[1].Button[6].setScale(0.48f, 0.48f);
+	level[1].Button[6].setPosition(Vector2f(263.5f, 470.f));
+
+
+
+
+	///BlueLeverOff1
+	level[1].BlueLeverOff1.loadFromFile("BlueLeverOff1.png");
+	level[1].Button[4].setTexture(level[1].BlueLeverOff1);
+	level[1].Button[4].setRotation(34.f);
+	level[1].Button[4].setScale(0.48f, 0.48f);
+	level[1].Button[4].setOrigin(69.5, 130.f);
+	level[1].Button[4].setPosition(Vector2f(288.5f, 520.f));
+
+	///BlueLever_on1
+	level[1].lever_on.loadFromFile("BlueLeverOn1.png");
+	level[1].Button[5].setTexture(level[1].lever_on);
+	level[1].Button[5].setRotation(-34.f);
+	level[1].Button[5].setScale(0.48f, 0.48f);
+	level[1].Button[5].setOrigin(69.5, 130.f);
+
+
+
+	//lever_left_hitbox
+	level[1].lever_left_hitbox.setSize(Vector2f(2.f, 3.f));
+	level[1].lever_left_hitbox.setPosition(Vector2f(270.5f, 500.f));
+
+	//lever_right_hitbox
+	level[1].lever_right_hitbox.setSize(Vector2f(2.f, 3.f));
+	level[1].lever_right_hitbox.setPosition(Vector2f(317.5f, 500.f));
+
 
 
 	// elevator
@@ -495,7 +598,9 @@ void Levels(RenderWindow& window) {
 	level[1].Elevator[1].setPosition(Vector2f(1107.f, 330.f));
 	level[1].Elevator[1].setScale(0.65f, 0.5f);
 
-	level[1].Elevator[2].setTexture(level[1].elevator);
+	/// elevator
+	level[1].elevator2.loadFromFile("BlueElevatorH.png");
+	level[1].Elevator[2].setTexture(level[1].elevator2);
 	level[1].Elevator[2].setPosition(Vector2f(23.f, 387.f));
 	level[1].Elevator[2].setScale(0.65f, 0.5f);
 
@@ -574,13 +679,13 @@ void Levels(RenderWindow& window) {
 	//set fireboy
 	f_w.fireboy_st.fireBoyImage.loadFromFile("Fireboy.png");
 	f_w.fireboy_st.FireBoy.setTexture(f_w.fireboy_st.fireBoyImage);
-	f_w.fireboy_st.FireBoy.setPosition(880, 350);
+	f_w.fireboy_st.FireBoy.setPosition(880, 650);
 	f_w.fireboy_st.FireBoy.setOrigin(f_w.fireboy_st.FireBoy.getLocalBounds().width / 38, f_w.fireboy_st.FireBoy.getLocalBounds().height / 2);
 	f_w.fireboy_st.FireBoy.setScale(0.7f, 0.7f);
 	//set watergirl
 	f_w.watergirl_st.waterGirlImage.loadFromFile("Watergirl.png");
 	f_w.watergirl_st.WaterGirl.setTexture(f_w.watergirl_st.waterGirlImage);
-	f_w.watergirl_st.WaterGirl.setPosition(880, 350);
+	f_w.watergirl_st.WaterGirl.setPosition(880, 650);
 	f_w.watergirl_st.WaterGirl.setOrigin(f_w.watergirl_st.WaterGirl.getLocalBounds().width / 60, f_w.watergirl_st.WaterGirl.getLocalBounds().height / 2);
 	f_w.watergirl_st.WaterGirl.setScale(0.7f, 0.7f);
 	//set fireboy's door
@@ -733,7 +838,7 @@ void Levels(RenderWindow& window) {
 	level[1].ground[20].setPosition(Vector2f(520, 163));
 	level[1].ground[20].setFillColor(Color::Cyan);
 
-	
+
 
 	level[1].ground[22].setSize(Vector2f(70, 2));
 	level[1].ground[22].setPosition(Vector2f(360, 115));
@@ -856,11 +961,10 @@ void Levels(RenderWindow& window) {
 	level[1].ground[46].setSize(Vector2f(2, 30));
 	level[1].ground[46].setFillColor(Color::Yellow);
 
+	//////////////////the ground for the elevator2 to stop down////////////
+	level[1].ground[47].setSize(Vector2f(20, 2));
+	level[1].ground[47].setPosition(Vector2f(20, 488));
 
-	//level[1].ground[47].setSize(Vector2f(40, 2));
-	//level[1].ground[47].setRotation(35.f);      //////////
-	//level[1].ground[47].setPosition(Vector2f(592, 407));
-	//level[1].ground[47].setFillColor(Color::Magenta);
 
 
 	//level[1].ground[48].setSize(Vector2f(40, 2));
@@ -1070,7 +1174,6 @@ void Levels(RenderWindow& window) {
 
 
 
-
 	///main pause
 	in_game.Settings_hitbox.setSize(Vector2f(1280, 315));
 	in_game.Background.setSize(Vector2f(1280, 720));
@@ -1114,6 +1217,520 @@ void Levels(RenderWindow& window) {
 	//settings_menu.setPosition(130.5,70); 
 	//draw(window);
 
+
+}
+void Level2(RenderWindow& window) {
+
+	//ground
+	level[2].gr_levels[2].loadFromFile("Level_2_ground.png");
+	level[2].ground_levels[2].setTexture(level[2].gr_levels[2]);
+
+	//background
+	level[2].bgr_background[2].loadFromFile("gamplay_background.png");
+	level[2].background_levels[2].setTexture(level[2].bgr_background[2]);
+
+	//level 2 ground 
+	/////////////horizontal//////////////////////
+	level[2].ground[0].setSize(Vector2f(1190, 2));
+	level[2].ground[0].setPosition(Vector2f(45, 683));
+	level[2].ground[0].setFillColor(Color::Cyan);
+
+	level[2].ground[1].setSize(Vector2f(1190, 2));
+	level[2].ground[1].setPosition(Vector2f(45, 43));
+	level[2].ground[1].setFillColor(Color::Cyan);
+
+	level[2].ground[2].setSize(Vector2f(545, 2));
+	level[2].ground[2].setPosition(Vector2f(80, 597));
+	level[2].ground[2].setFillColor(Color::Cyan);
+
+	level[2].ground[3].setSize(Vector2f(550, 2));
+	level[2].ground[3].setPosition(Vector2f(75, 566));
+	level[2].ground[3].setFillColor(Color::Cyan);
+
+	level[2].ground[4].setSize(Vector2f(615, 2));
+	level[2].ground[4].setPosition(Vector2f(175, 443));
+	level[2].ground[4].setFillColor(Color::Cyan);
+
+	level[2].ground[5].setSize(Vector2f(630, 2));
+	level[2].ground[5].setPosition(Vector2f(168, 478));
+	level[2].ground[5].setFillColor(Color::Cyan);
+
+	level[2].ground[6].setSize(Vector2f(500, 2));
+	level[2].ground[6].setPosition(Vector2f(45, 202));
+	level[2].ground[6].setFillColor(Color::Cyan);
+
+	level[2].ground[7].setSize(Vector2f(480, 2));
+	level[2].ground[7].setPosition(Vector2f(45, 235));
+	level[2].ground[7].setFillColor(Color::Cyan);
+
+	level[2].ground[8].setSize(Vector2f(100, 2));
+	level[2].ground[8].setPosition(Vector2f(240, 355));
+	level[2].ground[8].setFillColor(Color::Cyan);
+
+	level[2].ground[9].setSize(Vector2f(159, 2));
+	level[2].ground[9].setPosition(Vector2f(208, 377));
+	level[2].ground[9].setFillColor(Color::Cyan);
+
+	level[2].ground[10].setSize(Vector2f(260, 2));
+	level[2].ground[10].setPosition(Vector2f(690, 111));
+	level[2].ground[10].setFillColor(Color::Cyan);
+
+	level[2].ground[11].setSize(Vector2f(295, 2));
+	level[2].ground[11].setPosition(Vector2f(652, 141));
+	level[2].ground[11].setFillColor(Color::Cyan);
+
+	level[2].ground[12].setSize(Vector2f(210, 2));
+	level[2].ground[12].setPosition(Vector2f(1000, 156));
+	level[2].ground[12].setFillColor(Color::Cyan);
+
+	level[2].ground[13].setSize(Vector2f(230, 2));
+	level[2].ground[13].setPosition(Vector2f(1005, 185));
+	level[2].ground[13].setFillColor(Color::Cyan);
+
+	level[2].ground[14].setSize(Vector2f(320, 2));
+	level[2].ground[14].setPosition(Vector2f(918, 253));
+	level[2].ground[14].setFillColor(Color::Cyan);
+
+	level[2].ground[15].setSize(Vector2f(250, 2));
+	level[2].ground[15].setPosition(Vector2f(978, 382));
+	level[2].ground[15].setFillColor(Color::Cyan);
+
+	level[2].ground[16].setSize(Vector2f(415, 2));
+	level[2].ground[16].setPosition(Vector2f(815, 468));
+	level[2].ground[16].setFillColor(Color::Cyan);
+
+	level[2].ground[17].setSize(Vector2f(250, 2));
+	level[2].ground[17].setPosition(Vector2f(940, 572));
+	level[2].ground[17].setFillColor(Color::Cyan);
+
+	level[2].ground[18].setSize(Vector2f(42, 2));
+	level[2].ground[18].setPosition(Vector2f(265, 130));
+	level[2].ground[18].setFillColor(Color::Cyan);
+
+	level[2].ground[19].setSize(Vector2f(50, 2));
+	level[2].ground[19].setPosition(Vector2f(260, 277));
+	level[2].ground[19].setFillColor(Color::Cyan);
+
+	level[2].ground[20].setSize(Vector2f(35, 2));
+	level[2].ground[20].setPosition(Vector2f(690, 615));
+	level[2].ground[20].setFillColor(Color::Cyan);
+
+	level[2].ground[21].setSize(Vector2f(35, 2));
+	level[2].ground[21].setPosition(Vector2f(685, 642));
+	level[2].ground[21].setFillColor(Color::Cyan);
+
+	level[2].ground[22].setSize(Vector2f(60, 2));
+	level[2].ground[22].setPosition(Vector2f(813, 503));
+	level[2].ground[22].setFillColor(Color::Cyan);
+
+	level[2].ground[23].setSize(Vector2f(66, 2));
+	level[2].ground[23].setPosition(Vector2f(50, 394));
+	level[2].ground[23].setFillColor(Color::Cyan);
+
+	level[2].ground[24].setSize(Vector2f(30, 2));
+	level[2].ground[24].setPosition(Vector2f(75, 430));
+	level[2].ground[24].setFillColor(Color::Cyan);
+
+	level[2].ground[25].setSize(Vector2f(65, 2));
+	level[2].ground[25].setPosition(Vector2f(849, 280));
+	level[2].ground[25].setFillColor(Color::Cyan);
+
+	level[2].ground[26].setSize(Vector2f(40, 2));
+	level[2].ground[26].setPosition(Vector2f(717, 377));
+	level[2].ground[26].setFillColor(Color::Cyan);
+
+	level[2].ground[27].setSize(Vector2f(45, 2));
+	level[2].ground[27].setPosition(Vector2f(905, 406));
+	level[2].ground[27].setFillColor(Color::Cyan);
+
+	level[2].ground[28].setSize(Vector2f(70, 2));
+	level[2].ground[28].setPosition(Vector2f(755, 328));
+	level[2].ground[28].setFillColor(Color::Cyan);
+
+	level[2].ground[29].setSize(Vector2f(66, 2));
+	level[2].ground[29].setPosition(Vector2f(785, 354));
+	level[2].ground[29].setFillColor(Color::Cyan);
+
+	level[2].ground[30].setSize(Vector2f(35, 2));
+	level[2].ground[30].setPosition(Vector2f(625, 204));
+	level[2].ground[30].setFillColor(Color::Cyan);
+
+	level[2].ground[31].setSize(Vector2f(35, 2));
+	level[2].ground[31].setPosition(Vector2f(620, 236));
+	level[2].ground[31].setFillColor(Color::Cyan);
+	/////////////////vertical//////////////////////////
+	level[2].ground[32].setSize(Vector2f(2, 45));
+	level[2].ground[32].setPosition(Vector2f(263, 85));
+	level[2].ground[32].setFillColor(Color::Yellow);
+
+	level[2].ground[33].setSize(Vector2f(2, 45));
+	level[2].ground[33].setPosition(Vector2f(307, 85));
+	level[2].ground[33].setFillColor(Color::Yellow);
+
+	level[2].ground[34].setSize(Vector2f(2, 170));
+	level[2].ground[34].setPosition(Vector2f(520, 40));
+	level[2].ground[34].setFillColor(Color::Yellow);
+
+	level[2].ground[35].setSize(Vector2f(2, 170));
+	level[2].ground[35].setPosition(Vector2f(560, 40));
+	level[2].ground[35].setFillColor(Color::Yellow);
+
+	level[2].ground[36].setSize(Vector2f(2, 75));
+	level[2].ground[36].setPosition(Vector2f(682, 255));
+	level[2].ground[36].setFillColor(Color::Yellow);
+
+	level[2].ground[37].setSize(Vector2f(2, 75));
+	level[2].ground[37].setPosition(Vector2f(725, 255));
+	level[2].ground[37].setFillColor(Color::Yellow);
+
+	level[2].ground[38].setSize(Vector2f(2, 27));
+	level[2].ground[38].setPosition(Vector2f(715, 350));
+	level[2].ground[38].setFillColor(Color::Yellow);
+
+	level[2].ground[39].setSize(Vector2f(2, 30));
+	level[2].ground[39].setPosition(Vector2f(973, 325));
+	level[2].ground[39].setFillColor(Color::Yellow);
+
+	level[2].ground[40].setSize(Vector2f(2, 30));
+	level[2].ground[40].setPosition(Vector2f(918, 230));
+	level[2].ground[40].setFillColor(Color::Yellow);
+
+	////////////////////convexshapes///////////////////////
+	level[2].convexs[0].setPointCount(3);
+	level[2].convexs[0].setFillColor(Color::Red);
+	level[2].convexs[0].setPoint(0, sf::Vector2f(68.f, 580.f));
+	level[2].convexs[0].setPoint(1, sf::Vector2f(50.f, 585.f));
+	level[2].convexs[0].setPoint(2, sf::Vector2f(75.f, 567.f));
+
+	level[2].convexs[1].setPointCount(3);
+	level[2].convexs[1].setFillColor(Color::Black);
+	level[2].convexs[1].setPoint(0, sf::Vector2f(50.f, 619.f));
+	level[2].convexs[1].setPoint(1, sf::Vector2f(80.f, 596.f));
+	level[2].convexs[1].setPoint(2, sf::Vector2f(60.f, 600.f));
+
+	level[2].convexs[2].setPointCount(3);
+	level[2].convexs[2].setFillColor(Color::Green);
+	level[2].convexs[2].setPoint(0, sf::Vector2f(655.f, 590.f));
+	level[2].convexs[2].setPoint(1, sf::Vector2f(625.f, 568.f));
+	level[2].convexs[2].setPoint(2, sf::Vector2f(630.f, 585.f));
+
+	level[2].convexs[37].setPointCount(3);
+	level[2].convexs[37].setFillColor(Color::Green);
+	level[2].convexs[37].setPoint(0, sf::Vector2f(655.f, 600.f));
+	level[2].convexs[37].setPoint(1, sf::Vector2f(655.f, 590.f));
+	level[2].convexs[37].setPoint(2, sf::Vector2f(690.f, 617.f));
+
+	level[2].convexs[3].setPointCount(3);
+	level[2].convexs[3].setFillColor(Color::Black);
+	level[2].convexs[3].setPoint(0, sf::Vector2f(625.f, 600.f));
+	level[2].convexs[3].setPoint(1, sf::Vector2f(653.f, 618.f));
+	level[2].convexs[3].setPoint(2, sf::Vector2f(640.f, 605.f));
+
+	level[2].convexs[38].setPointCount(3);
+	level[2].convexs[38].setFillColor(Color::Black);
+	level[2].convexs[38].setPoint(0, sf::Vector2f(653.f, 618.f));
+	level[2].convexs[38].setPoint(1, sf::Vector2f(683.f, 640.f));
+	level[2].convexs[38].setPoint(2, sf::Vector2f(675.f, 625.f));
+
+	level[2].convexs[4].setPointCount(3);
+	level[2].convexs[4].setFillColor(Color::Green);
+	level[2].convexs[4].setPoint(0, sf::Vector2f(730.f, 630.f));
+	level[2].convexs[4].setPoint(1, sf::Vector2f(765.f, 648.f));
+	level[2].convexs[4].setPoint(2, sf::Vector2f(725.f, 618.f));
+
+	level[2].convexs[39].setPointCount(3);
+	level[2].convexs[39].setFillColor(Color::Green);
+	level[2].convexs[39].setPoint(0, sf::Vector2f(810.f, 682.f));
+	level[2].convexs[39].setPoint(1, sf::Vector2f(765.f, 648.f));
+	level[2].convexs[39].setPoint(2, sf::Vector2f(780.f, 665.f));
+
+	level[2].convexs[5].setPointCount(3);
+	level[2].convexs[5].setFillColor(Color::Black);
+	level[2].convexs[5].setPoint(0, sf::Vector2f(720.f, 642.f));
+	level[2].convexs[5].setPoint(1, sf::Vector2f(753.f, 667.f));
+	level[2].convexs[5].setPoint(2, sf::Vector2f(744.f, 651.f));
+
+	level[2].convexs[40].setPointCount(3);
+	level[2].convexs[40].setFillColor(Color::Black);
+	level[2].convexs[40].setPoint(0, sf::Vector2f(770.f, 670.f));
+	level[2].convexs[40].setPoint(1, sf::Vector2f(753.f, 667.f));
+	level[2].convexs[40].setPoint(2, sf::Vector2f(780.f, 685.f));
+
+	level[2].convexs[6].setPointCount(3);
+	level[2].convexs[6].setFillColor(Color::Black);
+	level[2].convexs[6].setPoint(0, sf::Vector2f(57.f, 435.f));
+	level[2].convexs[6].setPoint(1, sf::Vector2f(50.f, 448.f));
+	level[2].convexs[6].setPoint(2, sf::Vector2f(75.f, 430.f));
+
+	level[2].convexs[7].setPointCount(3);
+	level[2].convexs[7].setFillColor(Color::Green);
+	level[2].convexs[7].setPoint(0, sf::Vector2f(123.f, 414.f));
+	level[2].convexs[7].setPoint(1, sf::Vector2f(142.f, 418.f));
+	level[2].convexs[7].setPoint(2, sf::Vector2f(115.f, 395.f));
+
+	level[2].convexs[41].setPointCount(3);
+	level[2].convexs[41].setFillColor(Color::Green);
+	level[2].convexs[41].setPoint(0, sf::Vector2f(171.f, 441.f));
+	level[2].convexs[41].setPoint(1, sf::Vector2f(142.f, 418.f));
+	level[2].convexs[41].setPoint(2, sf::Vector2f(150.f, 431.f));
+
+	level[2].convexs[8].setPointCount(3);
+	level[2].convexs[8].setFillColor(Color::Black);
+	level[2].convexs[8].setPoint(0, sf::Vector2f(105.f, 430.f));
+	level[2].convexs[8].setPoint(1, sf::Vector2f(143.f, 457.f));
+	level[2].convexs[8].setPoint(2, sf::Vector2f(125.f, 435.f));
+
+	level[2].convexs[42].setPointCount(3);
+	level[2].convexs[42].setFillColor(Color::Black);
+	level[2].convexs[42].setPoint(0, sf::Vector2f(170.f, 480.f));
+	level[2].convexs[42].setPoint(1, sf::Vector2f(143.f, 457.f));
+	level[2].convexs[42].setPoint(2, sf::Vector2f(160.f, 457.f));
+
+	level[2].convexs[9].setPointCount(3);
+	level[2].convexs[9].setFillColor(Color::Green);
+	level[2].convexs[9].setPoint(0, sf::Vector2f(795.f, 460.f));
+	level[2].convexs[9].setPoint(1, sf::Vector2f(816.f, 467.f));
+	level[2].convexs[9].setPoint(2, sf::Vector2f(785.f, 443.f));
+
+	level[2].convexs[10].setPointCount(3);
+	level[2].convexs[10].setFillColor(Color::Black);
+	level[2].convexs[10].setPoint(0, sf::Vector2f(785.f, 480.f));
+	level[2].convexs[10].setPoint(1, sf::Vector2f(805.f, 485.f));
+	level[2].convexs[10].setPoint(2, sf::Vector2f(813.f, 502.f));
+
+	level[2].convexs[11].setPointCount(3);
+	level[2].convexs[11].setFillColor(Color::Black);
+	level[2].convexs[11].setPoint(0, sf::Vector2f(848.f, 503.f));
+	level[2].convexs[11].setPoint(1, sf::Vector2f(897.f, 539.f));
+	level[2].convexs[11].setPoint(2, sf::Vector2f(880.f, 516.f));
+
+	level[2].convexs[43].setPointCount(3);
+	level[2].convexs[43].setFillColor(Color::Black);
+	level[2].convexs[43].setPoint(0, sf::Vector2f(940.f, 571.f));
+	level[2].convexs[43].setPoint(1, sf::Vector2f(897.f, 539.f));
+	level[2].convexs[43].setPoint(2, sf::Vector2f(915.f, 540.f));
+
+	level[2].convexs[12].setPointCount(3);
+	level[2].convexs[12].setFillColor(Color::Black);
+	level[2].convexs[12].setPoint(0, sf::Vector2f(1168.f, 572.f));
+	level[2].convexs[12].setPoint(1, sf::Vector2f(1200.f, 587.f));
+	level[2].convexs[12].setPoint(2, sf::Vector2f(1230.f, 618.f));
+
+	level[2].convexs[13].setPointCount(3);
+	level[2].convexs[13].setFillColor(Color::Red);
+	level[2].convexs[13].setPoint(0, sf::Vector2f(208.f, 377.f));
+	level[2].convexs[13].setPoint(1, sf::Vector2f(240.f, 365.f));
+	level[2].convexs[13].setPoint(2, sf::Vector2f(240.f, 355.f));
+
+	level[2].convexs[14].setPointCount(3);
+	level[2].convexs[14].setFillColor(Color::Green);
+	level[2].convexs[14].setPoint(0, sf::Vector2f(335.f, 367.f));
+	level[2].convexs[14].setPoint(1, sf::Vector2f(340.f, 355.f));
+	level[2].convexs[14].setPoint(2, sf::Vector2f(368.f, 377.f));
+
+	level[2].convexs[15].setPointCount(3);
+	level[2].convexs[15].setFillColor(Color::Black);
+	level[2].convexs[15].setPoint(0, sf::Vector2f(340.f, 245.f));
+	level[2].convexs[15].setPoint(1, sf::Vector2f(365.f, 235.f));
+	level[2].convexs[15].setPoint(2, sf::Vector2f(330.f, 260.f));
+
+	level[2].convexs[44].setPointCount(3);
+	level[2].convexs[44].setFillColor(Color::Black);
+	level[2].convexs[44].setPoint(0, sf::Vector2f(317.f, 262.f));
+	level[2].convexs[44].setPoint(1, sf::Vector2f(310.f, 277.f));
+	level[2].convexs[44].setPoint(2, sf::Vector2f(330.f, 260.f));
+
+	level[2].convexs[16].setPointCount(3);
+	level[2].convexs[16].setFillColor(Color::Black);
+	level[2].convexs[16].setPoint(0, sf::Vector2f(205.f, 235.f));
+	level[2].convexs[16].setPoint(1, sf::Vector2f(233.f, 255.f));
+	level[2].convexs[16].setPoint(2, sf::Vector2f(233.f, 245.f));
+
+	level[2].convexs[45].setPointCount(3);
+	level[2].convexs[45].setFillColor(Color::Black);
+	level[2].convexs[45].setPoint(0, sf::Vector2f(260.f, 276.f));
+	level[2].convexs[45].setPoint(1, sf::Vector2f(233.f, 255.f));
+	level[2].convexs[45].setPoint(2, sf::Vector2f(256.f, 258.f));
+
+	level[2].convexs[17].setPointCount(3);
+	level[2].convexs[17].setFillColor(Color::Black);
+	level[2].convexs[17].setPoint(0, sf::Vector2f(534.f, 219.f));
+	level[2].convexs[17].setPoint(1, sf::Vector2f(560.f, 210.f));
+	level[2].convexs[17].setPoint(2, sf::Vector2f(525.f, 235.f));
+
+	level[2].convexs[18].setPointCount(3);
+	level[2].convexs[18].setFillColor(Color::Black);
+	level[2].convexs[18].setPoint(0, sf::Vector2f(335.f, 67.f));
+	level[2].convexs[18].setPoint(1, sf::Vector2f(368.f, 42.f));
+	level[2].convexs[18].setPoint(2, sf::Vector2f(345.f, 50.f));
+
+	level[2].convexs[46].setPointCount(3);
+	level[2].convexs[46].setFillColor(Color::Black);
+	level[2].convexs[46].setPoint(0, sf::Vector2f(335.f, 67.f));
+	level[2].convexs[46].setPoint(1, sf::Vector2f(307.f, 87.f));
+	level[2].convexs[46].setPoint(2, sf::Vector2f(315.f, 70.f));
+
+	level[2].convexs[19].setPointCount(3);
+	level[2].convexs[19].setFillColor(Color::Black);
+	level[2].convexs[19].setPoint(0, sf::Vector2f(239.f, 52.f));
+	level[2].convexs[19].setPoint(1, sf::Vector2f(202.f, 42.f));
+	level[2].convexs[19].setPoint(2, sf::Vector2f(232.f, 62.f));
+
+	level[2].convexs[47].setPointCount(3);
+	level[2].convexs[47].setFillColor(Color::Black);
+	level[2].convexs[47].setPoint(0, sf::Vector2f(264.f, 84.f));
+	level[2].convexs[47].setPoint(1, sf::Vector2f(253.f, 68.f));
+	level[2].convexs[47].setPoint(2, sf::Vector2f(232.f, 62.f));
+
+	level[2].convexs[20].setPointCount(3);
+	level[2].convexs[20].setFillColor(Color::Green);
+	level[2].convexs[20].setPoint(0, sf::Vector2f(572.f, 171.f));
+	level[2].convexs[20].setPoint(1, sf::Vector2f(560.f, 160.f));
+	level[2].convexs[20].setPoint(2, sf::Vector2f(591.f, 182.f));
+
+	level[2].convexs[48].setPointCount(3);
+	level[2].convexs[48].setFillColor(Color::Green);
+	level[2].convexs[48].setPoint(0, sf::Vector2f(589.f, 183.f));
+	level[2].convexs[48].setPoint(1, sf::Vector2f(618.f, 202.f));
+	level[2].convexs[48].setPoint(2, sf::Vector2f(591.f, 182.f));
+
+	level[2].convexs[21].setPointCount(3);
+	level[2].convexs[21].setFillColor(Color::Black);
+	level[2].convexs[21].setPoint(0, sf::Vector2f(560.f, 195.f));
+	level[2].convexs[21].setPoint(1, sf::Vector2f(590.f, 215.f));
+	level[2].convexs[21].setPoint(2, sf::Vector2f(580.f, 200.f));
+
+	level[2].convexs[49].setPointCount(3);
+	level[2].convexs[49].setFillColor(Color::Black);
+	level[2].convexs[49].setPoint(0, sf::Vector2f(619.f, 235.f));
+	level[2].convexs[49].setPoint(1, sf::Vector2f(590.f, 215.f));
+	level[2].convexs[49].setPoint(2, sf::Vector2f(613.f, 215.f));
+
+	level[2].convexs[22].setPointCount(3);
+	level[2].convexs[22].setFillColor(Color::Green);
+	level[2].convexs[22].setPoint(0, sf::Vector2f(670.f, 225.f));
+	level[2].convexs[22].setPoint(1, sf::Vector2f(688.f, 229.f));
+	level[2].convexs[22].setPoint(2, sf::Vector2f(660.f, 205.f));
+
+	level[2].convexs[50].setPointCount(3);
+	level[2].convexs[50].setFillColor(Color::Green);
+	level[2].convexs[50].setPoint(0, sf::Vector2f(722.f, 252.f));
+	level[2].convexs[50].setPoint(1, sf::Vector2f(688.f, 228.f));
+	level[2].convexs[50].setPoint(2, sf::Vector2f(700.f, 240.f));
+
+	level[2].convexs[23].setPointCount(3);
+	level[2].convexs[23].setFillColor(Color::Black);
+	level[2].convexs[23].setPoint(0, sf::Vector2f(655.f, 237.f));
+	level[2].convexs[23].setPoint(1, sf::Vector2f(685.f, 255.f));
+	level[2].convexs[23].setPoint(2, sf::Vector2f(682.f, 255.f));
+
+	level[2].convexs[24].setPointCount(3);
+	level[2].convexs[24].setFillColor(Color::Green);
+	level[2].convexs[24].setPoint(0, sf::Vector2f(730.f, 320.f));
+	level[2].convexs[24].setPoint(1, sf::Vector2f(755.f, 330.f));
+	level[2].convexs[24].setPoint(2, sf::Vector2f(725.f, 310.f));
+
+	level[2].convexs[25].setPointCount(3);
+	level[2].convexs[25].setFillColor(Color::Black);
+	level[2].convexs[25].setPoint(0, sf::Vector2f(685.f, 330.f));
+	level[2].convexs[25].setPoint(1, sf::Vector2f(713.f, 339.f));
+	level[2].convexs[25].setPoint(2, sf::Vector2f(715.f, 350.f));
+
+	level[2].convexs[26].setPointCount(3);
+	level[2].convexs[26].setFillColor(Color::Black);
+	level[2].convexs[26].setPoint(0, sf::Vector2f(770.f, 359.f));
+	level[2].convexs[26].setPoint(1, sf::Vector2f(788.f, 352.f));
+	level[2].convexs[26].setPoint(2, sf::Vector2f(758.f, 377.f));
+
+	level[2].convexs[27].setPointCount(3);
+	level[2].convexs[27].setFillColor(Color::Green);
+	level[2].convexs[27].setPoint(0, sf::Vector2f(825.f, 330.f));
+	level[2].convexs[27].setPoint(1, sf::Vector2f(855.f, 355.f));
+	level[2].convexs[27].setPoint(2, sf::Vector2f(833.f, 345.f));
+
+	level[2].convexs[28].setPointCount(3);
+	level[2].convexs[28].setFillColor(Color::Red);
+	level[2].convexs[28].setPoint(0, sf::Vector2f(880.f, 256.f));
+	level[2].convexs[28].setPoint(1, sf::Vector2f(847.f, 280.f));
+	level[2].convexs[28].setPoint(2, sf::Vector2f(872.f, 269.f));
+
+	level[2].convexs[51].setPointCount(3);
+	level[2].convexs[51].setFillColor(Color::Red);
+	level[2].convexs[51].setPoint(0, sf::Vector2f(880.f, 256.f));
+	level[2].convexs[51].setPoint(1, sf::Vector2f(917.f, 227.f));
+	level[2].convexs[51].setPoint(2, sf::Vector2f(908.f, 247.f));
+
+	level[2].convexs[29].setPointCount(3);
+	level[2].convexs[29].setFillColor(Color::Black);
+	level[2].convexs[29].setPoint(0, sf::Vector2f(914.f, 280.f));
+	level[2].convexs[29].setPoint(1, sf::Vector2f(945.f, 305.f));
+	level[2].convexs[29].setPoint(2, sf::Vector2f(940.f, 290.f));
+
+	level[2].convexs[52].setPointCount(3);
+	level[2].convexs[52].setFillColor(Color::Black);
+	level[2].convexs[52].setPoint(0, sf::Vector2f(973.f, 325.f));
+	level[2].convexs[52].setPoint(1, sf::Vector2f(945.f, 305.f));
+	level[2].convexs[52].setPoint(2, sf::Vector2f(956.f, 308.f));
+
+	level[2].convexs[30].setPointCount(3);
+	level[2].convexs[30].setFillColor(Color::Black);
+	level[2].convexs[30].setPoint(0, sf::Vector2f(965.f, 380.f));
+	level[2].convexs[30].setPoint(1, sf::Vector2f(945.f, 405.f));
+	level[2].convexs[30].setPoint(2, sf::Vector2f(980.f, 380.f));
+
+	level[2].convexs[31].setPointCount(3);
+	level[2].convexs[31].setFillColor(Color::Red);
+	level[2].convexs[31].setPoint(0, sf::Vector2f(938.f, 380.f));
+	level[2].convexs[31].setPoint(1, sf::Vector2f(924.f, 398.f));
+	level[2].convexs[31].setPoint(2, sf::Vector2f(905.f, 407.f));
+
+	level[2].convexs[53].setPointCount(3);
+	level[2].convexs[53].setFillColor(Color::Red);
+	level[2].convexs[53].setPoint(0, sf::Vector2f(938.f, 380.f));
+	level[2].convexs[53].setPoint(1, sf::Vector2f(972.f, 353.f));
+	level[2].convexs[53].setPoint(2, sf::Vector2f(960.f, 370.f));
+
+	level[2].convexs[32].setPointCount(3);
+	level[2].convexs[32].setFillColor(Color::Black);
+	level[2].convexs[32].setPoint(0, sf::Vector2f(1205.f, 380.f));
+	level[2].convexs[32].setPoint(1, sf::Vector2f(1223.f, 386.f));
+	level[2].convexs[32].setPoint(2, sf::Vector2f(1230.f, 400.f));
+
+	level[2].convexs[33].setPointCount(3);
+	level[2].convexs[33].setFillColor(Color::Red);
+	level[2].convexs[33].setPoint(0, sf::Vector2f(1205.f, 155.f));
+	level[2].convexs[33].setPoint(1, sf::Vector2f(1230.f, 140.f));
+	level[2].convexs[33].setPoint(2, sf::Vector2f(1224.f, 156.f));
+
+	level[2].convexs[34].setPointCount(3);
+	level[2].convexs[34].setFillColor(Color::Red);
+	level[2].convexs[34].setPoint(0, sf::Vector2f(690.f, 112.f));
+	level[2].convexs[34].setPoint(1, sf::Vector2f(650.f, 140.f));
+	level[2].convexs[34].setPoint(2, sf::Vector2f(672.f, 130.f));
+
+	level[2].convexs[35].setPointCount(3);
+	level[2].convexs[35].setFillColor(Color::Green);
+	level[2].convexs[35].setPoint(0, sf::Vector2f(989.f, 154.f));
+	level[2].convexs[35].setPoint(1, sf::Vector2f(978.f, 135.f));
+	level[2].convexs[35].setPoint(2, sf::Vector2f(1005.f, 155.f));
+
+	level[2].convexs[54].setPointCount(3);
+	level[2].convexs[54].setFillColor(Color::Green);
+	level[2].convexs[54].setPoint(0, sf::Vector2f(951.f, 115.f));
+	level[2].convexs[54].setPoint(1, sf::Vector2f(978.f, 135.f));
+	level[2].convexs[54].setPoint(2, sf::Vector2f(963.f, 130.f));
+
+	level[2].convexs[36].setPointCount(3);
+	level[2].convexs[36].setFillColor(Color::Black);
+	level[2].convexs[36].setPoint(0, sf::Vector2f(962.f, 144.f));
+	level[2].convexs[36].setPoint(1, sf::Vector2f(975.f, 163.f));
+	level[2].convexs[36].setPoint(2, sf::Vector2f(945.f, 140.f));
+
+	level[2].convexs[55].setPointCount(3);
+	level[2].convexs[55].setFillColor(Color::Black);
+	level[2].convexs[55].setPoint(0, sf::Vector2f(1004.f, 183.f));
+	level[2].convexs[55].setPoint(1, sf::Vector2f(975.f, 163.f));
+	level[2].convexs[55].setPoint(2, sf::Vector2f(993.f, 172.f));
 
 }
 void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, double& velocityFireBoy, Sprite& FireBoy)
@@ -1664,74 +2281,160 @@ void collision_boxes(RenderWindow& window)
 
 }
 void button_collision() {
-	bool down = 0, up = 0;
-	for (int i = 0; i < 10; i++) {
-		if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].Button[i].getGlobalBounds()) || f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].Button[i].getGlobalBounds())) {
+	short int in = 0;
+	for (int i = 1; i < 3; i++) {
+		if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].Button[i].getGlobalBounds())) {
 			if (!level[1].Button[i].getGlobalBounds().intersects(level[1].button_down[i].getGlobalBounds())) {
 				level[1].Button[i].move(0.f, 0.7f);
-
-				if (i == 1 || i == 2) {
-					if (!level[1].Elevator[1].getGlobalBounds().intersects(level[1].ground[12].getGlobalBounds())) {
-						if (!level[1].Elevator[1].getGlobalBounds().intersects(f_w.fireboy_st.firboy_top.getGlobalBounds()) && !level[1].Elevator[1].getGlobalBounds().intersects(f_w.watergirl_st.watergirl_top.getGlobalBounds()))
-						{
-
-							level[1].Elevator[1].move(0.f, 5.0f);
-						}
-						if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].ground[14].getGlobalBounds())) {
-							f_w.fireboy_st.FireBoy.move(0.0f, 5.f);
-						}
-						if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].ground[14].getGlobalBounds())) {
-							f_w.watergirl_st.WaterGirl.move(0.0f, 5.f);
-						}
-					}
-
-
+				if (!level[1].elevator_open) {
+					level[1].elevator_open = 1;
 				}
 			}
 		}
-		else if (!f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].Button[i].getGlobalBounds()) || !f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].Button[i].getGlobalBounds())) {
+		if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].Button[i].getGlobalBounds())) {
+
+			if (!level[1].Button[i].getGlobalBounds().intersects(level[1].button_down[i].getGlobalBounds())) {
+				level[1].Button[i].move(0.f, 0.7f);
+				if (!level[1].elevator_open) {
+					level[1].elevator_open = 1;
+				}
+			}
+
+		}
+		if (level[1].elevator_open) {
+			if (!level[1].Elevator[1].getGlobalBounds().intersects(level[1].ground[12].getGlobalBounds())) {
+				if (!level[1].Elevator[1].getGlobalBounds().intersects(f_w.fireboy_st.firboy_top.getGlobalBounds()) && !level[1].Elevator[1].getGlobalBounds().intersects(f_w.watergirl_st.watergirl_top.getGlobalBounds()))
+				{
+
+					level[1].Elevator[1].move(0.f, 5.0f);
+				}
+				if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].ground[14].getGlobalBounds())) {
+					f_w.fireboy_st.FireBoy.move(0.0f, 5.f);
+				}
+				if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].ground[14].getGlobalBounds())) {
+					f_w.watergirl_st.WaterGirl.move(0.0f, 5.f);
+				}
+
+
+			}
+
+
+		}
+
+		if (!f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].Button[i].getGlobalBounds()) && !f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].Button[i].getGlobalBounds())) {
+			in++;
+
 			if (!level[1].Button[i].getGlobalBounds().intersects(level[1].button_up[i].getGlobalBounds())) {
 				level[1].Button[i].move(0.f, -0.4f);
+			}
 
-				if (i == 1 || i == 2) {
-					if (!level[1].Elevator[1].getGlobalBounds().intersects(level[1].ground[42].getGlobalBounds())) {
+		}
+		if (in == 2)level[1].elevator_open = 0;
+		if (!level[1].elevator_open) {
+			if (!level[1].Elevator[1].getGlobalBounds().intersects(level[1].ground[42].getGlobalBounds())) {
 
-						if (!f_w.fireboy_st.firboy_top.getGlobalBounds().intersects(level[1].ground[42].getGlobalBounds()) && !f_w.watergirl_st.watergirl_top.getGlobalBounds().intersects(level[1].ground[42].getGlobalBounds())) {
-							{
-								level[1].Elevator[1].move(0.f, -5.f);
-								if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].ground[14].getGlobalBounds())) {
-									f_w.fireboy_st.FireBoy.move(0.0f, -5.f);
-								}
-								if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].ground[14].getGlobalBounds())) {
-									f_w.watergirl_st.WaterGirl.move(0.0f, -5.f);
-								}
-							}
+				if (!f_w.fireboy_st.firboy_top.getGlobalBounds().intersects(level[1].ground[42].getGlobalBounds()) && !f_w.watergirl_st.watergirl_top.getGlobalBounds().intersects(level[1].ground[42].getGlobalBounds())) {
+					{
+						level[1].Elevator[1].move(0.f, -5.f);
+						if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].ground[14].getGlobalBounds())) {
+							f_w.fireboy_st.FireBoy.move(0.0f, -5.f);
+						}
+						if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].ground[14].getGlobalBounds())) {
+							f_w.watergirl_st.WaterGirl.move(0.0f, -5.f);
 						}
 					}
 				}
-
 			}
 		}
 
+
+
 	}
+	////////////////////////////////////////////    lever   ////////////////////////////////////////////////////
+	if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[1].lever_right_hitbox.getGlobalBounds())) {
+		if (level[1].lever_open == 0 && Keyboard::isKeyPressed(Keyboard::A)) {
+
+			level[1].Button[4].setPosition(Vector2f(295.5f, 520.f));
+			level[1].Button[4].setRotation(-34.f);
+			level[1].Button[5].setPosition(Vector2f(295.5f, 520.f));
+			level[1].lever_open = 1;
+		}
+	}
+	if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[1].lever_right_hitbox.getGlobalBounds())) {
+
+		if (level[1].lever_open == 0 && Keyboard::isKeyPressed(Keyboard::Left)) {
+			level[1].Button[4].setPosition(Vector2f(295.5f, 520.f));
+			level[1].Button[4].setRotation(-34.f);
+			level[1].Button[5].setPosition(Vector2f(295.5f, 520.f));
+			level[1].lever_open = 1;
+
+		}
+	}
+	if (level[1].lever_open) {
+		if (!level[1].Elevator[2].getGlobalBounds().intersects(level[1].ground[47].getGlobalBounds())) {
+			if (!level[1].Elevator[2].getGlobalBounds().intersects(f_w.fireboy_st.firboy_top.getGlobalBounds()) && !level[1].Elevator[2].getGlobalBounds().intersects(f_w.watergirl_st.watergirl_top.getGlobalBounds()))
+			{
+
+				level[1].Elevator[2].move(0.f, 5.0f);
+			}
+			if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].ground[27].getGlobalBounds())) {
+				f_w.fireboy_st.FireBoy.move(0.0f, 5.f);
+			}
+			if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].ground[27].getGlobalBounds())) {
+				f_w.watergirl_st.WaterGirl.move(0.0f, 5.f);
+			}
+		}
+	}
+	if (f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[1].lever_left_hitbox.getGlobalBounds())) {
+		if (level[1].lever_open == 1 && Keyboard::isKeyPressed(Keyboard::D)) {
+			level[1].Button[4].setPosition(Vector2f(288.5f, 520.f));
+			level[1].Button[4].setRotation(34.f);
+			level[1].lever_open = 0;
+		}
+	}
+	if (f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[1].lever_left_hitbox.getGlobalBounds())) {
+
+		if (level[1].lever_open == 1 && Keyboard::isKeyPressed(Keyboard::Right)) {
+			level[1].Button[4].setPosition(Vector2f(288.5f, 520.f));
+			level[1].Button[4].setRotation(34.f);
+			level[1].lever_open = 0;
+		}
+	}
+	if (level[1].lever_open == 0) {
+		if (!level[1].Elevator[2].getGlobalBounds().intersects(level[1].ground[10].getGlobalBounds())) {
+
+			if (!f_w.fireboy_st.firboy_top.getGlobalBounds().intersects(level[1].ground[43].getGlobalBounds()) && !f_w.watergirl_st.watergirl_top.getGlobalBounds().intersects(level[1].ground[43].getGlobalBounds())) {
+				{
+					level[1].Elevator[2].move(0.f, -5.f);
+					if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].ground[27].getGlobalBounds())) {
+						f_w.fireboy_st.FireBoy.move(0.0f, -5.f);
+					}
+					if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].ground[27].getGlobalBounds())) {
+						f_w.watergirl_st.WaterGirl.move(0.0f, -5.f);
+					}
+				}
+			}
+		}
+	}
+
 }
 void collision(RenderWindow& window, bool& isAnimationStandingFireBoy, double& velocityFireBoy, Sprite& FireBoy, bool& isAnimationStandingWaterGirl, double& velocityWaterGirl, Sprite& WaterGirl) {
 	collision_fireboy(window, isAnimationStandingFireBoy, velocityFireBoy, FireBoy);
 	collision_watergirl(window, isAnimationStandingWaterGirl, velocityWaterGirl, WaterGirl);
 	collision_boxes(window);
- button_collision();
- ///----Pause Collision----//
- Vector2i mousepos = Mouse::getPosition(window);
- if (Mouse::isButtonPressed(Mouse::Left) && mousepos.x > 1230 && mousepos.x < 1261 && mousepos.y> 8 && mousepos.y < 42) {
-	 level[1].Pause.setScale(0.8f, 0.8f);
-	 level[1].pauseclicked = 1;
-	 level[1].Pause.setPosition(1232, 9);
-	 level[1].ingame_setings_c.restart();
- }
- else {
-	 level[1].Pause.setPosition(1230, 8);
-	 level[1].Pause.setScale(1.0f, 1.0f);
- }
+	button_collision();
+	///----Pause Collision----//
+	Vector2i mousepos = Mouse::getPosition(window);
+	if (Mouse::isButtonPressed(Mouse::Left) && mousepos.x > 1230 && mousepos.x < 1261 && mousepos.y> 8 && mousepos.y < 42) {
+		level[1].Pause.setScale(0.8f, 0.8f);
+		level[1].pauseclicked = 1;
+		level[1].Pause.setPosition(1232, 9);
+		level[1].ingame_setings_c.restart();
+	}
+	else {
+		level[1].Pause.setPosition(1230, 8);
+		level[1].Pause.setScale(1.0f, 1.0f);
+	}
 
 }
 void Animation(RenderWindow& window) {
@@ -1960,7 +2663,7 @@ void Animation(RenderWindow& window) {
 		{
 			level[1].door[1].setLoop(false);
 			level[1].door[1].play();
-			
+
 		}
 		level[1].fireboy_dooropening = 1;
 		if (level[1].clockDoor[1].getElapsedTime().asSeconds() >= 0.036)
@@ -1969,7 +2672,7 @@ void Animation(RenderWindow& window) {
 			if (level[1].animationDoorFireBoy != 21) { level[1].animationDoorFireBoy++; }
 			level[1].clockDoor[1].restart();
 		}
-			if (level[1].animationDoorFireBoy == 21)level[1].door[1].stop();
+		if (level[1].animationDoorFireBoy == 21)level[1].door[1].stop();
 	}
 	else {
 		if (level[1].fireboy_dooropening)
@@ -1985,26 +2688,26 @@ void Animation(RenderWindow& window) {
 			if (level[1].animationDoorFireBoy != 0) { level[1].animationDoorFireBoy--; }
 			level[1].clockDoor[1].restart();
 		}
-			if (level[1].animationDoorFireBoy == 0)level[1].door[1].stop();
+		if (level[1].animationDoorFireBoy == 0)level[1].door[1].stop();
 
 	}
 	//animation door watergirl
-	if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].WaterGirl_DoorOpening.getGlobalBounds())) 
+	if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].WaterGirl_DoorOpening.getGlobalBounds()))
 	{
-			if (!level[1].watergirl_dooropening)
-			{
-				level[1].door[2].setLoop(false);
-				level[1].door[2].play();
-			}
-				level[1].watergirl_dooropening = 1;
-			if (level[1].clockDoor[2].getElapsedTime().asSeconds() >= 0.036)
-			{
+		if (!level[1].watergirl_dooropening)
+		{
+			level[1].door[2].setLoop(false);
+			level[1].door[2].play();
+		}
+		level[1].watergirl_dooropening = 1;
+		if (level[1].clockDoor[2].getElapsedTime().asSeconds() >= 0.036)
+		{
 			level[1].WaterGirl_DoorOpening.setTextureRect(IntRect(level[1].animationDoorWaterGirl * 114, 0, 114, 122));
 			if (level[1].animationDoorWaterGirl != 21) { level[1].animationDoorWaterGirl++; }
-				level[1].clockDoor[2].restart();
-			}
-			if (level[1].animationDoorWaterGirl == 21)level[1].door[2].stop();
-	
+			level[1].clockDoor[2].restart();
+		}
+		if (level[1].animationDoorWaterGirl == 21)level[1].door[2].stop();
+
 	}
 	else {
 		if (level[1].watergirl_dooropening)
@@ -2015,8 +2718,8 @@ void Animation(RenderWindow& window) {
 		level[1].watergirl_dooropening = 0;
 		if (level[1].clockDoor[2].getElapsedTime().asSeconds() >= 0.036)
 		{
-		level[1].WaterGirl_DoorOpening.setTextureRect(IntRect(level[1].animationDoorWaterGirl * 114, 0, 114, 122));
-		if (level[1].animationDoorWaterGirl != 0) { level[1].animationDoorWaterGirl--; }
+			level[1].WaterGirl_DoorOpening.setTextureRect(IntRect(level[1].animationDoorWaterGirl * 114, 0, 114, 122));
+			if (level[1].animationDoorWaterGirl != 0) { level[1].animationDoorWaterGirl--; }
 			level[1].clockDoor[2].restart();
 		}
 		if (level[1].animationDoorWaterGirl == 0)level[1].door[2].stop();
@@ -2036,11 +2739,11 @@ void Animation(RenderWindow& window) {
 void Game_Play(RenderWindow& window)
 {
 	//levels
-	Levels(window);
+	Level1(window);
 	fire_water_hitboxes(window);
 
 
-	
+
 	///////////////////////////////////////////////////////
 
 
@@ -2064,9 +2767,9 @@ void Game_Play(RenderWindow& window)
 		}
 
 
-			//timer
-			level[1].sa3a_s = level[1].timer.getElapsedTime();
-			level[1].elwaqt_s.setString(to_string((int)level[1].sa3a_s.asSeconds()));
+		//timer
+		level[1].sa3a_s = level[1].timer.getElapsedTime();
+		level[1].elwaqt_s.setString(to_string((int)level[1].sa3a_s.asSeconds()));
 
 		//////////////////////
 		///test
@@ -2104,7 +2807,7 @@ void Game_Play(RenderWindow& window)
 		level[1].cube[1].move(0.0f, -level[1].velocityboxes[1]);
 		f_w.fireboy_st.FireBoy.move(0, -f_w.fireboy_st.velocityFireBoy);
 		f_w.watergirl_st.WaterGirl.move(0, -f_w.watergirl_st.velocityWaterGirl);
-		
+
 		window.draw(level[1].fb_count);
 		window.draw(level[1].wg_count);
 		window.draw(level[1].elwaqt_s);
@@ -2119,12 +2822,16 @@ void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 	window.draw(level[1].background_levels[1]);
 	window.draw(level[1].Button[1]);
 	window.draw(level[1].Button[2]);
-	window.draw(level[1].Button[3]);
 	window.draw(level[1].ground_levels[1]);
+	if (level[1].lever_open) window.draw(level[1].Button[5]);
+	else 	window.draw(level[1].Button[4]);
+	if (level[1].lever_open)window.draw(level[1].Button[6]);
+	else window.draw(level[1].Button[3]);
+
 	for (int i = 0; i < 60; i++)
 	{
 
-		/*window.draw(level[1].ground[i]);*/
+		//window.draw(level[1].ground[i]);
 		if (i < 11)
 		{
 			window.draw(level[1].coinFireBoy[i]);
@@ -2137,21 +2844,27 @@ void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 		}
 	}
 	window.draw(level[1].cube[1]);
-	
+
 	window.draw(level[1].Elevator[2]);
 	window.draw(level[1].Elevator[1]);
 
-	window.draw(level[1].button_up[1]);
-	window.draw(level[1].button_down[1]);
-	window.draw(level[1].button_up[2]);
-	window.draw(level[1].button_down[2]);
-	/*window.draw(level[1].boxes_down[1]);
-	window.draw(level[1].boxes_top[1]);
-	window.draw(level[1].boxes_left[1]);
-	window.draw(level[1].boxes_right[1]);*/
+	//	window.draw(level[1].lever_left_hitbox);
+	//	window.draw(level[1].lever_right_hitbox);
 
-	// window.draw(level[1].background_levels[1]);
-//     window.draw(level[1].ground_levels[1]);
+		// window.draw(f_w.fireboy_st.firboy_down);
+		// window.draw(f_w.watergirl_st.watergirl_down);
+
+		//  window.draw(level[1].button_up[1]);
+		//   window.draw(level[1].button_down[1]);
+		//  window.draw(level[1].button_up[2]);
+		//  window.draw(level[1].button_down[2]);
+		/*window.draw(level[1].boxes_down[1]);
+		window.draw(level[1].boxes_top[1]);
+		window.draw(level[1].boxes_left[1]);
+		window.draw(level[1].boxes_right[1]);*/
+
+		// window.draw(level[1].background_levels[1]);
+	//     window.draw(level[1].ground_levels[1]);
 	window.draw(level[1].FireBoy_DoorStand);
 	window.draw(level[1].WaterGirl_DoorStand);
 	/*    window.draw(RectangleUp);
@@ -2184,10 +2897,10 @@ void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 
 	window.draw(level[1].Pause);
 	if (level[1].pauseclicked) {
-	window.draw(in_game.Background);
-	window.draw(in_game.settings_menu);
-	if (!in_game.Settings_hitbox.getGlobalBounds().intersects(in_game.settings_menu.getGlobalBounds())) {
-		in_game.settings_menu.move(0, -30);
-	}
+		window.draw(in_game.Background);
+		window.draw(in_game.settings_menu);
+		if (!in_game.Settings_hitbox.getGlobalBounds().intersects(in_game.settings_menu.getGlobalBounds())) {
+			in_game.settings_menu.move(0, -30);
+		}
 	}
 }
