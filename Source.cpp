@@ -963,7 +963,7 @@ void Level1(RenderWindow& window) {
 
 	//////////////////the ground for the elevator2 to stop down////////////
 	level[1].ground[47].setSize(Vector2f(20, 2));
-	level[1].ground[47].setPosition(Vector2f(20, 488));
+	level[1].ground[47].setPosition(Vector2f(20, 490));
 
 
 
@@ -1750,7 +1750,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 		velocityFireBoy = 0;
 		if (Keyboard::isKeyPressed(Keyboard::Key::W)) {
 			level[1].Jump[1].play();
-			velocityFireBoy = 9;
+			velocityFireBoy = 5.5;
 			isAnimationStandingFireBoy = 0;
 
 		}
@@ -1951,7 +1951,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 		velocityWaterGirl = 0;
 		if (Keyboard::isKeyPressed(Keyboard::Key::Up)) {
 			level[1].Jump[2].play();
-			velocityWaterGirl = 9;
+			velocityWaterGirl = 5.5;
 			isAnimationStandingWaterGirl = 0;
 
 		}
