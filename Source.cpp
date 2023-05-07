@@ -679,13 +679,13 @@ void Level1(RenderWindow& window) {
 	//set fireboy
 	f_w.fireboy_st.fireBoyImage.loadFromFile("Fireboy.png");
 	f_w.fireboy_st.FireBoy.setTexture(f_w.fireboy_st.fireBoyImage);
-	f_w.fireboy_st.FireBoy.setPosition(880, 650);
+	f_w.fireboy_st.FireBoy.setPosition(100, 800);
 	f_w.fireboy_st.FireBoy.setOrigin(f_w.fireboy_st.FireBoy.getLocalBounds().width / 38, f_w.fireboy_st.FireBoy.getLocalBounds().height / 2);
 	f_w.fireboy_st.FireBoy.setScale(0.7f, 0.7f);
 	//set watergirl
 	f_w.watergirl_st.waterGirlImage.loadFromFile("Watergirl.png");
 	f_w.watergirl_st.WaterGirl.setTexture(f_w.watergirl_st.waterGirlImage);
-	f_w.watergirl_st.WaterGirl.setPosition(880, 650);
+	f_w.watergirl_st.WaterGirl.setPosition(50, 700);
 	f_w.watergirl_st.WaterGirl.setOrigin(f_w.watergirl_st.WaterGirl.getLocalBounds().width / 60, f_w.watergirl_st.WaterGirl.getLocalBounds().height / 2);
 	f_w.watergirl_st.WaterGirl.setScale(0.7f, 0.7f);
 	//set fireboy's door
@@ -1750,7 +1750,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 		velocityFireBoy = 0;
 		if (Keyboard::isKeyPressed(Keyboard::Key::W)) {
 			level[1].Jump[1].play();
-			velocityFireBoy = 9;
+			velocityFireBoy = 5.5;
 			isAnimationStandingFireBoy = 0;
 
 		}
@@ -1928,7 +1928,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 
 		if (Keyboard::isKeyPressed(Keyboard::Key::W)) {
 			level[1].Jump[1].play();
-			velocityFireBoy = 9;
+			velocityFireBoy = 5.5;
 			isAnimationStandingFireBoy = 0;
 
 		}
@@ -1951,7 +1951,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 		velocityWaterGirl = 0;
 		if (Keyboard::isKeyPressed(Keyboard::Key::Up)) {
 			level[1].Jump[2].play();
-			velocityWaterGirl = 9;
+			velocityWaterGirl = 5.5;
 			isAnimationStandingWaterGirl = 0;
 
 		}
@@ -2111,7 +2111,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 		velocityWaterGirl = 0;
 		if (Keyboard::isKeyPressed(Keyboard::Key::Up)) {
 			level[1].Jump[2].play();
-			velocityWaterGirl = 9;
+			velocityWaterGirl = 5.5;
 			isAnimationStandingWaterGirl = 0;
 
 		}
