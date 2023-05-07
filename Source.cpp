@@ -1906,7 +1906,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 
 	///////////////////////////---------------collision convexs---------------------///////////////////////////
 
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 60; i++)
 	{
 
 
@@ -1973,25 +1973,27 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 		}
 	}
 	if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[in_game.number_Level].convexs[9].getGlobalBounds()) && !(f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[in_game.number_Level].convexs[9].getGlobalBounds()))) {
-		FireBoy.move(5.2f, 0);
+		if (in_game.number_Level == 1)
+			FireBoy.move(5.2f, 0);
 	}
 
 	if (f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[in_game.number_Level].convexs[2].getGlobalBounds()) && !(f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[in_game.number_Level].convexs[2].getGlobalBounds()))) {
-		FireBoy.move(-5.2f, 0);
+		if (in_game.number_Level == 1)
+			FireBoy.move(-5.2f, 0);
 	}
 
 	/////////// collision fireboy with water and black pond //////////////////
-	if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].pondWaterGirl[1].getGlobalBounds()) || f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].pondBlack[1].getGlobalBounds()))
+	if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[in_game.number_Level].pondWaterGirl[1].getGlobalBounds()) || f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[in_game.number_Level].pondBlack[1].getGlobalBounds()))
 	{
-		if (!level[1].isSmoke[1])
-			level[1].death[1].play();
-		level[1].isSmoke[1] = 1;
-		level[1].smoke[1].setPosition(f_w.fireboy_st.firboy_top.getPosition().x - 30, f_w.fireboy_st.firboy_top.getPosition().y - 40);
+		if (!level[in_game.number_Level].isSmoke[1])
+			level[in_game.number_Level].death[1].play();
+		level[in_game.number_Level].isSmoke[1] = 1;
+		level[in_game.number_Level].smoke[1].setPosition(f_w.fireboy_st.firboy_top.getPosition().x - 30, f_w.fireboy_st.firboy_top.getPosition().y - 40);
 
 
 		f_w.fireboy_st.FireBoy.setScale(0, 0);
 	}
-	else level[1].isSmoke[1] = 0;
+	else level[in_game.number_Level].isSmoke[1] = 0;
 
 	/////////// collision fireboy with coin //////////////////
 	for (int i = 0; i < 5; i++)
@@ -2009,13 +2011,13 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 		level[in_game.number_Level].cube[1].move(-2.5f, 0.0f);
 		f_w.fireboy_st.FireBoy.move(3.0f, 0.0f);
 		if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[in_game.number_Level].ground[44].getGlobalBounds())) {
-			//level[1].cube[1].move(-2.5f, 0.0f);
+			//level[in_game.number_Level].cube[1].move(-2.5f, 0.0f);
 			f_w.fireboy_st.FireBoy.move(2.5f, 0.0f);
 			f_w.watergirl_st.WaterGirl.move(2.0f, 0.0f);
 		}
 	}
 	if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[in_game.number_Level].boxes_right[1].getGlobalBounds()) && (level[in_game.number_Level].g_w_b_f[1])) {
-		// level[1].cube[1].move(-2.5f, 0.0f);
+		// level[in_game.number_Level].cube[1].move(-2.5f, 0.0f);
 		//f_w.watergirl_st.WaterGirl.move(5.0f, 0.0f);
 		f_w.fireboy_st.FireBoy.move(3.0f, 0.0f);
 	}
@@ -2023,7 +2025,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 		level[in_game.number_Level].cube[1].move(2.5f, 0.0f);
 		f_w.fireboy_st.FireBoy.move(-3.0f, 0.0f);
 		if (f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[in_game.number_Level].ground[41].getGlobalBounds())) {
-			//level[1].cube[1].move(-2.5f, 0.0f);
+			//level[in_game.number_Level].cube[1].move(-2.5f, 0.0f);
 			f_w.fireboy_st.FireBoy.move(-2.5f, 0.0f);
 			f_w.watergirl_st.WaterGirl.move(-2.0f, 0.0f);
 		}
@@ -2104,7 +2106,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 	}
 
 	//collision convexes
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 60; i++)
 	{
 
 
@@ -2181,16 +2183,16 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 	}
 
 	/////////// collision watergirl with fire and black pond //////////////////
-	if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].pondFireBoy[1].getGlobalBounds()) || f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].pondBlack[1].getGlobalBounds()))
+	if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[in_game.number_Level].pondFireBoy[1].getGlobalBounds()) || f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[in_game.number_Level].pondBlack[1].getGlobalBounds()))
 	{
-		if (!level[1].isSmoke[2])
-			level[1].death[2].play();
-		level[1].isSmoke[2] = 1;
-		level[1].smoke[2].setPosition(f_w.watergirl_st.watergirl_top.getPosition().x - 30, f_w.watergirl_st.watergirl_top.getPosition().y - 40);
+		if (!level[in_game.number_Level].isSmoke[2])
+			level[in_game.number_Level].death[2].play();
+		level[in_game.number_Level].isSmoke[2] = 1;
+		level[in_game.number_Level].smoke[2].setPosition(f_w.watergirl_st.watergirl_top.getPosition().x - 30, f_w.watergirl_st.watergirl_top.getPosition().y - 40);
 
 		f_w.watergirl_st.WaterGirl.setScale(0, 0);
 	}
-	else level[1].isSmoke[2] = 0;
+	else level[in_game.number_Level].isSmoke[2] = 0;
 	/////////// collision watergirl with coin //////////////////
 	for (int i = 0; i < 5; i++)
 	{
@@ -2208,7 +2210,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 		f_w.watergirl_st.WaterGirl.move(3.0f, 0.0f);
 	}
 	if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[in_game.number_Level].boxes_right[1].getGlobalBounds()) && (level[in_game.number_Level].g_f_b_w[1])) {
-		//	level[1].cube[1].move(-2.5f, 0.0f);
+		//	level[in_game.number_Level].cube[1].move(-2.5f, 0.0f);
 		f_w.watergirl_st.WaterGirl.move(5.0f, 0.0f);
 	}
 	if (f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[in_game.number_Level].boxes_left[1].getGlobalBounds()) && !(level[in_game.number_Level].w_b_f_g[1])) {
@@ -2216,7 +2218,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 		f_w.watergirl_st.WaterGirl.move(-3.0f, 0.0f);
 	}
 	if (f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[in_game.number_Level].boxes_left[1].getGlobalBounds()) && (level[in_game.number_Level].w_b_f_g[1])) {
-		// level[1].cube[1].move(2.5f, 0.0f);
+		// level[in_game.number_Level].cube[1].move(2.5f, 0.0f);
 		f_w.watergirl_st.WaterGirl.move(-5.0f, 0.0f);
 	}
 	if (f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[in_game.number_Level].boxes_top[1].getGlobalBounds())) {
@@ -2237,28 +2239,28 @@ void collision_boxes(RenderWindow& window)
 	bool top = 0, down = 0;
 	//collision fireboy_down
 	for (int i = 0; i < 60; i++) {
-		if (level[1].ground[i].getGlobalBounds().intersects(level[1].boxes_down[1].getGlobalBounds()) && (level[1].ground[i].getFillColor() == Color::Cyan)) {
+		if (level[in_game.number_Level].ground[i].getGlobalBounds().intersects(level[in_game.number_Level].boxes_down[1].getGlobalBounds()) && (level[in_game.number_Level].ground[i].getFillColor() == Color::Cyan)) {
 			down = 1;
-			level[1].isStandingboxes[1] = 1;
+			level[in_game.number_Level].isStandingboxes[1] = 1;
 		}
 	}
 	if (down)
 	{
-		level[1].velocityboxes[1] = 0;
+		level[in_game.number_Level].velocityboxes[1] = 0;
 	}
 	else if (!down)
 	{
-		level[1].velocityboxes[1] -= 0.2;
+		level[in_game.number_Level].velocityboxes[1] -= 0.2;
 	}
 	////////////////collision box_right with ground ///////////////
 	for (int i = 0; i < 60; i++) {
-		if (level[1].ground[i].getGlobalBounds().intersects(level[1].boxes_right[1].getGlobalBounds()) && level[1].ground[i].getFillColor() == Color::Yellow) {
-			if (f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[1].boxes_left[1].getGlobalBounds())) {
-				level[1].cube[1].move(-2.5f, 0.0f);
+		if (level[in_game.number_Level].ground[i].getGlobalBounds().intersects(level[in_game.number_Level].boxes_right[1].getGlobalBounds()) && level[in_game.number_Level].ground[i].getFillColor() == Color::Yellow) {
+			if (f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[in_game.number_Level].boxes_left[1].getGlobalBounds())) {
+				level[in_game.number_Level].cube[1].move(-2.5f, 0.0f);
 				f_w.fireboy_st.FireBoy.move(-3.0f, 0.0f);
 			}
-			if (f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[1].boxes_left[1].getGlobalBounds())) {
-				level[1].cube[1].move(-2.5f, 0.0f);
+			if (f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[in_game.number_Level].boxes_left[1].getGlobalBounds())) {
+				level[in_game.number_Level].cube[1].move(-2.5f, 0.0f);
 				f_w.watergirl_st.WaterGirl.move(-3.0f, 0.0f);
 			}
 		}
@@ -2268,30 +2270,30 @@ void collision_boxes(RenderWindow& window)
 
 
 	for (int i = 0; i < 60; i++) {
-		if (level[1].ground[i].getGlobalBounds().intersects(level[1].boxes_left[1].getGlobalBounds()) && level[1].ground[i].getFillColor() == Color::Yellow) {
-			if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[1].boxes_right[1].getGlobalBounds())) {
-				level[1].cube[1].move(2.5f, 0.0f);
+		if (level[in_game.number_Level].ground[i].getGlobalBounds().intersects(level[in_game.number_Level].boxes_left[1].getGlobalBounds()) && level[in_game.number_Level].ground[i].getFillColor() == Color::Yellow) {
+			if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[in_game.number_Level].boxes_right[1].getGlobalBounds())) {
+				level[in_game.number_Level].cube[1].move(2.5f, 0.0f);
 				f_w.fireboy_st.FireBoy.move(3.0f, 0.0f);
 
 			}
-			if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[1].boxes_right[1].getGlobalBounds())) {
-				level[1].cube[1].move(2.5f, 0.0f);
+			if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[in_game.number_Level].boxes_right[1].getGlobalBounds())) {
+				level[in_game.number_Level].cube[1].move(2.5f, 0.0f);
 				f_w.watergirl_st.WaterGirl.move(3.0f, 0.0f);
 			}
 		}
 	}
 	///////////////////////////---------------collision convexs---------------------///////////////////////////
 
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 60; i++)
 	{
-		if (level[1].boxes_down[1].getGlobalBounds().intersects(level[1].convexs[i].getGlobalBounds()) && level[1].convexs[i].getFillColor() == Color::Green) {
-			level[1].isStandingboxes[1] = 1;
-			level[1].cube[1].move(4.0, 4.0);
+		if (level[in_game.number_Level].boxes_down[1].getGlobalBounds().intersects(level[in_game.number_Level].convexs[i].getGlobalBounds()) && level[in_game.number_Level].convexs[i].getFillColor() == Color::Green) {
+			level[in_game.number_Level].isStandingboxes[1] = 1;
+			level[in_game.number_Level].cube[1].move(4.0, 4.0);
 			//cout << "YES\n";
 		}
-		if (level[1].boxes_down[1].getGlobalBounds().intersects(level[1].convexs[i].getGlobalBounds()) && level[1].convexs[i].getFillColor() == Color::Red) {
-			level[1].isStandingboxes[1] = 1;
-			level[1].cube[1].move(-4.0, 4.0);
+		if (level[in_game.number_Level].boxes_down[1].getGlobalBounds().intersects(level[in_game.number_Level].convexs[i].getGlobalBounds()) && level[in_game.number_Level].convexs[i].getFillColor() == Color::Red) {
+			level[in_game.number_Level].isStandingboxes[1] = 1;
+			level[in_game.number_Level].cube[1].move(-4.0, 4.0);
 		}
 	}
 
@@ -2299,41 +2301,41 @@ void collision_boxes(RenderWindow& window)
 	///////////////////collision the box between fireboy and watergirl and ground ////////////////
 	bool state_1 = 0, state_2 = 0, state_3 = 0, state_4 = 0;
 	for (int i = 0; i < 60; i++) {
-		if (f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[1].boxes_left[1].getGlobalBounds())) {
+		if (f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[in_game.number_Level].boxes_left[1].getGlobalBounds())) {
 			////case 1:  //  g f  b w
 			////case 1:  //    b w
-			if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[1].ground[i].getGlobalBounds()) && level[1].ground[i].getFillColor() == Color::Yellow)
+			if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[in_game.number_Level].ground[i].getGlobalBounds()) && level[in_game.number_Level].ground[i].getFillColor() == Color::Yellow)
 			{
-				if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[1].boxes_right[1].getGlobalBounds())) {
+				if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[in_game.number_Level].boxes_right[1].getGlobalBounds())) {
 					//	f_w.fireboy_st.FireBoy.move(5.0f, 0.0f);
 					if (Keyboard::isKeyPressed(Keyboard::Left))
 						state_1 = 1;
 				}
 			}
-			if (state_1)level[1].g_f_b_w[1] = 1;
-			else level[1].g_f_b_w[1] = 0;
+			if (state_1)level[in_game.number_Level].g_f_b_w[1] = 1;
+			else level[in_game.number_Level].g_f_b_w[1] = 0;
 
 
 			////case 2:   //f b w g 
-			if (level[1].ground[i].getFillColor() == Color::Yellow && f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[1].ground[i].getGlobalBounds()))
+			if (level[in_game.number_Level].ground[i].getFillColor() == Color::Yellow && f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[in_game.number_Level].ground[i].getGlobalBounds()))
 			{
-				if (level[1].boxes_right[1].getGlobalBounds().intersects(f_w.watergirl_st.watergirl_left.getGlobalBounds())) {
+				if (level[in_game.number_Level].boxes_right[1].getGlobalBounds().intersects(f_w.watergirl_st.watergirl_left.getGlobalBounds())) {
 					// f_w.watergirl_st.WaterGirl.move(5.0f, 0.0f);
 					if (Keyboard::isKeyPressed(Keyboard::D)) {
 						state_2 = 1;
 					}
 				}
 			}
-			if (state_2)level[1].f_b_w_g[1] = 1;
-			else level[1].f_b_w_g[1] = 0;
+			if (state_2)level[in_game.number_Level].f_b_w_g[1] = 1;
+			else level[in_game.number_Level].f_b_w_g[1] = 0;
 
 		}
 
 
-		if (level[1].boxes_right[1].getGlobalBounds().intersects(f_w.fireboy_st.firboy_left.getGlobalBounds())) {
+		if (level[in_game.number_Level].boxes_right[1].getGlobalBounds().intersects(f_w.fireboy_st.firboy_left.getGlobalBounds())) {
 			////case 3:   //g w b f
-			if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[1].ground[i].getGlobalBounds()) && level[1].ground[i].getFillColor() == Color::Yellow) {
-				if (level[1].boxes_left[1].getGlobalBounds().intersects(f_w.watergirl_st.watergirl_right.getGlobalBounds())) {
+			if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[in_game.number_Level].ground[i].getGlobalBounds()) && level[in_game.number_Level].ground[i].getFillColor() == Color::Yellow) {
+				if (level[in_game.number_Level].boxes_left[1].getGlobalBounds().intersects(f_w.watergirl_st.watergirl_right.getGlobalBounds())) {
 					//	f_w.watergirl_st.WaterGirl.move(7.25f, 0.0f);
 					if (Keyboard::isKeyPressed(Keyboard::A)) {
 						state_3 = 1;
@@ -2341,11 +2343,11 @@ void collision_boxes(RenderWindow& window)
 				}
 
 			}
-			if (state_3)level[1].g_w_b_f[1] = 1;
-			else level[1].g_w_b_f[1] = 0;
+			if (state_3)level[in_game.number_Level].g_w_b_f[1] = 1;
+			else level[in_game.number_Level].g_w_b_f[1] = 0;
 			////case 4:  //w b f g
-			if (f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[1].ground[i].getGlobalBounds()) && level[1].ground[i].getFillColor() == Color::Yellow) {
-				if (f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[1].boxes_left[1].getGlobalBounds())) {
+			if (f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[in_game.number_Level].ground[i].getGlobalBounds()) && level[in_game.number_Level].ground[i].getFillColor() == Color::Yellow) {
+				if (f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[in_game.number_Level].boxes_left[1].getGlobalBounds())) {
 					//	f_w.fireboy_st.FireBoy.move(-5.0f, 0.0f);
 					if (Keyboard::isKeyPressed(Keyboard::Right)) {
 						state_4 = 1;
@@ -2353,40 +2355,40 @@ void collision_boxes(RenderWindow& window)
 				}
 
 			}
-			if (state_4)level[1].w_b_f_g[1] = 1;
-			else level[1].w_b_f_g[1] = 0;
+			if (state_4)level[in_game.number_Level].w_b_f_g[1] = 1;
+			else level[in_game.number_Level].w_b_f_g[1] = 0;
 
 		}
 	}
 	///////////////////collision the box between fireboy and watergirl ////////////////
-	if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[1].boxes_right[1].getGlobalBounds()) && f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[1].boxes_left[1].getGlobalBounds())) {
+	if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[in_game.number_Level].boxes_right[1].getGlobalBounds()) && f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[in_game.number_Level].boxes_left[1].getGlobalBounds())) {
 		f_w.fireboy_st.FireBoy.move(3.0f, 0.0f);
 		f_w.watergirl_st.WaterGirl.move(-3.0f, 0.0f);
 		bool wg_touch = 0, fb_touch = 0;
 		for (int i = 0; i < 60; i++) {
-			if (!wg_touch && f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[1].ground[i].getGlobalBounds()) && level[1].ground[i].getFillColor() == Color::Yellow) {
+			if (!wg_touch && f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[in_game.number_Level].ground[i].getGlobalBounds()) && level[in_game.number_Level].ground[i].getFillColor() == Color::Yellow) {
 				wg_touch = 1;
 				f_w.watergirl_st.WaterGirl.move(6.2f, 0.0f);
 				f_w.fireboy_st.FireBoy.move(1.f, 0.0f);
 			}
-			if (!fb_touch && f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[1].ground[i].getGlobalBounds()) && level[1].ground[i].getFillColor() == Color::Yellow) {
+			if (!fb_touch && f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[in_game.number_Level].ground[i].getGlobalBounds()) && level[in_game.number_Level].ground[i].getFillColor() == Color::Yellow) {
 				fb_touch = 1;
 				f_w.fireboy_st.FireBoy.move(-3.0f, 0.0f);
 			}
 		}
 
 	}
-	if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[1].boxes_right[1].getGlobalBounds()) && f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[1].boxes_left[1].getGlobalBounds())) {
+	if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[in_game.number_Level].boxes_right[1].getGlobalBounds()) && f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[in_game.number_Level].boxes_left[1].getGlobalBounds())) {
 
 		f_w.fireboy_st.FireBoy.move(-3.0f, 0.0f);
 		f_w.watergirl_st.WaterGirl.move(3.0f, 0.0f);
 		bool wg_touch = 0, fb_touch = 0;
 		for (int i = 0; i < 60; i++) {
-			if (!wg_touch && f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[1].ground[i].getGlobalBounds()) && level[1].ground[i].getFillColor() == Color::Yellow) {
+			if (!wg_touch && f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[in_game.number_Level].ground[i].getGlobalBounds()) && level[in_game.number_Level].ground[i].getFillColor() == Color::Yellow) {
 				wg_touch = 1;
 				f_w.watergirl_st.WaterGirl.move(-3.0f, 0.0f);
 			}
-			if (!fb_touch && f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[1].ground[i].getGlobalBounds()) && level[1].ground[i].getFillColor() == Color::Yellow) {
+			if (!fb_touch && f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[in_game.number_Level].ground[i].getGlobalBounds()) && level[in_game.number_Level].ground[i].getFillColor() == Color::Yellow) {
 				fb_touch = 1;
 				f_w.fireboy_st.FireBoy.move(3.0f, 0.0f);
 			}
@@ -2940,7 +2942,7 @@ void Game_Play(RenderWindow& window)
 
 		window.clear();
 		draw(window, f_w.fireboy_st.FireBoy, f_w.watergirl_st.WaterGirl);
-		level[1].cube[1].move(0.0f, -level[1].velocityboxes[1]);
+		level[in_game.number_Level].cube[1].move(0.0f, -level[in_game.number_Level].velocityboxes[1]);
 		f_w.fireboy_st.FireBoy.move(0, -f_w.fireboy_st.velocityFireBoy);
 		f_w.watergirl_st.WaterGirl.move(0, -f_w.watergirl_st.velocityWaterGirl);
 
@@ -3059,16 +3061,7 @@ void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 		{
 
 			window.draw(level[2].ground[i]);
-			/*if (i < 11)
-			{
-				window.draw(level[1].coinFireBoy[i]);
-				window.draw(level[1].coinWaterGirl[i]);
-				if (i < 3)
-				{
-					if (level[1].isSmoke[1] == 1) window.draw(level[1].smoke[1]);
-					if (level[1].isSmoke[2] == 1) window.draw(level[1].smoke[2]);
-				}
-			}*/
+			window.draw(level[2].convexs[i]);
 		}
 		/*window.draw(level[1].cube[1]);
 
@@ -3122,13 +3115,13 @@ void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 		window.draw(level[1].pondBlack[1]);*/
 		window.draw(test2);
 
-		window.draw(level[1].Pause);
-		if (level[1].pauseclicked) {
+		/*window.draw(level[2].Pause);
+		if (level[2].pauseclicked) {
 			window.draw(in_game.Background);
 			window.draw(in_game.settings_menu);
 			if (!in_game.Settings_hitbox.getGlobalBounds().intersects(in_game.settings_menu.getGlobalBounds())) {
 				in_game.settings_menu.move(0, -30);
 			}
-		}
+		}*/
 	}
 }
