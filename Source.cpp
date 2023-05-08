@@ -198,14 +198,14 @@ void fire_water_hitboxes(RenderWindow& window) {
 	f_w.watergirl_st.watergirl_down.setOrigin(2.5f, 5.f);
 
 	// hitbox (right_watergirl)
-	f_w.watergirl_st.watergirl_right.setSize(Vector2f(10, 40));
+	f_w.watergirl_st.watergirl_right.setSize(Vector2f(10, 30));
 	f_w.watergirl_st.watergirl_right.setFillColor(Color::Blue);
-	f_w.watergirl_st.watergirl_right.setOrigin(5, 20);
+	f_w.watergirl_st.watergirl_right.setOrigin(5, 12.5);
 
 	// hitbox (left_watergirl)
-	f_w.watergirl_st.watergirl_left.setSize(Vector2f(20, 40));
+	f_w.watergirl_st.watergirl_left.setSize(Vector2f(20, 30));
 	f_w.watergirl_st.watergirl_left.setFillColor(Color::Blue);
-	f_w.watergirl_st.watergirl_left.setOrigin(10, 20);
+	f_w.watergirl_st.watergirl_left.setOrigin(10, 12.5);
 }
 void Main_Menu(RenderWindow& window) {
 
@@ -1361,8 +1361,8 @@ void Level2(RenderWindow& window) {
 	level[2].ground[3].setPosition(Vector2f(75, 566));
 	level[2].ground[3].setFillColor(Color::Cyan);
 
-	level[2].ground[4].setSize(Vector2f(615, 2));
-	level[2].ground[4].setPosition(Vector2f(175, 443));
+	level[2].ground[4].setSize(Vector2f(626, 2));
+	level[2].ground[4].setPosition(Vector2f(160, 443));
 	level[2].ground[4].setFillColor(Color::Cyan);
 
 	level[2].ground[5].setSize(Vector2f(630, 2));
@@ -1410,7 +1410,7 @@ void Level2(RenderWindow& window) {
 	level[2].ground[15].setFillColor(Color::Cyan);
 
 	level[2].ground[16].setSize(Vector2f(415, 2));
-	level[2].ground[16].setPosition(Vector2f(815, 468));
+	level[2].ground[16].setPosition(Vector2f(810, 468));
 	level[2].ground[16].setFillColor(Color::Cyan);
 
 	level[2].ground[17].setSize(Vector2f(250, 2));
@@ -1437,7 +1437,7 @@ void Level2(RenderWindow& window) {
 	level[2].ground[22].setPosition(Vector2f(813, 503));
 	level[2].ground[22].setFillColor(Color::Cyan);
 
-	level[2].ground[23].setSize(Vector2f(66, 2));
+	level[2].ground[23].setSize(Vector2f(62, 2));              ////
 	level[2].ground[23].setPosition(Vector2f(50, 394));
 	level[2].ground[23].setFillColor(Color::Cyan);
 
@@ -1521,6 +1521,11 @@ void Level2(RenderWindow& window) {
 	level[2].ground[43].setPosition(Vector2f(50.5f, 20.5f));
 	level[2].ground[43].setFillColor(Color::Yellow);
 
+	/////the right wall
+	level[2].ground[44].setSize(Vector2f(2, 720));
+	level[2].ground[44].setPosition(Vector2f(1228.5f, 20.5f));
+	level[2].ground[44].setFillColor(Color::Yellow);
+
 	////////////////////convexshapes///////////////////////
 	level[2].convexs[0].setPointCount(3);
 	level[2].convexs[0].setFillColor(Color::Red);
@@ -1590,14 +1595,14 @@ void Level2(RenderWindow& window) {
 
 	level[2].convexs[7].setPointCount(3);
 	level[2].convexs[7].setFillColor(Color::Green);
-	level[2].convexs[7].setPoint(0, sf::Vector2f(123.f, 414.f));
+	level[2].convexs[7].setPoint(0, sf::Vector2f(120.f, 411.f));                            ////////////
 	level[2].convexs[7].setPoint(1, sf::Vector2f(142.f, 418.f));
-	level[2].convexs[7].setPoint(2, sf::Vector2f(115.f, 395.f));
+	level[2].convexs[7].setPoint(2, sf::Vector2f(110.f, 393.5f));
 
 	level[2].convexs[41].setPointCount(3);
 	level[2].convexs[41].setFillColor(Color::Green);
-	level[2].convexs[41].setPoint(0, sf::Vector2f(171.f, 441.f));
-	level[2].convexs[41].setPoint(1, sf::Vector2f(142.f, 418.f));
+	level[2].convexs[41].setPoint(0, sf::Vector2f(178.f, 446.f));                       /////////////
+	level[2].convexs[41].setPoint(1, sf::Vector2f(141.f, 417.f));
 	level[2].convexs[41].setPoint(2, sf::Vector2f(150.f, 431.f));
 
 	level[2].convexs[8].setPointCount(3);
@@ -1614,9 +1619,16 @@ void Level2(RenderWindow& window) {
 
 	level[2].convexs[9].setPointCount(3);
 	level[2].convexs[9].setFillColor(Color::Green);
-	level[2].convexs[9].setPoint(0, sf::Vector2f(795.f, 460.f));
-	level[2].convexs[9].setPoint(1, sf::Vector2f(816.f, 467.f));
-	level[2].convexs[9].setPoint(2, sf::Vector2f(785.f, 443.f));
+	level[2].convexs[9].setPoint(0, sf::Vector2f(785.5f, 442.f));                            //784.5   444.5
+	level[2].convexs[9].setPoint(1, sf::Vector2f(805.5f, 460.f));                          // 802.5   459
+	level[2].convexs[9].setPoint(2, sf::Vector2f(797.5f, 460.f));                         // 808   475
+
+
+	level[2].convexs[56].setPointCount(3);
+	level[2].convexs[56].setFillColor(Color::Green);
+	level[2].convexs[56].setPoint(0, sf::Vector2f(802.5f, 459.f));                            //802.5   459
+	level[2].convexs[56].setPoint(1, sf::Vector2f(819.5f, 469.5f));                          // 819.5   469.5
+	level[2].convexs[56].setPoint(2, sf::Vector2f(812.f, 473.f));
 
 	level[2].convexs[10].setPointCount(3);
 	level[2].convexs[10].setFillColor(Color::Black);
@@ -1644,7 +1656,7 @@ void Level2(RenderWindow& window) {
 
 	level[2].convexs[13].setPointCount(3);
 	level[2].convexs[13].setFillColor(Color::Red);
-	level[2].convexs[13].setPoint(0, sf::Vector2f(208.f, 377.f));
+	level[2].convexs[13].setPoint(0, sf::Vector2f(202.f, 380.f));
 	level[2].convexs[13].setPoint(1, sf::Vector2f(240.f, 365.f));
 	level[2].convexs[13].setPoint(2, sf::Vector2f(240.f, 355.f));
 
@@ -1710,15 +1722,15 @@ void Level2(RenderWindow& window) {
 
 	level[2].convexs[20].setPointCount(3);
 	level[2].convexs[20].setFillColor(Color::Green);
-	level[2].convexs[20].setPoint(0, sf::Vector2f(572.f, 171.f));
-	level[2].convexs[20].setPoint(1, sf::Vector2f(560.f, 160.f));
-	level[2].convexs[20].setPoint(2, sf::Vector2f(591.f, 182.f));
+	level[2].convexs[20].setPoint(0, sf::Vector2f(565.f, 162.f));
+	level[2].convexs[20].setPoint(1, sf::Vector2f(580.f, 186.f));
+	level[2].convexs[20].setPoint(2, sf::Vector2f(603.f, 191.f));
 
 	level[2].convexs[48].setPointCount(3);
-	level[2].convexs[48].setFillColor(Color::White);
-	level[2].convexs[48].setPoint(0, sf::Vector2f(589.f, 183.f));
-	level[2].convexs[48].setPoint(1, sf::Vector2f(618.f, 202.f));
-	level[2].convexs[48].setPoint(2, sf::Vector2f(591.f, 182.f));
+	level[2].convexs[48].setFillColor(Color::Green);
+	level[2].convexs[48].setPoint(0, sf::Vector2f(595.5f, 184.5f));
+	level[2].convexs[48].setPoint(1, sf::Vector2f(630.5f, 208.5f));
+	level[2].convexs[48].setPoint(2, sf::Vector2f(620.5f, 208.5f));
 
 	level[2].convexs[21].setPointCount(3);
 	level[2].convexs[21].setFillColor(Color::Black);
@@ -1777,7 +1789,7 @@ void Level2(RenderWindow& window) {
 	level[2].convexs[28].setPointCount(3);
 	level[2].convexs[28].setFillColor(Color::Red);
 	level[2].convexs[28].setPoint(0, sf::Vector2f(880.f, 256.f));
-	level[2].convexs[28].setPoint(1, sf::Vector2f(847.f, 280.f));
+	level[2].convexs[28].setPoint(1, sf::Vector2f(845.f, 284.f));
 	level[2].convexs[28].setPoint(2, sf::Vector2f(872.f, 269.f));
 
 	level[2].convexs[51].setPointCount(3);
@@ -1837,12 +1849,12 @@ void Level2(RenderWindow& window) {
 	level[2].convexs[35].setPointCount(3);
 	level[2].convexs[35].setFillColor(Color::Green);
 	level[2].convexs[35].setPoint(0, sf::Vector2f(989.f, 154.f));
-	level[2].convexs[35].setPoint(1, sf::Vector2f(978.f, 135.f));
-	level[2].convexs[35].setPoint(2, sf::Vector2f(1005.f, 155.f));
+	level[2].convexs[35].setPoint(1, sf::Vector2f(978.f, 135.f));              //   / / / / /
+	level[2].convexs[35].setPoint(2, sf::Vector2f(1008.f, 158.f));
 
 	level[2].convexs[54].setPointCount(3);
 	level[2].convexs[54].setFillColor(Color::Green);
-	level[2].convexs[54].setPoint(0, sf::Vector2f(951.f, 115.f));
+	level[2].convexs[54].setPoint(0, sf::Vector2f(950.f, 110.f));
 	level[2].convexs[54].setPoint(1, sf::Vector2f(978.f, 135.f));
 	level[2].convexs[54].setPoint(2, sf::Vector2f(963.f, 130.f));
 
@@ -1876,7 +1888,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 		velocityFireBoy = 0;
 		if (Keyboard::isKeyPressed(Keyboard::Key::W)) {
 			level[in_game.number_Level].Jump[1].play();
-			velocityFireBoy = 5.5;
+			velocityFireBoy = 6.0;
 			isAnimationStandingFireBoy = 0;
 
 		}
@@ -1938,19 +1950,21 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 					//cout << "no\n";
 				}
 
-				FireBoy.move(2.5, 2);
+				FireBoy.move(2.0, 2);
+				if (in_game.number_Level == 2)FireBoy.move(0.5, 0);
 				//cout << "YES\n";
 			}
 			if (Keyboard::isKeyPressed(Keyboard::Key::W))
 			{
 				level[in_game.number_Level].Jump[1].play();
-				velocityFireBoy = 5.5;
+				velocityFireBoy = 6.0;
 			}
 
 		}
 		else if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[in_game.number_Level].convexs[i].getGlobalBounds()) && level[in_game.number_Level].convexs[i].getFillColor() == Color::Red) {
 			isAnimationStandingFireBoy = 1;
 			velocityFireBoy = 0;
+
 			if (Keyboard::isKeyPressed(Keyboard::Key::A) && (!f_w.fireboy_st.grounded))
 			{
 				FireBoy.move(5, 0);
@@ -1966,7 +1980,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 				//cout << "no\n";
 			}
 
-			if (!f_w.fireboy_st.grounded)
+			if ((!f_w.fireboy_st.grounded && in_game.number_Level == 1) || (in_game.number_Level == 2) && (i == 13 || i == 28 || i == 31 || i == 34))
 			{
 				FireBoy.move(-2.0, 2.0);
 				//cout << "YES\n";
@@ -1975,7 +1989,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 			if (Keyboard::isKeyPressed(Keyboard::Key::W))
 			{
 				level[in_game.number_Level].Jump[1].play();
-				velocityFireBoy = 5.5;
+				velocityFireBoy = 6.0;
 			}
 
 		}
@@ -1984,16 +1998,39 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 			if (!f_w.fireboy_st.grounded)
 				f_w.fireboy_st.velocityFireBoy = -3.7;
 		}
-	}
-	if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[in_game.number_Level].convexs[9].getGlobalBounds()) && !(f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[in_game.number_Level].convexs[9].getGlobalBounds()))) {
-		if (in_game.number_Level == 1)
-			FireBoy.move(5.2f, 0);
+
+		///////level 2 special state with convex
+
+		if (i == 14 || i == 27) {
+
+			if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[2].convexs[i].getGlobalBounds()) && !(f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[2].convexs[i].getGlobalBounds()))) {
+
+				FireBoy.move(5.2f, 0);
+			}
+		}
+
+		if (i == 13 || i == 28 || i == 31 || i == 34) {
+
+			if (f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[2].convexs[i].getGlobalBounds()) && !(f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[2].convexs[i].getGlobalBounds()))) {
+
+				FireBoy.move(-5.2f, 0);
+			}
+		}
 	}
 
-	if (f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[in_game.number_Level].convexs[2].getGlobalBounds()) && !(f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[in_game.number_Level].convexs[2].getGlobalBounds()))) {
-		if (in_game.number_Level == 1)
-			FireBoy.move(-5.2f, 0);
+	///////level 1 special state with convex
+	if (f_w.fireboy_st.firboy_left.getGlobalBounds().intersects(level[1].convexs[9].getGlobalBounds()) && !(f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].convexs[9].getGlobalBounds()))) {
+
+		FireBoy.move(5.2f, 0);
 	}
+
+	if (f_w.fireboy_st.firboy_right.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()) && !(f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()))) {
+
+		FireBoy.move(-5.2f, 0);
+	}
+
+
+
 
 	/////////// collision fireboy with water and black pond //////////////////
 	if (f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[in_game.number_Level].pondWaterGirl[1].getGlobalBounds()) || f_w.fireboy_st.firboy_down.getGlobalBounds().intersects(level[in_game.number_Level].pondBlack[1].getGlobalBounds()))
@@ -2057,7 +2094,7 @@ void collision_fireboy(RenderWindow& window, bool& isAnimationStandingFireBoy, d
 
 		if (Keyboard::isKeyPressed(Keyboard::Key::W)) {
 			level[in_game.number_Level].Jump[1].play();
-			velocityFireBoy = 5.5;
+			velocityFireBoy = 6.0;
 			isAnimationStandingFireBoy = 0;
 
 		}
@@ -2080,7 +2117,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 		velocityWaterGirl = 0;
 		if (Keyboard::isKeyPressed(Keyboard::Key::Up)) {
 			level[in_game.number_Level].Jump[2].play();
-			velocityWaterGirl = 5.5;
+			velocityWaterGirl = 6.0;
 			isAnimationStandingWaterGirl = 0;
 
 		}
@@ -2118,7 +2155,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 		}
 	}
 
-	//collision convexes
+	////////////////////////////////  collision convexes //////////////////////////////////////////////////
 	for (int i = 0; i < 60; i++)
 	{
 
@@ -2138,14 +2175,14 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 					WaterGirl.move(-5, 0);
 					//cout << "no\n";
 				}
-
 				WaterGirl.move(2.0, 2.0);
+				if (in_game.number_Level == 2)	WaterGirl.move(0.5, 0.0);
 				//cout << "YES\n";
 			}
 			if (Keyboard::isKeyPressed(Keyboard::Key::Up))
 			{
 				level[in_game.number_Level].Jump[2].play();
-				velocityWaterGirl = 5.5;
+				velocityWaterGirl = 6.0;
 			}
 
 		}
@@ -2168,7 +2205,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 					WaterGirl.move(-5, 0);
 				//cout << "no\n";
 			}
-			if (!f_w.watergirl_st.grounded)
+			if ((!f_w.watergirl_st.grounded && (in_game.number_Level == 2)) || ((in_game.number_Level == 2) && (i == 13 || i == 28 || i == 31 || i == 34)))
 			{
 				WaterGirl.move(-2.0, 2.0);
 				//cout << "YES\n";
@@ -2177,7 +2214,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 			if (Keyboard::isKeyPressed(Keyboard::Key::Up))
 			{
 				level[in_game.number_Level].Jump[2].play();
-				velocityWaterGirl = 5.5;
+				velocityWaterGirl = 6.0;
 			}
 
 
@@ -2188,12 +2225,32 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 				velocityWaterGirl = -3.5;
 
 		}
+
+		///////level 2 special state with convex
+
+		if (i == 14 || i == 27) {
+
+			if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[2].convexs[i].getGlobalBounds()) && !(f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[2].convexs[i].getGlobalBounds()))) {
+
+				WaterGirl.move(5.2f, 0);
+			}
+		}
+
+		if (i == 13 || i == 28 || i == 31 || i == 34) {
+
+			if (f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[2].convexs[i].getGlobalBounds()) && !(f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[2].convexs[i].getGlobalBounds()))) {
+
+				WaterGirl.move(-5.2f, 0);
+			}
+		}
 	}
-	//// ////////////////////////////////////////////////////
-	if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[in_game.number_Level].convexs[9].getGlobalBounds()) && !(f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[in_game.number_Level].convexs[9].getGlobalBounds()))) {
+	///////level 1 special state with convex
+	if (f_w.watergirl_st.watergirl_left.getGlobalBounds().intersects(level[1].convexs[9].getGlobalBounds()) && !(f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].convexs[9].getGlobalBounds()))) {
+
 		WaterGirl.move(5.2f, 0);
 	}
-	if (f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[in_game.number_Level].convexs[2].getGlobalBounds()) && !(f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[in_game.number_Level].convexs[2].getGlobalBounds()))) {
+	if (f_w.watergirl_st.watergirl_right.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()) && !(f_w.watergirl_st.watergirl_down.getGlobalBounds().intersects(level[1].convexs[2].getGlobalBounds()))) {
+
 		WaterGirl.move(-5.2f, 0);
 	}
 
@@ -2242,7 +2299,7 @@ void collision_watergirl(RenderWindow& window, bool& isAnimationStandingWaterGir
 		velocityWaterGirl = 0;
 		if (Keyboard::isKeyPressed(Keyboard::Key::Up)) {
 			level[in_game.number_Level].Jump[2].play();
-			velocityWaterGirl = 5.5;
+			velocityWaterGirl = 6.0;
 			isAnimationStandingWaterGirl = 0;
 
 		}
@@ -3075,8 +3132,8 @@ void draw(RenderWindow& window, Sprite& FireBoy, Sprite& WaterGirl)
 		for (int i = 0; i < 60; i++)
 		{
 
-			window.draw(level[2].ground[i]);
-			window.draw(level[2].convexs[i]);
+			//	window.draw(level[2].ground[i]);
+			//	window.draw(level[2].convexs[i]);
 		}
 		/*window.draw(level[1].cube[1]);
 
