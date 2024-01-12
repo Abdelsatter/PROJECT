@@ -3242,26 +3242,27 @@ void Animation(RenderWindow& window) {
 
 	//animation win menu
 	if (in_game.win) {
-		Vector2i mouspos = Mouse::getPosition(window);
-		if (Mouse::isButtonPressed(Mouse::Left)) {
-			if (mousepos.x > 382 && mousepos.x < 898 && mouspos.y < 538.5 && mousepos.y > 621.5) {
-				level[1].continueclicked = 1;
-			}
-		}
-		if (level[1].continueclicked == 0) {
-			if (!in_game.winmenu_hb.getGlobalBounds().intersects(level[1].winmenu.getGlobalBounds())) {
-				level[1].winmenu.move(0, -30);
-			}
-			if (!in_game.Continue_button_hb.getGlobalBounds().intersects(in_game.Continue_button.getGlobalBounds())) {
-				in_game.Continue_button.move(0, -30);
-			}
-		}
-		else if (level[1].continueclicked) {
-			level[1].continueclicked = 0;
-			in_game.number_Level = 2;
-			in_game.win = 0;
-			//Game_Play(window);
-		}
+		Main_Menu(window);
+		//Vector2i mouspos = Mouse::getPosition(window);
+		//if (Mouse::isButtonPressed(Mouse::Left)) {
+		//	if (mousepos.x > 382 && mousepos.x < 898 && mouspos.y < 538.5 && mousepos.y > 621.5) {
+		//		level[1].continueclicked = 1;
+		//	}
+		//}
+		//if (level[1].continueclicked == 0) {
+		//	if (!in_game.winmenu_hb.getGlobalBounds().intersects(level[1].winmenu.getGlobalBounds())) {
+		//		level[1].winmenu.move(0, -30);
+		//	}
+		//	if (!in_game.Continue_button_hb.getGlobalBounds().intersects(in_game.Continue_button.getGlobalBounds())) {
+		//		in_game.Continue_button.move(0, -30);
+		//	}
+		//}
+		//else if (level[1].continueclicked) {
+		//	level[1].continueclicked = 0;
+		//	in_game.number_Level = 2;
+		//	in_game.win = 0;
+		//	//Game_Play(window);
+		//}
 	}
 
 	//animation smoke fireboy
